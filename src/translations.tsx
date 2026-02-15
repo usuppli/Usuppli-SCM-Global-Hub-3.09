@@ -9,7 +9,17 @@ export const translations: any = {
       refresh: "Refresh",
       share: "Share",
       clickToEdit: "Click to edit",
-      copied: "Copied to clipboard"
+      copied: "Copied to clipboard",
+      search: "Search...",
+      loading: "Loading...",
+      actions: "Actions",
+      view: "View",
+      export: "Export",
+      print: "Print",
+      submit: "Submit",
+      next: "Next",
+      back: "Back",
+      finish: "Finish"
     },
     nav: {
       dashboard: "Dashboard",
@@ -45,10 +55,16 @@ export const translations: any = {
       requestSample: "Request Sample",
       status: "Production Status",
       factory: "Assigned Factory",
-      timeline: "Delivery Timeline"
+      timeline: "Delivery Timeline",
+      priority: "Priority",
+      quantity: "Quantity"
     },
     catalog: {
-      subtitle: "Global SKU Directory"
+      subtitle: "Global SKU Directory",
+      addNew: "Add New Product",
+      sku: "SKU",
+      category: "Category",
+      cost: "Unit Cost"
     },
     workspace: {
       tabs: {
@@ -60,6 +76,101 @@ export const translations: any = {
         timeline: "Timeline",
         ai: "AI Strategy"
       }
+    },
+    teamChat: {
+      title: "Team Collaboration",
+      channels: "Channels",
+      directMessages: "Direct Messages",
+      typeMessage: "Type a message...",
+      online: "Online",
+      offline: "Offline",
+      teamGeneral: "General Team",
+      logisticsOps: "Logistics Ops",
+      productDesign: "Product Design",
+      qaTeam: "QA Team",
+      shareVia: "Share via",
+      recording: "Recording...",
+      deleteMsg: "Delete Message"
+    },
+    competitor: {
+      title: "Competitor Intelligence",
+      subtitle: "Market Analysis & Tracking",
+      trackNew: "Track Competitor",
+      marketShare: "Market Share",
+      pricePosition: "Price Position",
+      headers: { brand: "Brand", price: "Price", origin: "Origin", strength: "Key Strength" }
+    },
+    timeline: {
+      title: "Product Launch Timeline",
+      subtitle: "Critical Path Management",
+      phases: {
+        concept: { market: "Global", activity: "Concept" },
+        sampling: { market: "Asia", activity: "Sampling" },
+        production: { market: "USA", activity: "Production" },
+        logistics: { market: "Europe", activity: "Logistics" },
+        p1: { market: "Global", activity: "Concept Validation" },
+        p2: { market: "Asia", activity: "Prototyping" },
+        p3: { market: "Europe", activity: "Pilot Run" },
+        p4: { market: "USA", activity: "Mass Production" },
+        p5: { market: "Global", activity: "Official Launch" }
+      },
+      status: {
+        completed: "Completed",
+        inProgress: "In Progress",
+        pending: "Pending",
+        delayed: "Delayed"
+      },
+      addMilestone: "Add Milestone"
+    },
+    hsLookup: {
+      title: "HS Code Intelligence",
+      subtitle: "Global Classification & Compliance",
+      searchPlaceholder: "Search product description (e.g. 'cotton shirt')...",
+      results: "Classification Results",
+      code: "HS Code",
+      description: "Description",
+      duty: "Duty Rate"
+    },
+    exchange: {
+      title: "Currency Exchange",
+      subtitle: "Real-time Forex Rates",
+      base: "Base Currency",
+      target: "Target Currency",
+      rate: "Current Rate",
+      calculator: "Converter"
+    },
+    scorecard: {
+      title: "Supplier Scorecard",
+      subtitle: "Performance Metrics",
+      grade: "Overall Grade",
+      metrics: {
+        quality: "Quality",
+        speed: "Speed / Lead Time",
+        price: "Pricing",
+        risk: "Risk Profile",
+        communication: "Communication"
+      }
+    },
+    ai: {
+      title: "SCM AI Strategist",
+      subtitle: "Predictive Analytics & Insights",
+      promptPlaceholder: "Ask about inventory, risks, or suppliers...",
+      analyze: "Analyze",
+      suggestions: "Strategic Suggestions",
+      thinking: "Analyzing data points..."
+    },
+    logistics: {
+      title: "Logistics Tower",
+      subtitle: "Real-time freight tracking",
+      inboundAir: "Inbound Air",
+      inboundOcean: "Inbound Ocean",
+      customsHold: "Customs Hold",
+      activeUnits: "Active Shipments",
+      nextArrival: "Next Arrival",
+      shipments: "Shipments",
+      origin: "Origin",
+      destination: "Destination",
+      status: "Status"
     },
     admin: {
       title: "Admin Panel",
@@ -97,7 +208,10 @@ export const translations: any = {
       }
     },
     login: {
-      subtitle: "Enterprise Supply Chain Manager"
+      subtitle: "Enterprise Supply Chain Manager",
+      email: "Email Address",
+      password: "Password",
+      signIn: "Sign In"
     },
     specs: {
       title: "Product Specifications",
@@ -143,18 +257,9 @@ export const translations: any = {
       search: "Search suppliers...",
       addBtn: "Add Supplier",
       form: { name: "Factory Name", location: "Location", contact: "Contact Person", contactNo: "Phone Number", moq: "Minimum Order Quantity" }
-    },
-    logistics: {
-      title: "Logistics Tower",
-      subtitle: "Real-time freight tracking",
-      inboundAir: "Inbound Air",
-      inboundOcean: "Inbound Ocean",
-      customsHold: "Customs Hold",
-      activeUnits: "Active Shipments",
-      nextArrival: "Next Arrival"
     }
   },
-  'zh-Hans': { // Simplified Chinese
+  'zh-Hans': { 
     common: {
       save: "保存",
       cancel: "取消",
@@ -163,7 +268,17 @@ export const translations: any = {
       refresh: "刷新",
       share: "分享",
       clickToEdit: "点击编辑",
-      copied: "已复制到剪贴板"
+      copied: "已复制",
+      search: "搜索...",
+      loading: "加载中...",
+      actions: "操作",
+      view: "查看",
+      export: "导出",
+      print: "打印",
+      submit: "提交",
+      next: "下一步",
+      back: "返回",
+      finish: "完成"
     },
     nav: {
       dashboard: "仪表板",
@@ -175,7 +290,7 @@ export const translations: any = {
       crm: "客户名录",
       collaboration: "协作中心",
       teamChat: "团队聊天",
-      admin: "管理", 
+      admin: "管理",
       newProduct: "新增产品",
       analytics: "数据分析",
       sourcing: "采购管理",
@@ -199,10 +314,16 @@ export const translations: any = {
       requestSample: "请求样品",
       status: "生产状态",
       factory: "指定工厂",
-      timeline: "交货时间线"
+      timeline: "交货时间线",
+      priority: "优先级",
+      quantity: "数量"
     },
     catalog: {
-      subtitle: "全球 SKU 目录"
+      subtitle: "全球 SKU 目录",
+      addNew: "新增产品",
+      sku: "SKU",
+      category: "类别",
+      cost: "单位成本"
     },
     workspace: {
       tabs: {
@@ -214,6 +335,101 @@ export const translations: any = {
         timeline: "时间表",
         ai: "AI 策略"
       }
+    },
+    teamChat: {
+      title: "团队协作",
+      channels: "频道",
+      directMessages: "私信",
+      typeMessage: "输入消息...",
+      online: "在线",
+      offline: "离线",
+      teamGeneral: "综合团队",
+      logisticsOps: "物流运营",
+      productDesign: "产品设计",
+      qaTeam: "QA团队",
+      shareVia: "分享至",
+      recording: "录音中...",
+      deleteMsg: "删除消息"
+    },
+    competitor: {
+      title: "竞争对手情报",
+      subtitle: "市场分析与追踪",
+      trackNew: "追踪新对手",
+      marketShare: "市场份额",
+      pricePosition: "价格定位",
+      headers: { brand: "品牌", price: "价格", origin: "原产地", strength: "核心优势" }
+    },
+    timeline: {
+      title: "产品发布时间表",
+      subtitle: "关键路径管理",
+      phases: {
+        concept: { market: "全球", activity: "概念" },
+        sampling: { market: "亚洲", activity: "样品" },
+        production: { market: "美国", activity: "生产" },
+        logistics: { market: "欧洲", activity: "物流" },
+        p1: { market: "全球", activity: "概念验证" },
+        p2: { market: "亚洲", activity: "原型制作" },
+        p3: { market: "欧洲", activity: "试产" },
+        p4: { market: "美国", activity: "批量生产" },
+        p5: { market: "全球", activity: "正式发布" }
+      },
+      status: {
+        completed: "已完成",
+        inProgress: "进行中",
+        pending: "待定",
+        delayed: "延误"
+      },
+      addMilestone: "添加里程碑"
+    },
+    hsLookup: {
+      title: "HS 编码情报",
+      subtitle: "全球分类与合规",
+      searchPlaceholder: "搜索产品描述 (例如 '棉衬衫')...",
+      results: "分类结果",
+      code: "HS 编码",
+      description: "描述",
+      duty: "税率"
+    },
+    exchange: {
+      title: "货币汇率",
+      subtitle: "实时外汇汇率",
+      base: "基础货币",
+      target: "目标货币",
+      rate: "当前汇率",
+      calculator: "转换器"
+    },
+    scorecard: {
+      title: "供应商评分卡",
+      subtitle: "绩效指标",
+      grade: "总体评级",
+      metrics: {
+        quality: "质量",
+        speed: "速度/交货期",
+        price: "定价",
+        risk: "风险状况",
+        communication: "沟通"
+      }
+    },
+    ai: {
+      title: "SCM AI 策略师",
+      subtitle: "预测分析与洞察",
+      promptPlaceholder: "询问有关库存、风险或供应商的问题...",
+      analyze: "分析",
+      suggestions: "战略建议",
+      thinking: "分析数据点..."
+    },
+    logistics: {
+      title: "物流塔",
+      subtitle: "全球货运追踪",
+      inboundAir: "入境空运",
+      inboundOcean: "入境海运",
+      customsHold: "海关扣留",
+      activeUnits: "活跃运输",
+      nextArrival: "下次到达",
+      shipments: "运输",
+      origin: "原产地",
+      destination: "目的地",
+      status: "状态"
     },
     admin: {
       title: "管理面板",
@@ -251,7 +467,10 @@ export const translations: any = {
       }
     },
     login: {
-      subtitle: "企业级供应链管理器"
+      subtitle: "企业级供应链管理器",
+      email: "电子邮件地址",
+      password: "密码",
+      signIn: "登录"
     },
     specs: {
       title: "产品规格",
@@ -297,18 +516,9 @@ export const translations: any = {
       search: "搜索供应商...",
       addBtn: "添加供应商",
       form: { name: "工厂名称", location: "地点", contact: "联系人", contactNo: "电话号码", moq: "最小起订量" }
-    },
-    logistics: {
-      title: "物流塔",
-      subtitle: "全球货运追踪",
-      inboundAir: "入境空运",
-      inboundOcean: "入境海运",
-      customsHold: "海关扣留",
-      activeUnits: "活跃运输",
-      nextArrival: "下次到达"
     }
   },
-  'zh-Hant': { // Traditional Chinese
+  'zh-Hant': { 
     common: {
       save: "儲存",
       cancel: "取消",
@@ -317,7 +527,17 @@ export const translations: any = {
       refresh: "重新整理",
       share: "分享",
       clickToEdit: "點擊編輯",
-      copied: "已複製到剪貼簿"
+      copied: "已複製",
+      search: "搜尋...",
+      loading: "載入中...",
+      actions: "操作",
+      view: "檢視",
+      export: "導出",
+      print: "列印",
+      submit: "提交",
+      next: "下一步",
+      back: "返回",
+      finish: "完成"
     },
     nav: {
       dashboard: "儀表板",
@@ -353,10 +573,16 @@ export const translations: any = {
       requestSample: "請求樣品",
       status: "生產狀態",
       factory: "指定工廠",
-      timeline: "交貨時間線"
+      timeline: "交貨時間線",
+      priority: "優先級",
+      quantity: "數量"
     },
     catalog: {
-      subtitle: "全球 SKU 目錄"
+      subtitle: "全球 SKU 目錄",
+      addNew: "新增產品",
+      sku: "SKU",
+      category: "類別",
+      cost: "單位成本"
     },
     workspace: {
       tabs: {
@@ -368,6 +594,101 @@ export const translations: any = {
         timeline: "時間表",
         ai: "AI 策略"
       }
+    },
+    teamChat: {
+      title: "團隊協作",
+      channels: "頻道",
+      directMessages: "私信",
+      typeMessage: "輸入訊息...",
+      online: "在線",
+      offline: "離線",
+      teamGeneral: "綜合團隊",
+      logisticsOps: "物流運營",
+      productDesign: "產品設計",
+      qaTeam: "QA團隊",
+      shareVia: "分享至",
+      recording: "錄音中...",
+      deleteMsg: "刪除訊息"
+    },
+    competitor: {
+      title: "競爭對手情報",
+      subtitle: "市場分析與追蹤",
+      trackNew: "追蹤新對手",
+      marketShare: "市場份額",
+      pricePosition: "價格定位",
+      headers: { brand: "品牌", price: "價格", origin: "原產地", strength: "核心優勢" }
+    },
+    timeline: {
+      title: "產品發布時間表",
+      subtitle: "關鍵路徑管理",
+      phases: {
+        concept: { market: "全球", activity: "概念" },
+        sampling: { market: "亞洲", activity: "樣品" },
+        production: { market: "美國", activity: "生產" },
+        logistics: { market: "歐洲", activity: "物流" },
+        p1: { market: "全球", activity: "概念驗證" },
+        p2: { market: "亞洲", activity: "原型製作" },
+        p3: { market: "歐洲", activity: "試產" },
+        p4: { market: "美國", activity: "批量生產" },
+        p5: { market: "全球", activity: "正式發布" }
+      },
+      status: {
+        completed: "已完成",
+        inProgress: "進行中",
+        pending: "待定",
+        delayed: "延誤"
+      },
+      addMilestone: "添加里程碑"
+    },
+    hsLookup: {
+      title: "HS 編碼情報",
+      subtitle: "全球分類與合規",
+      searchPlaceholder: "搜尋產品描述 (例如 '棉襯衫')...",
+      results: "分類結果",
+      code: "HS 編碼",
+      description: "描述",
+      duty: "稅率"
+    },
+    exchange: {
+      title: "貨幣匯率",
+      subtitle: "實時外匯匯率",
+      base: "基礎貨幣",
+      target: "目標貨幣",
+      rate: "當前匯率",
+      calculator: "轉換器"
+    },
+    scorecard: {
+      title: "供應商評分卡",
+      subtitle: "績效指標",
+      grade: "總體評級",
+      metrics: {
+        quality: "質量",
+        speed: "速度/交貨期",
+        price: "定價",
+        risk: "風險狀況",
+        communication: "溝通"
+      }
+    },
+    ai: {
+      title: "SCM AI 策略師",
+      subtitle: "預測分析與洞察",
+      promptPlaceholder: "詢問有關庫存、風險或供應商的問題...",
+      analyze: "分析",
+      suggestions: "戰略建議",
+      thinking: "分析數據點..."
+    },
+    logistics: {
+      title: "物流塔",
+      subtitle: "全球貨運追踪",
+      inboundAir: "入境空運",
+      inboundOcean: "入境海運",
+      customsHold: "海關扣留",
+      activeUnits: "活躍運輸",
+      nextArrival: "下次到達",
+      shipments: "運輸",
+      origin: "原產地",
+      destination: "目的地",
+      status: "狀態"
     },
     admin: {
       title: "管理面板",
@@ -405,7 +726,10 @@ export const translations: any = {
       }
     },
     login: {
-      subtitle: "企業級供應鏈管理器"
+      subtitle: "企業級供應鏈管理器",
+      email: "電子郵件地址",
+      password: "密碼",
+      signIn: "登錄"
     },
     specs: {
       title: "產品規格",
@@ -451,15 +775,6 @@ export const translations: any = {
       search: "搜尋供應商...",
       addBtn: "添加供應商",
       form: { name: "工廠名稱", location: "地點", contact: "聯繫人", contactNo: "電話號碼", moq: "最小起訂量" }
-    },
-    logistics: {
-      title: "物流塔",
-      subtitle: "全球貨運追踪",
-      inboundAir: "入境空運",
-      inboundOcean: "入境海運",
-      customsHold: "海關扣留",
-      activeUnits: "活躍運輸",
-      nextArrival: "下次到達"
     }
   }
 };

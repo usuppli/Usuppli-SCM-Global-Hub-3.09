@@ -1,6 +1,13 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, Sparkles, Loader2, AlertCircle } from 'lucide-react';
+import { Send, Bot, User, Sparkles, Loader2, AlertCircle, BrainCircuit } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
+import { translations } from '../translations';
+import { Language } from '../types';
+
+interface Props {
+  lang?: Language;
+}
 
 interface Message {
   id: string;
@@ -9,20 +16,29 @@ interface Message {
   timestamp: Date;
 }
 
-export default function SCMAIStrategist() {
+const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
+  // Safe Translation Access
+  const t = (translations[lang] || translations['en'])?.ai || translations['en'].ai;
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       role: 'model',
-      text: "Hello! I'm your Supply Chain AI Strategist. I can help you analyze risks, draft supplier emails, interpret tariffs, or brainstorm procurement strategies. How can I assist you today?",
+      text: lang === 'zh-Hans' 
+        ? "你好！我是您的供应链 AI 策略师。我可以帮助您分析风险、起草供应商邮件、解读关税或集思广益采购策略。今天我能为您做什么？"
+        : lang === 'zh-Hant'
+        ? "你好！我是您的供應鏈 AI 策略師。我可以幫助您分析風險、起草供應商郵件、解讀關稅或集思廣益採購策略。今天我能為您做什麼？"
+        : "Hello! I'm your Supply Chain AI Strategist. I can help you analyze risks, draft supplier emails, interpret tariffs, or brainstorm procurement strategies. How can I assist you today?",
       timestamp: new Date(),
     },
   ]);
+  
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -43,18 +59,32 @@ export default function SCMAIStrategist() {
     setError(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // NOTE: For Vite, use import.meta.env.VITE_GOOGLE_API_KEY
+      // If you are using a different build system, verify how environment variables are loaded.
+      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY || ""; 
+      
+      if (!apiKey) {
+        // Fallback Simulation if no API key is present
+        setTimeout(() => {
+            const simResponse = "I am currently running in simulation mode because no API Key was detected. In a production environment, I would analyze your query: " + userMsg.text;
+            setMessages((prev) => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'model',
+                text: simResponse,
+                timestamp: new Date(),
+            }]);
+            setIsLoading(false);
+        }, 1500);
+        return;
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
       const systemContext = "You are an expert Supply Chain Strategist. Keep answers professional, concise, and actionable.";
       
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: userMsg.text,
-        config: {
-          systemInstruction: systemContext,
-        }
-      });
-
-      const aiText = response.text || "No response generated.";
+      const model = ai.getGenerativeModel({ model: "gemini-pro", systemInstruction: systemContext });
+      const result = await model.generateContent(userMsg.text);
+      const response = await result.response;
+      const aiText = response.text() || "No response generated.";
 
       setMessages((prev) => [...prev, {
         id: (Date.now() + 1).toString(),
@@ -64,7 +94,7 @@ export default function SCMAIStrategist() {
       }]);
     } catch (err) {
       console.error(err);
-      setError("Connection issue. Please check your API key.");
+      setError("Connection issue. Please check your API key and network.");
     } finally {
       setIsLoading(false);
     }
@@ -76,11 +106,11 @@ export default function SCMAIStrategist() {
       <div className="p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 backdrop-blur-sm flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-            <Sparkles className="w-5 h-5" />
+            <BrainCircuit className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-lg font-black text-slate-800 dark:text-white">AI Strategist</h3>
-            <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Intelligent Supply Chain Assistant</p>
+            <h3 className="text-lg font-black text-slate-800 dark:text-white">{t?.title || "SCM AI Strategist"}</h3>
+            <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t?.subtitle || "Intelligent Supply Chain Assistant"}</p>
           </div>
         </div>
       </div>
@@ -125,16 +155,16 @@ export default function SCMAIStrategist() {
             </div>
             <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 flex items-center gap-2">
               <Loader2 className="w-4 h-4 animate-spin text-indigo-500" />
-              <span className="text-xs font-bold text-slate-400 dark:text-slate-500">Processing strategy...</span>
+              <span className="text-xs font-bold text-slate-400 dark:text-slate-500">{t?.thinking || "Thinking..."}</span>
             </div>
           </div>
         )}
         {error && (
           <div className="flex gap-4 justify-center">
-             <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border border-red-100 dark:border-red-800">
-               <AlertCircle className="w-4 h-4" />
-               {error}
-             </div>
+              <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border border-red-100 dark:border-red-800">
+                <AlertCircle className="w-4 h-4" />
+                {error}
+              </div>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -146,7 +176,7 @@ export default function SCMAIStrategist() {
           <input
             type="text"
             className="flex-1 bg-transparent border-none outline-none px-4 text-sm font-medium text-slate-800 dark:text-white placeholder:text-slate-400"
-            placeholder="Ask about tariffs, risks, or strategy..."
+            placeholder={t?.promptPlaceholder || "Ask about tariffs, risks, or strategy..."}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -163,4 +193,6 @@ export default function SCMAIStrategist() {
       </div>
     </div>
   );
-}
+};
+
+export default SCMAIStrategist;
