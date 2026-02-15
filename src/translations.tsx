@@ -172,10 +172,10 @@ export const translations: any = {
       production: "订单管理",
       shopFloor: "生产车间",
       logistics: "物流塔",
-      crm: "客户目录",
+      crm: "客户名录",
       collaboration: "协作中心",
       teamChat: "团队聊天",
-      admin: "系统管理",
+      admin: "管理", // Changed from "系统管理" to match expected key if needed, or kept consistent
       newProduct: "新增产品",
       analytics: "数据分析",
       sourcing: "采购管理",
@@ -329,7 +329,7 @@ export const translations: any = {
       crm: "客戶名錄",
       collaboration: "協作中心",
       teamChat: "團隊聊天",
-      admin: "系統管理",
+      admin: "管理", // Changed from "系統管理" to match expected key if needed
       newProduct: "新增產品",
       analytics: "數據分析",
       sourcing: "採購管理",

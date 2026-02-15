@@ -25,9 +25,9 @@ interface Props {
 const UserPreferences: React.FC<Props> = ({ currentLang, onLanguageChange }) => {
   const { theme, toggleTheme } = useTheme();
   
-  // Safely grab translations
+  // Safely grab translations with fallback to prevent crashes
   const t = translations[currentLang] || translations['en'];
-  const navT = t.nav;
+  const navT = t.nav || translations['en'].nav; 
 
   // Logic State
   const [startPage, setStartPage] = useState<string>(() => localStorage.getItem('usuppli-start-page') || 'dashboard');
@@ -58,14 +58,14 @@ const UserPreferences: React.FC<Props> = ({ currentLang, onLanguageChange }) => 
     showNotification(currentLang === 'en' ? "Security updated" : "安全设置已更新", 'success');
   };
 
-  // CORRECTED IDs (Must match App.tsx mapping)
+  // FAILSAFE MAPPING: Uses || fallback to prevent crash if translation is missing
   const START_MENU_OPTIONS = [
-    { id: 'dashboard', label: navT.dashboard },
-    { id: 'workspace', label: navT.productCatalog },
-    { id: 'orders', label: navT.production },
-    { id: 'logistics', label: navT.logistics },
-    { id: 'suppliers', label: navT.factoryMaster },
-    { id: 'customers', label: navT.crm }
+    { id: 'dashboard', label: navT?.dashboard || 'Dashboard' },
+    { id: 'workspace', label: navT?.productCatalog || 'Product Catalog' },
+    { id: 'orders', label: navT?.production || 'Orders' },
+    { id: 'logistics', label: navT?.logistics || 'Logistics' },
+    { id: 'suppliers', label: navT?.factoryMaster || 'Suppliers' },
+    { id: 'customers', label: navT?.crm || 'Customers' }
   ];
 
   return (
@@ -78,7 +78,7 @@ const UserPreferences: React.FC<Props> = ({ currentLang, onLanguageChange }) => 
                 <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-2xl">
                     <User className="w-6 h-6 text-[#003d5b] dark:text-blue-500" />
                 </div>
-                {t.admin.tabs.preferences}
+                {t?.admin?.tabs?.preferences || "Preferences"}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 mt-2 font-bold text-xs uppercase tracking-widest pl-1">
                Personalization & Security Hub
