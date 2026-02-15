@@ -101,7 +101,8 @@ export interface Factory {
   contactEmail: string;
   website?: string;
   websiteUrl?: string; // Wizard compatibility
-  rating: number; 
+  rating: number; // For Factory Master
+  overallGrade?: 'A' | 'B' | 'C' | 'D'; // For Supplier Scorecard
   businessType?: 'Manufacturer' | 'Trading Company' | 'Agent' | 'Wholesaler';
   supplierType?: string; // Wizard compatibility
   capabilities?: string[];
@@ -176,6 +177,8 @@ export interface Shipment {
   accountManager?: string;
   shipmentType?: 'Production' | 'Sample';
   accountType?: 'Usuppli/Axcess' | 'Existing Customer' | 'New Customer';
+  items?: string[]; // Added for compatibility
+  type?: 'Air' | 'Ocean' | 'Road'; // Added for compatibility
 }
 
 export interface Customer {
@@ -184,16 +187,16 @@ export interface Customer {
   companyName: string;
   email: string;
   contactPerson?: string;
-  contactName?: string; // Added for compatibility with Directory
+  contactName?: string;
   phone?: string;
-  location?: string; // Added for compatibility with Directory
+  location?: string;
   region: string;
   totalOrders?: number;
   totalSpend?: number;
-  tier?: 'VIP' | 'Standard' | 'New' | 'Strategic' | 'Probation'; // Extended for Directory
+  tier?: 'VIP' | 'Standard' | 'New' | 'Strategic' | 'Probation';
   businessType?: string;
   customerNo?: string;
-  status?: 'Active' | 'Lead' | 'Inactive' | 'Pending' | 'Probation'; // Extended for Directory
+  status?: 'Active' | 'Lead' | 'Inactive' | 'Pending' | 'Probation';
   address?: string;
   stateRegion?: string;
   postalCode?: string;
@@ -216,8 +219,9 @@ export interface Customer {
   shippingSameAsBilling?: boolean;
   incoterms?: string;
   notes?: string;
-  lastOrder?: string; // Added for Directory
-  orders?: number; // Added for Directory
+  lastOrder?: string;
+  orders?: number;
+  company?: string; // Added for compatibility
 }
 
 export interface SampleRequest {
@@ -228,17 +232,18 @@ export interface SampleRequest {
   factoryName?: string;
   customerId?: string;
   customerName?: string;
-  type: string;
-  status: string;
+  type?: string;
+  status: string; // Unified: 'Requested' | 'Sent' | 'Received' | 'Approved' | 'Rejected' | string
   requestDate: string;
   estimatedCompletion?: string;
   estimatedDelivery?: string;
   trackingNumber?: string;
   courier?: string;
-  cost: number;
-  courierCost: number;
+  cost?: number;
+  courierCost?: number;
   feedback?: string;
   notes?: string;
+  jobId?: string; // Added for compatibility
   attachments?: {
     id: string;
     name: string;
@@ -305,13 +310,13 @@ export interface Product {
   material?: string;
   construction?: string;
   moq?: number;
-  dimensions: {
+  dimensions?: {
       lengthCm: number;
       widthCm: number;
       heightCm: number;
       weightKg: number;
   };
-  skus: {
+  skus?: {
       code: string;
       size: string;
       prices: Record<string, number>;
@@ -330,7 +335,7 @@ export interface Product {
     text: string;
     date: string;
   }[];
-  costVariables: CostVariables;
+  costVariables?: CostVariables;
   primaryFactoryId?: string;
   factories?: Factory[];
   competitors?: any[];
@@ -339,8 +344,8 @@ export interface Product {
   dutyOverrides?: Record<string, number>;
   additionalFees?: Record<string, number>;
   customerId?: string;
-  sku?: string;
-  leadTime?: string;
+  sku: string;
+  leadTime?: string | number; // Merged type
   weight?: string;
   costPrice?: number;
   retailPrice?: number;
@@ -348,6 +353,11 @@ export interface Product {
   description?: string;
   packagingType?: string;
   sourcingCountry?: string;
+  cost?: number; // Added for compatibility
+  currency?: string; // Added for compatibility
+  supplierId?: string; // Added for compatibility
+  specs?: any; // Added for compatibility
+  tariffCode?: string; // Added for compatibility
 }
 
 // ==========================================
@@ -355,15 +365,16 @@ export interface Product {
 // ==========================================
 
 export interface AuditLogEntry {
-    id: string;
-    timestamp: Date;
-    userId: string;
-    userName: string;
-    userRole: string;
-    action: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN' | 'EXPORT' | 'STATUS_CHANGE';
-    entity: 'Product' | 'Order' | 'Customer' | 'Factory' | 'System' | 'Shipment' | 'User';
-    entityId?: string;
-    details: string;
+  id: string;
+  timestamp: string | Date; // Allow both for compatibility
+  user: string; // Display name
+  userId?: string; // Optional for more detail
+  userRole?: string;
+  action: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN' | 'LOGOUT' | 'SYSTEM' | 'EXPORT' | 'STATUS_CHANGE';
+  module: string; // e.g., 'Product Catalog'
+  entity?: 'Product' | 'Order' | 'Customer' | 'Factory' | 'System' | 'Shipment' | 'User';
+  entityId?: string;
+  details: string;
 }
 
 export interface ChatAttachment {
@@ -410,14 +421,4 @@ export interface SavedFilter {
   id: string;
   name: string;
   rules: FilterRule[];
-}
-// Add to src/types.tsx
-
-export interface AuditLogEntry {
-  id: string;
-  timestamp: string;
-  user: string;
-  action: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN' | 'LOGOUT' | 'SYSTEM';
-  module: string; // e.g., 'Product Catalog', 'Auth', 'Settings'
-  details: string;
 }

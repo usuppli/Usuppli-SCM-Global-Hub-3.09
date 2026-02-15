@@ -154,7 +154,7 @@ export const translations: any = {
       nextArrival: "Next Arrival"
     }
   },
-  'zh-Hans': { // Simplified Chinese
+  'zh-Hans': { 
     common: {
       save: "保存",
       cancel: "取消",
@@ -175,7 +175,7 @@ export const translations: any = {
       crm: "客户名录",
       collaboration: "协作中心",
       teamChat: "团队聊天",
-      admin: "管理", // Changed from "系统管理" to match expected key if needed, or kept consistent
+      admin: "管理",
       newProduct: "新增产品",
       analytics: "数据分析",
       sourcing: "采购管理",
@@ -296,7 +296,7 @@ export const translations: any = {
       subtitle: "管理全球制造合作伙伴",
       search: "搜索供应商...",
       addBtn: "添加供应商",
-      form: { name: "工厂名称", location: "地点", contact: "联系人", contactNo: "电话号码", moq: "最小起訂量" }
+      form: { name: "工厂名称", location: "地点", contact: "联系人", contactNo: "电话号码", moq: "最小起订量" }
     },
     logistics: {
       title: "物流塔",
@@ -308,7 +308,7 @@ export const translations: any = {
       nextArrival: "下次到达"
     }
   },
-  'zh-Hant': { // Traditional Chinese
+  'zh-Hant': { 
     common: {
       save: "儲存",
       cancel: "取消",
@@ -329,7 +329,7 @@ export const translations: any = {
       crm: "客戶名錄",
       collaboration: "協作中心",
       teamChat: "團隊聊天",
-      admin: "管理", // Changed from "系統管理" to match expected key if needed
+      admin: "管理", 
       newProduct: "新增產品",
       analytics: "數據分析",
       sourcing: "採購管理",

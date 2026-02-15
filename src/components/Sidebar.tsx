@@ -55,20 +55,21 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const isExpanded = isPinned || isHovered;
 
+  // FAILSAFE: Ensure translation object exists
   const t = translations[currentLang] || translations['en'];
-  const navT = t.nav;
+  const navT = t?.nav || translations['en'].nav; 
 
   const navItems = [
-    { group: navT.analytics, id: 'DASHBOARD' as TabType, label: navT.dashboard, icon: LayoutDashboard },
-    { group: navT.sourcing, id: 'PRODUCT_CATALOG' as TabType, label: navT.productCatalog, icon: Package, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
+    { group: navT?.analytics, id: 'DASHBOARD' as TabType, label: navT?.dashboard, icon: LayoutDashboard },
+    { group: navT?.sourcing, id: 'PRODUCT_CATALOG' as TabType, label: navT?.productCatalog, icon: Package, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
     { group: null, id: 'PRODUCT_WORKSPACE' as TabType, label: 'Workspace', icon: Layers, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] }, 
-    { group: null, id: 'FACTORY_MASTER' as TabType, label: navT.factoryMaster, icon: Factory, restrictedTo: ['admin', 'super_admin', 'editor'] },
-    { group: navT.executionGroup, id: 'ORDER_MANAGER' as TabType, label: navT.production, icon: ClipboardList },
-    { group: null, id: 'PRODUCTION_FLOOR' as TabType, label: navT.shopFloor, icon: Wrench },
-    { group: null, id: 'LOGISTICS_TOWER' as TabType, label: navT.logistics, icon: Truck },
-    { group: null, id: 'CRM' as TabType, label: navT.crm, icon: Users, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
-    { group: navT.system, id: 'TEAM_CHAT' as TabType, label: navT.teamChat, icon: MessageSquare },
-    { group: null, id: 'ADMIN' as TabType, label: navT.admin, icon: Settings, restrictedTo: ['admin', 'super_admin'] },
+    { group: null, id: 'FACTORY_MASTER' as TabType, label: navT?.factoryMaster, icon: Factory, restrictedTo: ['admin', 'super_admin', 'editor'] },
+    { group: navT?.executionGroup, id: 'ORDER_MANAGER' as TabType, label: navT?.production, icon: ClipboardList },
+    { group: null, id: 'PRODUCTION_FLOOR' as TabType, label: navT?.shopFloor, icon: Wrench },
+    { group: null, id: 'LOGISTICS_TOWER' as TabType, label: navT?.logistics, icon: Truck },
+    { group: null, id: 'CRM' as TabType, label: navT?.crm, icon: Users, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
+    { group: navT?.system, id: 'TEAM_CHAT' as TabType, label: navT?.teamChat, icon: MessageSquare },
+    { group: null, id: 'ADMIN' as TabType, label: navT?.admin, icon: Settings, restrictedTo: ['admin', 'super_admin'] },
   ];
 
   const NavButton = ({ label, icon: Icon, badge, onClick, isActive }: any) => (
@@ -100,7 +101,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       onMouseLeave={() => setIsHovered(false)}
       className={`bg-[#0b1120] text-slate-300 flex flex-col h-screen transition-all duration-500 ease-in-out z-[60] relative border-r border-slate-800 shadow-2xl ${isExpanded ? 'w-72' : 'w-20'}`}
     >
-      {/* Sidebar Controls */}
       <div className={`absolute -right-3 top-20 flex flex-col gap-2 z-[70] transition-opacity duration-300 ${!isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <button onClick={() => setIsPinned(!isPinned)} className="bg-slate-800 border border-slate-700 rounded-full p-1.5 shadow-xl text-blue-400 hover:text-white transition-all">
           <ChevronLeft className={`w-3 h-3 transition-transform duration-500 ${!isPinned ? 'rotate-180' : ''}`} />
@@ -110,12 +110,10 @@ const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
 
-      {/* Brand & Lang Switcher */}
       <div className="flex flex-col gap-4 p-6 pb-2">
           <div className={`flex items-center gap-3 overflow-hidden transition-all duration-500 ${!isExpanded ? '-ml-1' : ''}`}>
             <Logo className="h-9 w-auto text-blue-500 shrink-0" variant="mark" />
             <div className={`transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 w-0'}`}>
-                {/* BRAND NAME FIXED */}
                 <span className="font-black text-xl tracking-tighter text-white">USUPPLI</span>
             </div>
           </div>
@@ -127,7 +125,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Action Button */}
       <div className="px-3 mb-4 flex items-center gap-2">
          {!isReadOnly && (
             <button 
@@ -135,7 +132,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                 className={`group relative overflow-hidden flex items-center rounded-xl text-xs font-black text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20 transition-all duration-300 ${isExpanded ? 'flex-1 py-2.5 justify-center gap-2' : 'w-full p-2 aspect-square justify-center'}`}
             >
                 <Plus className="w-5 h-5 text-white shrink-0" />
-                {/* LABEL FIXED */}
                 {isExpanded && <span className="whitespace-nowrap uppercase tracking-widest text-[10px]">New Product</span>}
             </button>
          )}
@@ -144,7 +140,6 @@ const Sidebar: React.FC<SidebarProps> = ({
          </div>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 space-y-1 overflow-y-auto no-scrollbar custom-scrollbar">
         {navItems.map((item) => {
             if (item.restrictedTo && !item.restrictedTo.includes(user.role)) return null;
@@ -165,7 +160,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         })}
       </nav>
 
-      {/* Footer */}
       <div className="bg-[#0f172a] border-t border-slate-800">
           {onOpenCommandPalette && isExpanded && (
               <div className="px-3 pt-4 pb-2">

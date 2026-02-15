@@ -14,7 +14,7 @@ import {
   ShieldCheck,
   Lock,
   LayoutTemplate,
-  ChevronDown // Added for collapsible logic
+  ChevronDown 
 } from 'lucide-react';
 
 interface Props {
@@ -25,9 +25,9 @@ interface Props {
 const UserPreferences: React.FC<Props> = ({ currentLang, onLanguageChange }) => {
   const { theme, toggleTheme } = useTheme();
   
-  // Safely grab translations with fallback to prevent crashes
+  // FAILSAFE: Ensure translation object exists to prevent WSOD
   const t = translations[currentLang] || translations['en'];
-  const navT = t.nav || translations['en'].nav; 
+  const navT = t?.nav || translations['en'].nav; 
 
   // Logic State
   const [startPage, setStartPage] = useState<string>(() => localStorage.getItem('usuppli-start-page') || 'dashboard');
@@ -58,7 +58,7 @@ const UserPreferences: React.FC<Props> = ({ currentLang, onLanguageChange }) => 
     showNotification(currentLang === 'en' ? "Security updated" : "安全设置已更新", 'success');
   };
 
-  // FAILSAFE MAPPING: Uses || fallback to prevent crash if translation is missing
+  // CORRECTED IDs (Must match App.tsx mapping) & SAFE LABELS
   const START_MENU_OPTIONS = [
     { id: 'dashboard', label: navT?.dashboard || 'Dashboard' },
     { id: 'workspace', label: navT?.productCatalog || 'Product Catalog' },
