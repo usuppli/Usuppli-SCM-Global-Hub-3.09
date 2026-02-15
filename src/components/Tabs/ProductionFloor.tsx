@@ -1,15 +1,14 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Job, Product, Customer, Language } from '../../types';
 import { translations } from '../../translations';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // --- SAFE ICONS ---
-const ConnectIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>);
-const DisconnectIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>);
 const SensorIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>);
 const AlertIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>);
 const SearchIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>);
-const GridIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 v2a2 2 0 01-2 h-2a2 2 0 01-2-2v-2z" /></svg>);
+const GridIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 v2a2 2 0 01-2 h-2a2 2 0 01-2-2v-2z" /></svg>);
 const ListIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>);
 const DownloadIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>);
 
@@ -21,7 +20,11 @@ interface Props {
 }
 
 const ProductionFloor: React.FC<Props> = ({ jobs = [], lang }) => {
-  // ROLE RESTRICTION FOR CSV EXPORT
+  // Safe Translation Access
+  const rootT = translations[lang] || translations['en'];
+  const t = rootT.shopFloor;
+  const commonT = rootT.common;
+
   const userRole = localStorage.getItem('userRole') || 'viewer';
   const isAdmin = userRole === 'admin' || userRole === 'super_admin';
 
@@ -90,32 +93,32 @@ const ProductionFloor: React.FC<Props> = ({ jobs = [], lang }) => {
       
       {/* HEADER: COMMAND CENTER */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-slate-900 text-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-800">
-         <div>
+          <div>
             <div className="flex items-center gap-4 mb-2">
                 <div className={`w-3.5 h-3.5 rounded-full ${isConnected ? 'bg-emerald-500 animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]' : 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]'}`}></div>
-                <h3 className="text-3xl font-black tracking-tight">Shop Floor Telemetry</h3>
+                <h3 className="text-3xl font-black tracking-tight">{t?.title || "Shop Floor Telemetry"}</h3>
             </div>
             <p className="text-slate-400 text-xs font-mono uppercase tracking-[0.2em]">
                 {isConnected ? `Connected: ${activeMachine} • Node_ID: US-SCM-A4` : 'Station Standby • Awaiting Signal'}
             </p>
-         </div>
-         
-         <div className="flex gap-6 mt-6 md:mt-0">
-             <div className="text-right hidden md:block border-r border-slate-800 pr-8">
-                 <span className="block text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Active Stream</span>
-                 <span className="block text-xl font-mono font-bold text-emerald-400">{activeJob?.id || 'NO_SIGNAL'}</span>
-             </div>
-             <button 
+          </div>
+          
+          <div className="flex gap-6 mt-6 md:mt-0">
+              <div className="text-right hidden md:block border-r border-slate-800 pr-8">
+                  <span className="block text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Active Stream</span>
+                  <span className="block text-xl font-mono font-bold text-emerald-400">{activeJob?.id || 'NO_SIGNAL'}</span>
+              </div>
+              <button 
                 onClick={() => setIsConnected(!isConnected)}
                 className={`px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl transition-all active:scale-95 ${
                     isConnected 
                     ? 'bg-red-600/10 text-red-500 border border-red-600/30 hover:bg-red-600 hover:text-white shadow-red-950/20' 
                     : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-950/40'
                 }`}
-             >
-                 {isConnected ? 'Kill Connection' : 'Sync Line Status'}
-             </button>
-         </div>
+              >
+                  {isConnected ? 'Kill Connection' : (t?.refresh || 'Sync Line Status')}
+              </button>
+          </div>
       </div>
 
       {/* TELEMETRY DASHBOARD GRID */}
@@ -198,7 +201,7 @@ const ProductionFloor: React.FC<Props> = ({ jobs = [], lang }) => {
             <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 absolute left-4 top-1/2 -translate-y-1/2 transition-colors" />
             <input 
                 className="w-full pl-11 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-800 dark:text-white text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600" 
-                placeholder="Search Active Jobs..." 
+                placeholder={commonT?.search || "Search Active Jobs..."} 
                 value={searchTerm} 
                 onChange={e => setSearchTerm(e.target.value)} 
             />
@@ -213,7 +216,7 @@ const ProductionFloor: React.FC<Props> = ({ jobs = [], lang }) => {
                 onClick={handleExportCSV} 
                 className="px-4 py-3 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-2xl font-bold text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2 shadow-sm"
             >
-                <DownloadIcon className="w-4 h-4" /> <span>Export CSV</span>
+                <DownloadIcon className="w-4 h-4" /> <span>{commonT?.export || "Export CSV"}</span>
             </button>
           )}
         </div>

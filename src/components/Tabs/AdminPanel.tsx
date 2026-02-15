@@ -76,7 +76,7 @@ interface Props {
   onUpdateVersion?: (v: string) => void;
   onUpdateTariff?: (country: string, rate: string | number) => void;
   onToggleTariffLock?: (country: string) => void;
-  auditLogs?: AuditLogEntry[]; // New prop for logs
+  auditLogs?: AuditLogEntry[];
 }
 
 const AdminPanel: React.FC<Props> = ({ 
@@ -91,9 +91,12 @@ const AdminPanel: React.FC<Props> = ({
   onUpdateVersion, 
   onUpdateTariff,
   onToggleTariffLock,
-  auditLogs = [] // Default to empty array if not passed
+  auditLogs = []
 }) => {
-  const t = (translations[lang] || translations['en'])?.admin;
+  // CRASH PROTECTION: Safe access to translations
+  const rootT = translations[lang] || translations['en'];
+  const t = rootT.admin;
+  const commonT = rootT.common;
 
   const [activeTab, setActiveTab] = useState<'system' | 'users' | 'backup' | 'audit' | 'preferences'>('system');
   const [newUser, setNewUser] = useState({ name: '', email: '', role: 'viewer', password: '' });
@@ -111,13 +114,11 @@ const AdminPanel: React.FC<Props> = ({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Safety Role Checks
   const userRole = currentUser?.role || 'viewer';
   const isSuperAdmin = userRole.toLowerCase() === 'super_admin';
   const isAdmin = userRole.toLowerCase() === 'admin';
   const hasAccess = isSuperAdmin || isAdmin;
 
-  // Filter Logic for Audit Logs
   const filteredLogs = useMemo(() => {
     return auditLogs.filter(log => {
       const matchesSearch = log.details.toLowerCase().includes(auditSearch.toLowerCase()) || 
@@ -140,29 +141,13 @@ const AdminPanel: React.FC<Props> = ({
       `"${log.details.replace(/"/g, '""')}"` 
     ]);
     
-    const csvContent = [
-      headers.join(','), 
-      ...rows.map(row => row.join(','))
-    ].join('\n');
-
+    const csvContent = [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `audit_log_${new Date().toISOString().split('T')[0]}.csv`;
     link.click();
   };
-
-  if (!hasAccess) {
-      return (
-          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in-95">
-              <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-3xl flex items-center justify-center text-red-600 dark:text-red-400 mb-6 shadow-xl shadow-red-200 dark:shadow-none">
-                  <Shield className="w-10 h-10" />
-              </div>
-              <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Access Denied</h2>
-              <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-md">Institutional protocols restrict this section to administrative accounts.</p>
-          </div>
-      );
-  }
 
   const handleCreateUser = (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,12 +211,17 @@ const AdminPanel: React.FC<Props> = ({
     }
   };
 
-  const handleSaveTariff = (country: string) => {
-     if (onUpdateTariff && tempTariff !== "") {
-        onUpdateTariff(country, tempTariff);
-        setEditingTariff(null);
-     }
-  };
+  if (!hasAccess) {
+      return (
+          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in-95">
+              <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-3xl flex items-center justify-center text-red-600 dark:text-red-400 mb-6 shadow-xl shadow-red-200 dark:shadow-none">
+                  <Shield className="w-10 h-10" />
+              </div>
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Access Denied</h2>
+              <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-md">Institutional protocols restrict this section to administrative accounts.</p>
+          </div>
+      );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 relative">
@@ -244,8 +234,8 @@ const AdminPanel: React.FC<Props> = ({
                 <h3 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight">Delete Account?</h3>
                 <p className="text-slate-500 text-sm mt-2 mb-6">Are you sure you want to remove <span className="font-bold text-slate-800 dark:text-slate-200">{userToDelete.name}</span>? This action is irreversible.</p>
                 <div className="flex gap-3 w-full">
-                    <button onClick={() => setUserToDelete(null)} className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-2xl font-bold uppercase tracking-widest text-[10px]">Cancel</button>
-                    <button onClick={executeDelete} className="flex-1 py-3 bg-red-600 text-white rounded-2xl font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-red-500/20">Delete</button>
+                    <button onClick={() => setUserToDelete(null)} className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-2xl font-bold uppercase tracking-widest text-[10px]">{commonT?.cancel || "Cancel"}</button>
+                    <button onClick={executeDelete} className="flex-1 py-3 bg-red-600 text-white rounded-2xl font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-red-500/20">{commonT?.delete || "Delete"}</button>
                 </div>
             </div>
         </div>
@@ -358,13 +348,13 @@ const AdminPanel: React.FC<Props> = ({
                       </Select>
                       <div className="md:col-span-2 text-right">
                         <button type="submit" className="bg-[#003d5b] dark:bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest py-3 px-8 rounded-xl hover:bg-sky-900 dark:hover:bg-blue-500 transition-all shadow-lg active:scale-95">
-                          Register Identity
+                          {t?.users?.registerIdentity || "Register Identity"}
                         </button>
                       </div>
                   </form>
                </div>
                <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 border-b dark:border-slate-800 pb-2">User Registry</h4>
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 border-b dark:border-slate-800 pb-2">{t?.users?.title || "User Registry"}</h4>
                   <div className="grid grid-cols-1 gap-3">
                       {users.map(u => (
                           <div key={u.id} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800 transition-all hover:border-blue-500/20">
@@ -395,17 +385,17 @@ const AdminPanel: React.FC<Props> = ({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="p-10 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] flex flex-col items-center text-center transition-all hover:border-blue-500/30">
                         <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-3xl flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6"><DownloadIcon className="w-10 h-10" /></div>
-                        <h4 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight mb-2">Export DB</h4>
-                        <p className="text-xs text-slate-500 mb-6 leading-relaxed">Download a complete JSON snapshot of all products, shipments, and factories.</p>
-                        <button onClick={handleExportBackup} className="w-full py-4 bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all shadow-lg active:scale-95">Generate Snapshot</button>
+                        <h4 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight mb-2">{t?.backup?.jsonTitle || "Export DB"}</h4>
+                        <p className="text-xs text-slate-500 mb-6 leading-relaxed">{t?.backup?.jsonDesc || "Download Snapshot"}</p>
+                        <button onClick={handleExportBackup} className="w-full py-4 bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all shadow-lg active:scale-95">{t?.backup?.generate || "Generate Snapshot"}</button>
                     </div>
 
                     <div className="p-10 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] flex flex-col items-center text-center transition-all hover:border-emerald-500/30">
                         <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6"><UploadIcon className="w-10 h-10" /></div>
-                        <h4 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight mb-2">Restore DB</h4>
+                        <h4 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight mb-2">{t?.backup?.restoreDB || "Restore DB"}</h4>
                         <p className="text-xs text-slate-500 mb-6 leading-relaxed">Upload a previous JSON backup to restore system state. Warning: Overwrites local data.</p>
                         <input type="file" ref={fileInputRef} className="hidden" accept=".json" onChange={handleImportBackup} />
-                        <button onClick={() => fileInputRef.current?.click()} className="w-full py-4 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl hover:bg-emerald-500 transition-all shadow-lg active:scale-95">Upload & Restore</button>
+                        <button onClick={() => fileInputRef.current?.click()} className="w-full py-4 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl hover:bg-emerald-500 transition-all shadow-lg active:scale-95">{t?.backup?.upload || "Upload & Restore"}</button>
                     </div>
                 </div>
             </div>
@@ -413,78 +403,45 @@ const AdminPanel: React.FC<Props> = ({
          
          {activeTab === 'audit' && (
              <div className="space-y-6 animate-in fade-in">
-                {/* Audit Controls */}
                 <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                     <div className="flex items-center gap-2 w-full md:w-auto">
                         <div className="relative flex-1 md:w-64">
                             <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
                             <input 
                                 type="text" 
-                                placeholder="Search logs..." 
+                                placeholder={commonT?.search || "Search..."}
                                 value={auditSearch}
                                 onChange={(e) => setAuditSearch(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none"
                             />
                         </div>
-                        <select 
-                            value={auditFilter}
-                            onChange={(e) => setAuditFilter(e.target.value as any)}
-                            className="p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold outline-none"
-                        >
-                            <option value="ALL">All Events</option>
-                            <option value="AUTH">Auth Only</option>
-                            <option value="PRODUCT">Products</option>
-                        </select>
                     </div>
                     <button 
                         onClick={handleExportAudit}
                         className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-black uppercase tracking-wider transition-colors"
                     >
-                        <FileText className="w-4 h-4" /> Export CSV
+                        <FileText className="w-4 h-4" /> {t?.audit?.exportCSV || "Export CSV"}
                     </button>
                 </div>
 
-                {/* Audit List */}
                 <div className="bg-[#0b1120] text-emerald-400 p-6 rounded-[2rem] font-mono text-xs h-[500px] overflow-y-auto shadow-inner border border-slate-800 custom-scrollbar relative">
                     <div className="sticky top-0 bg-[#0b1120] z-10 pb-4 border-b border-slate-800 mb-4 flex justify-between items-end">
                         <div>
                             <p className="text-sky-400 font-black underline uppercase tracking-widest text-[10px]">Secure Institutional Log</p>
                             <p className="text-slate-500 mt-1">Tracking ID: {currentUser?.id || 'GUEST'}</p>
                         </div>
-                        <div className="flex gap-2">
-                            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                            <span className="text-[9px] text-red-500 font-bold uppercase">Live Recording</span>
-                        </div>
                     </div>
-
                     <div className="space-y-2">
-                        {filteredLogs.length === 0 ? (
-                            <p className="text-slate-600 italic text-center mt-10">No records found matching query.</p>
-                        ) : (
-                            filteredLogs.map((log) => (
-                                <div key={log.id} className="group flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-2 hover:bg-white/5 rounded-lg border border-transparent hover:border-white/5 transition-all">
-                                    <span className="text-slate-500 min-w-[140px] shrink-0">[{new Date(log.timestamp).toLocaleString()}]</span>
-                                    
-                                    <span className={`px-2 py-0.5 rounded text-[9px] font-bold w-fit ${
-                                        log.action === 'LOGIN' ? 'bg-emerald-500/20 text-emerald-400' :
-                                        log.action === 'LOGOUT' ? 'bg-slate-500/20 text-slate-400' :
-                                        log.action === 'DELETE' ? 'bg-red-500/20 text-red-400' :
-                                        log.action === 'CREATE' ? 'bg-blue-500/20 text-blue-400' :
-                                        'bg-amber-500/20 text-amber-400'
-                                    }`}>
-                                        {log.action}
-                                    </span>
-
-                                    <span className="text-purple-400 font-bold min-w-[100px]">{log.module}</span>
-                                    
-                                    <span className="text-slate-300 flex-1 truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:bg-[#0b1120] group-hover:z-50">
-                                        <span className="text-slate-500 mr-2">{log.user}:</span>
-                                        {log.details}
-                                    </span>
-                                </div>
-                            ))
-                        )}
-                        <p className="text-emerald-500/50 mt-4 animate-pulse italic">&gt; Awaiting next event...</p>
+                        {filteredLogs.map((log) => (
+                            <div key={log.id} className="group flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-2 hover:bg-white/5 rounded-lg border border-transparent hover:border-white/5 transition-all">
+                                <span className="text-slate-500 min-w-[140px] shrink-0">[{new Date(log.timestamp).toLocaleString()}]</span>
+                                <span className="text-purple-400 font-bold min-w-[100px]">{log.module}</span>
+                                <span className="text-slate-300 flex-1 truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:bg-[#0b1120] group-hover:z-50">
+                                    <span className="text-slate-500 mr-2">{log.user}:</span>
+                                    {log.details}
+                                </span>
+                            </div>
+                        ))}
                     </div>
                 </div>
              </div>

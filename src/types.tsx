@@ -35,6 +35,96 @@ export type TabType =
 export type Language = 'en' | 'zh-Hans' | 'zh-Hant';
 
 // ==========================================
+// TRANSLATION TYPES (NEWLY ADDED)
+// ==========================================
+
+export interface HubTranslations {
+  title: string;
+  subtitle: string;
+  newThread: string;
+  startNewThread: string;
+  topic: string;
+  message: string;
+  selectCustomer: string;
+  startConversation: string;
+  initialMessage: string;
+}
+
+export interface CalendarTranslations {
+  title: string;
+  subtitle: string;
+  addEvent: string;
+  addPlan: string;
+  calculator: string;
+}
+
+export interface CrmTranslations {
+  title: string;
+  addCustomer: string;
+  search: string;
+}
+
+export interface Translation {
+  common: {
+    save: string;
+    cancel: string;
+    edit: string;
+    delete: string;
+    refresh: string;
+    share: string;
+    clickToEdit: string;
+    copied: string;
+    search: string;
+    loading: string;
+    actions: string;
+    view: string;
+    export: string;
+    print: string;
+    submit: string;
+    next: string;
+    back: string;
+    finish: string;
+    command: string;
+    close: string;
+  };
+  nav: {
+    dashboard: string;
+    productCatalog: string;
+    productWorkspace: string;
+    factoryMaster: string;
+    production: string;
+    shopFloor: string;
+    logistics: string;
+    crm: string;
+    collaboration: string;
+    teamChat: string;
+    admin: string;
+    newProduct: string;
+    analytics: string;
+    sourcing: string;
+    executionGroup: string;
+    system: string;
+    aiStrategist: string;
+    calendar: string;
+    hub: string;
+  };
+  dashboard: {
+    title: string;
+    subtitle: string;
+    activeJobs: string;
+    globalSkus: string;
+    inventoryVal: string;
+    supplierHealth: string;
+    recentActivity: string;
+    refreshPulse: string;
+  };
+  // ... existing sections mapped dynamically ...
+  hub: HubTranslations;
+  calendar: CalendarTranslations;
+  crm: CrmTranslations;
+}
+
+// ==========================================
 // THEME & ANALYTICS TYPES
 // ==========================================
 

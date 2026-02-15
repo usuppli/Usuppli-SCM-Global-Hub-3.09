@@ -19,11 +19,14 @@ export const translations: any = {
       submit: "Submit",
       next: "Next",
       back: "Back",
-      finish: "Finish"
+      finish: "Finish",
+      command: "Command",
+      close: "Close"
     },
     nav: {
       dashboard: "Dashboard",
       productCatalog: "Product Catalog",
+      productWorkspace: "Workspace",
       factoryMaster: "Supplier & Factory Portfolio",
       production: "Order Manager",
       shopFloor: "Shop Floor",
@@ -37,7 +40,32 @@ export const translations: any = {
       sourcing: "Sourcing",
       executionGroup: "Execution",
       system: "System",
-      aiStrategist: "AI Strategist"
+      aiStrategist: "AI Strategist",
+      calendar: "Calendar",
+      hub: "Hub"
+    },
+    calendar: {
+      title: "Constraint Calendar",
+      subtitle: "Global Production & Logistics Constraints",
+      addEvent: "Add Event",
+      addPlan: "Add Plan to Calendar",
+      calculator: "Lead Time Calculator",
+      eta: "Est. Arrival (ETA)",
+      totalDays: "Total Days",
+      start: "Start Date",
+      end: "End Date",
+      region: "Region"
+    },
+    hub: {
+      title: "Collaboration Hub",
+      subtitle: "Global Message Board",
+      newThread: "New Thread",
+      startNewThread: "Start New Thread",
+      topic: "Topic",
+      message: "Message",
+      selectCustomer: "Select Customer...",
+      startConversation: "Select a thread to start collaborating",
+      initialMessage: "Initial message..."
     },
     dashboard: {
       title: "Operations Dashboard",
@@ -46,7 +74,8 @@ export const translations: any = {
       globalSkus: "Global SKUs",
       inventoryVal: "Inventory Value",
       supplierHealth: "Supplier Health",
-      recentActivity: "Recent Activity"
+      recentActivity: "Recent Activity",
+      refreshPulse: "Refresh Pulse"
     },
     production: {
       title: "Order Manager",
@@ -57,7 +86,15 @@ export const translations: any = {
       factory: "Assigned Factory",
       timeline: "Delivery Timeline",
       priority: "Priority",
-      quantity: "Quantity"
+      quantity: "Quantity",
+      tabs: {
+        production: "Production",
+        samples: "Samples"
+      }
+    },
+    shopFloor: {
+      title: "Shop Floor",
+      refresh: "Refresh Pulse"
     },
     catalog: {
       subtitle: "Global SKU Directory",
@@ -162,6 +199,8 @@ export const translations: any = {
     logistics: {
       title: "Logistics Tower",
       subtitle: "Real-time freight tracking",
+      addShipment: "Add Shipment",
+      sortBy: "Sort by ETA",
       inboundAir: "Inbound Air",
       inboundOcean: "Inbound Ocean",
       customsHold: "Customs Hold",
@@ -172,12 +211,18 @@ export const translations: any = {
       destination: "Destination",
       status: "Status"
     },
+    crm: {
+      title: "Customer Directory",
+      addCustomer: "Add Customer",
+      search: "Search customers..."
+    },
     admin: {
       title: "Admin Panel",
       subtitle: "System Configuration & Governance",
       users: {
         title: "User Management",
         createBtn: "Create User",
+        registerIdentity: "Register Identity",
         tableUser: "User",
         tableRole: "Role",
         tableActions: "Actions"
@@ -191,13 +236,24 @@ export const translations: any = {
         versionWarning: "Warning: Manually changing the system version will update global metadata."
       },
       backup: {
-        jsonTitle: "JSON Backup",
+        jsonTitle: "Export DB",
         jsonDesc: "Download full system snapshot",
         downloadJson: "Download",
+        generate: "Generate Snapshot",
+        restoreDB: "Restore DB",
+        upload: "Upload & Restore",
         csvTitle: "CSV Export",
         csvDesc: "Export data to spreadsheet",
         productsBtn: "Products",
         jobsBtn: "Orders"
+      },
+      audit: {
+        exportCSV: "Export CSV"
+      },
+      preferences: {
+        theme: "Interface Theme",
+        localization: "Localization",
+        startPage: "Default Start Page"
       },
       tabs: {
         system: "System",
@@ -268,7 +324,7 @@ export const translations: any = {
       refresh: "刷新",
       share: "分享",
       clickToEdit: "点击编辑",
-      copied: "已复制",
+      copied: "已复制到剪贴板",
       search: "搜索...",
       loading: "加载中...",
       actions: "操作",
@@ -278,11 +334,14 @@ export const translations: any = {
       submit: "提交",
       next: "下一步",
       back: "返回",
-      finish: "完成"
+      finish: "完成",
+      command: "命令",
+      close: "关闭"
     },
     nav: {
       dashboard: "仪表板",
       productCatalog: "产品目录",
+      productWorkspace: "工作区",
       factoryMaster: "供应商与工厂组合",
       production: "订单管理",
       shopFloor: "生产车间",
@@ -296,7 +355,32 @@ export const translations: any = {
       sourcing: "采购管理",
       executionGroup: "执行中心",
       system: "系统设置",
-      aiStrategist: "AI 策略师"
+      aiStrategist: "AI 策略师",
+      calendar: "日历",
+      hub: "中心"
+    },
+    calendar: {
+      title: "约束日历",
+      subtitle: "全球生产与物流约束",
+      addEvent: "添加事件",
+      addPlan: "添加计划到日历",
+      calculator: "提前期计算器",
+      eta: "预计到达时间 (ETA)",
+      totalDays: "总天数",
+      start: "开始日期",
+      end: "结束日期",
+      region: "地区"
+    },
+    hub: {
+      title: "协作中心",
+      subtitle: "全球留言板",
+      newThread: "新话题",
+      startNewThread: "开始新话题",
+      topic: "话题",
+      message: "消息",
+      selectCustomer: "选择客户...",
+      startConversation: "选择一个话题开始协作",
+      initialMessage: "初始消息..."
     },
     dashboard: {
       title: "运营仪表板",
@@ -305,7 +389,8 @@ export const translations: any = {
       globalSkus: "全球SKU数量",
       inventoryVal: "库存价值",
       supplierHealth: "供应商评分",
-      recentActivity: "近期动态"
+      recentActivity: "近期动态",
+      refreshPulse: "刷新脉动"
     },
     production: {
       title: "订单管理",
@@ -316,7 +401,15 @@ export const translations: any = {
       factory: "指定工厂",
       timeline: "交货时间线",
       priority: "优先级",
-      quantity: "数量"
+      quantity: "数量",
+      tabs: {
+        production: "生产",
+        samples: "样品"
+      }
+    },
+    shopFloor: {
+      title: "生产车间",
+      refresh: "刷新脉动"
     },
     catalog: {
       subtitle: "全球 SKU 目录",
@@ -421,6 +514,8 @@ export const translations: any = {
     logistics: {
       title: "物流塔",
       subtitle: "全球货运追踪",
+      addShipment: "添加运输",
+      sortBy: "按预计到达时间排序",
       inboundAir: "入境空运",
       inboundOcean: "入境海运",
       customsHold: "海关扣留",
@@ -431,12 +526,18 @@ export const translations: any = {
       destination: "目的地",
       status: "状态"
     },
+    crm: {
+      title: "客户名录",
+      addCustomer: "添加客户",
+      search: "搜索客户..."
+    },
     admin: {
       title: "管理面板",
       subtitle: "系统配置与治理",
       users: {
         title: "用户管理",
         createBtn: "创建用户",
+        registerIdentity: "注册身份",
         tableUser: "用户",
         tableRole: "角色",
         tableActions: "操作"
@@ -450,13 +551,24 @@ export const translations: any = {
         versionWarning: "警告：手动更改系统版本将更新所有全局元数据。"
       },
       backup: {
-        jsonTitle: "JSON 备份",
+        jsonTitle: "导出数据库",
         jsonDesc: "下载完整系统快照",
         downloadJson: "下载",
+        generate: "生成快照",
+        restoreDB: "恢复数据库",
+        upload: "上传并恢复",
         csvTitle: "CSV 导出",
         csvDesc: "将数据导出到表格",
         productsBtn: "产品",
         jobsBtn: "订单"
+      },
+      audit: {
+        exportCSV: "导出 CSV"
+      },
+      preferences: {
+        theme: "界面主题",
+        localization: "语言设置",
+        startPage: "默认启动页"
       },
       tabs: {
         system: "系统",
@@ -537,11 +649,14 @@ export const translations: any = {
       submit: "提交",
       next: "下一步",
       back: "返回",
-      finish: "完成"
+      finish: "完成",
+      command: "命令",
+      close: "關閉"
     },
     nav: {
       dashboard: "儀表板",
       productCatalog: "產品目錄",
+      productWorkspace: "工作區",
       factoryMaster: "供應商與工廠組合",
       production: "訂單管理",
       shopFloor: "生產車間",
@@ -555,7 +670,32 @@ export const translations: any = {
       sourcing: "採購管理",
       executionGroup: "執行中心",
       system: "系統設置",
-      aiStrategist: "AI 策略師"
+      aiStrategist: "AI 策略師",
+      calendar: "約束日曆",
+      hub: "中心"
+    },
+    calendar: {
+      title: "約束日曆",
+      subtitle: "全球生產和物流約束",
+      addEvent: "添加事件",
+      addPlan: "將計劃添加到日曆",
+      calculator: "提前期計算器",
+      eta: "預計到達時間 (ETA)",
+      totalDays: "總天數",
+      start: "開始日期",
+      end: "結束日期",
+      region: "地區"
+    },
+    hub: {
+      title: "協作中心",
+      subtitle: "全球留言板",
+      newThread: "新話題",
+      startNewThread: "開始新話題",
+      topic: "話題",
+      message: "消息",
+      selectCustomer: "選擇客戶...",
+      startConversation: "選擇一個話題開始協作",
+      initialMessage: "初始消息..."
     },
     dashboard: {
       title: "運營儀表板",
@@ -564,7 +704,8 @@ export const translations: any = {
       globalSkus: "全球SKU數量",
       inventoryVal: "庫存價值",
       supplierHealth: "供應商評分",
-      recentActivity: "近期動態"
+      recentActivity: "近期動態",
+      refreshPulse: "刷新脈動"
     },
     production: {
       title: "訂單管理",
@@ -575,7 +716,15 @@ export const translations: any = {
       factory: "指定工廠",
       timeline: "交貨時間線",
       priority: "優先級",
-      quantity: "數量"
+      quantity: "數量",
+      tabs: {
+        production: "生產",
+        samples: "樣品"
+      }
+    },
+    shopFloor: {
+      title: "生產車間",
+      refresh: "刷新脈動"
     },
     catalog: {
       subtitle: "全球 SKU 目錄",
@@ -680,6 +829,8 @@ export const translations: any = {
     logistics: {
       title: "物流塔",
       subtitle: "全球貨運追踪",
+      addShipment: "添加運輸",
+      sortBy: "按預計到達時間排序",
       inboundAir: "入境空運",
       inboundOcean: "入境海運",
       customsHold: "海關扣留",
@@ -690,12 +841,18 @@ export const translations: any = {
       destination: "目的地",
       status: "狀態"
     },
+    crm: {
+      title: "客戶名錄",
+      addCustomer: "添加客戶",
+      search: "搜尋客戶..."
+    },
     admin: {
       title: "管理面板",
       subtitle: "系統配置與治理",
       users: {
         title: "用戶管理",
         createBtn: "創建用戶",
+        registerIdentity: "註冊身份",
         tableUser: "用戶",
         tableRole: "角色",
         tableActions: "操作"
@@ -709,13 +866,24 @@ export const translations: any = {
         versionWarning: "警告：手動更改系統版本將更新所有全局元數據。"
       },
       backup: {
-        jsonTitle: "JSON 備份",
+        jsonTitle: "匯出資料庫",
         jsonDesc: "下載完整系統快照",
         downloadJson: "下載",
+        generate: "生成快照",
+        restoreDB: "恢復資料庫",
+        upload: "上傳並恢復",
         csvTitle: "CSV 導出",
         csvDesc: "將數據導出到表格",
         productsBtn: "產品",
         jobsBtn: "訂單"
+      },
+      audit: {
+        exportCSV: "導出 CSV"
+      },
+      preferences: {
+        theme: "介面主題",
+        localization: "語言設置",
+        startPage: "預設啟動頁"
       },
       tabs: {
         system: "系統",

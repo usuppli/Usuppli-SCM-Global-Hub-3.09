@@ -58,11 +58,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   // FAILSAFE: Ensure translation object exists to prevent crashes
   const t = translations[currentLang] || translations['en'];
   const navT = t?.nav || translations['en'].nav; 
+  const commonT = t?.common || translations['en'].common;
 
   const navItems = [
     { group: navT?.analytics, id: 'DASHBOARD' as TabType, label: navT?.dashboard, icon: LayoutDashboard },
     { group: navT?.sourcing, id: 'PRODUCT_CATALOG' as TabType, label: navT?.productCatalog, icon: Package, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
-    { group: null, id: 'PRODUCT_WORKSPACE' as TabType, label: 'Workspace', icon: Layers, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] }, 
+    { group: null, id: 'PRODUCT_WORKSPACE' as TabType, label: navT?.productWorkspace || 'Workspace', icon: Layers, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] }, 
     { group: null, id: 'FACTORY_MASTER' as TabType, label: navT?.factoryMaster, icon: Factory, restrictedTo: ['admin', 'super_admin', 'editor'] },
     { group: navT?.executionGroup, id: 'ORDER_MANAGER' as TabType, label: navT?.production, icon: ClipboardList },
     { group: null, id: 'PRODUCTION_FLOOR' as TabType, label: navT?.shopFloor, icon: Wrench },
@@ -132,7 +133,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 className={`group relative overflow-hidden flex items-center rounded-xl text-xs font-black text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20 transition-all duration-300 ${isExpanded ? 'flex-1 py-2.5 justify-center gap-2' : 'w-full p-2 aspect-square justify-center'}`}
             >
                 <Plus className="w-5 h-5 text-white shrink-0" />
-                {isExpanded && <span className="whitespace-nowrap uppercase tracking-widest text-[10px]">New Product</span>}
+                {isExpanded && <span className="whitespace-nowrap uppercase tracking-widest text-[10px]">{navT?.newProduct || "New Product"}</span>}
             </button>
          )}
          <div className={`${isExpanded ? '' : 'hidden'}`}>
@@ -169,7 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 >
                     <div className="flex items-center gap-2">
                         <Search className="w-4 h-4" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">Command</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">{commonT?.command || "Command"}</span>
                     </div>
                     <span className="text-[9px] font-black opacity-30 bg-slate-800 px-1 rounded">⌘K</span>
                 </button>
