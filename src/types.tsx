@@ -99,6 +99,7 @@ export interface Factory {
   phone?: string;
   contactPhone?: string;
   contactEmail: string;
+  email?: string; // Alias for contactEmail
   website?: string;
   websiteUrl?: string; // Wizard compatibility
   rating: number; // For Factory Master
@@ -128,7 +129,8 @@ export interface Factory {
 
 export interface Job {
   id: string;
-  jobName: string;
+  jobName?: string; // Alias
+  orderNumber?: string; // Alias
   description?: string;
   poNumber?: string;
   customer?: string; 
@@ -136,9 +138,10 @@ export interface Job {
   customerId?: string;
   factory?: string;
   factoryName?: string;
-  factoryId?: string;
+  factoryId: string;
   sku?: string;
-  productRefId: string;
+  productRefId?: string; // Alias
+  productId?: string; // Alias
   quantity: number;
   value?: number;
   status: string;
@@ -146,9 +149,9 @@ export interface Job {
   orderDate?: string;
   startDate?: string;
   deliveryDate?: string;
-  targetDelivery: string;
+  targetDelivery?: string;
   progress?: number;
-  completionPercent: number;
+  completionPercent?: number;
   productionStage?: string;
   priority?: 'Low' | 'Medium' | 'High' | 'Urgent';
   isSoncapRequired?: boolean;
@@ -170,28 +173,29 @@ export interface Shipment {
   eta: string;
   status: 'Booked' | 'In Transit' | 'Customs' | 'Delivered' | 'Exception' | 'Delayed';
   carrier: string;
-  method: 'Air' | 'Ocean' | 'Rail' | 'Truck' | 'Sea';
+  method?: string; // Alias for type
+  type?: 'Air' | 'Ocean' | 'Road';
   jobId?: string;
   lastUpdated?: string;
   linkedSampleId?: string;
   accountManager?: string;
   shipmentType?: 'Production' | 'Sample';
   accountType?: 'Usuppli/Axcess' | 'Existing Customer' | 'New Customer';
-  items?: string[]; // Added for compatibility
-  type?: 'Air' | 'Ocean' | 'Road'; // Added for compatibility
+  items?: string[]; 
 }
 
 export interface Customer {
   id: string;
   name?: string; 
-  companyName: string;
+  companyName?: string; // Alias
+  company?: string; // Alias
   email: string;
   contactPerson?: string;
   contactName?: string;
   phone?: string;
   location?: string;
   region: string;
-  totalOrders?: number;
+  totalOrders: number;
   totalSpend?: number;
   tier?: 'VIP' | 'Standard' | 'New' | 'Strategic' | 'Probation';
   businessType?: string;
@@ -221,19 +225,18 @@ export interface Customer {
   notes?: string;
   lastOrder?: string;
   orders?: number;
-  company?: string; // Added for compatibility
 }
 
 export interface SampleRequest {
   id: string;
   productId: string;
   productName?: string;
-  factoryId: string;
+  factoryId?: string;
   factoryName?: string;
   customerId?: string;
   customerName?: string;
   type?: string;
-  status: string; // Unified: 'Requested' | 'Sent' | 'Received' | 'Approved' | 'Rejected' | string
+  status: string; 
   requestDate: string;
   estimatedCompletion?: string;
   estimatedDelivery?: string;
@@ -243,7 +246,7 @@ export interface SampleRequest {
   courierCost?: number;
   feedback?: string;
   notes?: string;
-  jobId?: string; // Added for compatibility
+  jobId?: string; 
   attachments?: {
     id: string;
     name: string;
@@ -301,7 +304,7 @@ export interface Product {
   id: string;
   name: string;
   category: string;
-  brand: string;
+  brand?: string;
   status: string;
   thumbnail?: string;
   image?: string;
@@ -310,6 +313,12 @@ export interface Product {
   material?: string;
   construction?: string;
   moq?: number;
+  cost?: number; // Alias
+  costPrice?: number; // Alias
+  currency?: string;
+  supplierId?: string;
+  specs?: any;
+  tariffCode?: string;
   dimensions?: {
       lengthCm: number;
       widthCm: number;
@@ -345,19 +354,13 @@ export interface Product {
   additionalFees?: Record<string, number>;
   customerId?: string;
   sku: string;
-  leadTime?: string | number; // Merged type
+  leadTime?: string | number; 
   weight?: string;
-  costPrice?: number;
   retailPrice?: number;
   targetMargin?: number;
   description?: string;
   packagingType?: string;
   sourcingCountry?: string;
-  cost?: number; // Added for compatibility
-  currency?: string; // Added for compatibility
-  supplierId?: string; // Added for compatibility
-  specs?: any; // Added for compatibility
-  tariffCode?: string; // Added for compatibility
 }
 
 // ==========================================
@@ -366,12 +369,12 @@ export interface Product {
 
 export interface AuditLogEntry {
   id: string;
-  timestamp: string | Date; // Allow both for compatibility
-  user: string; // Display name
-  userId?: string; // Optional for more detail
+  timestamp: string | Date;
+  user: string;
+  userId?: string;
   userRole?: string;
   action: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN' | 'LOGOUT' | 'SYSTEM' | 'EXPORT' | 'STATUS_CHANGE';
-  module: string; // e.g., 'Product Catalog'
+  module: string; 
   entity?: 'Product' | 'Order' | 'Customer' | 'Factory' | 'System' | 'Shipment' | 'User';
   entityId?: string;
   details: string;

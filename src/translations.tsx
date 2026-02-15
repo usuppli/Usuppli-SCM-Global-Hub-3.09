@@ -154,7 +154,7 @@ export const translations: any = {
       nextArrival: "Next Arrival"
     }
   },
-  'zh-Hans': { 
+  'zh-Hans': { // Simplified Chinese
     common: {
       save: "保存",
       cancel: "取消",
@@ -175,7 +175,7 @@ export const translations: any = {
       crm: "客户名录",
       collaboration: "协作中心",
       teamChat: "团队聊天",
-      admin: "管理",
+      admin: "管理", 
       newProduct: "新增产品",
       analytics: "数据分析",
       sourcing: "采购管理",
@@ -308,7 +308,7 @@ export const translations: any = {
       nextArrival: "下次到达"
     }
   },
-  'zh-Hant': { 
+  'zh-Hant': { // Traditional Chinese
     common: {
       save: "儲存",
       cancel: "取消",

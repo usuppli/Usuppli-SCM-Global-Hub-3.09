@@ -55,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const isExpanded = isPinned || isHovered;
 
-  // FAILSAFE: Ensure translation object exists
+  // FAILSAFE: Ensure translation object exists to prevent crashes
   const t = translations[currentLang] || translations['en'];
   const navT = t?.nav || translations['en'].nav; 
 

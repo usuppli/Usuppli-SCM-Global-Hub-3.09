@@ -1,6 +1,6 @@
 
-import React, { useState, useRef } from 'react';
-import { Product, Language, User, UserRole, Job } from '../../types';
+import React, { useState, useRef, useMemo } from 'react';
+import { Product, Language, User, UserRole, Job, AuditLogEntry } from '../../types';
 import { translations } from '../../translations';
 import GraphicalWorldClock from '../GraphicalWorldClock'; 
 import UserPreferences from './UserPreferences'; 
@@ -17,7 +17,10 @@ import {
   Unlock as UnlockIcon, 
   Settings as SettingsIcon,
   Search,
-  FileText
+  FileText,
+  CheckCircle2,
+  LayoutTemplate,
+  ChevronDown
 } from 'lucide-react';
 
 const STYLES = {
@@ -72,7 +75,8 @@ interface Props {
   lockedTariffs?: string[]; 
   onUpdateVersion?: (v: string) => void;
   onUpdateTariff?: (country: string, rate: string | number) => void;
-  onToggleTariffLock?: (country: string) => void; 
+  onToggleTariffLock?: (country: string) => void;
+  auditLogs?: AuditLogEntry[]; // New prop for logs
 }
 
 const AdminPanel: React.FC<Props> = ({ 
@@ -86,7 +90,8 @@ const AdminPanel: React.FC<Props> = ({
   lockedTariffs = [],
   onUpdateVersion, 
   onUpdateTariff,
-  onToggleTariffLock
+  onToggleTariffLock,
+  auditLogs = [] // Default to empty array if not passed
 }) => {
   const t = (translations[lang] || translations['en'])?.admin;
 
@@ -101,6 +106,9 @@ const AdminPanel: React.FC<Props> = ({
   const [editingTariff, setEditingTariff] = useState<string | null>(null);
   const [tempTariff, setTempTariff] = useState<string>('');
 
+  const [auditSearch, setAuditSearch] = useState('');
+  const [auditFilter, setAuditFilter] = useState<'ALL' | 'AUTH' | 'SYSTEM' | 'PRODUCT'>('ALL');
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Safety Role Checks
@@ -108,6 +116,41 @@ const AdminPanel: React.FC<Props> = ({
   const isSuperAdmin = userRole.toLowerCase() === 'super_admin';
   const isAdmin = userRole.toLowerCase() === 'admin';
   const hasAccess = isSuperAdmin || isAdmin;
+
+  // Filter Logic for Audit Logs
+  const filteredLogs = useMemo(() => {
+    return auditLogs.filter(log => {
+      const matchesSearch = log.details.toLowerCase().includes(auditSearch.toLowerCase()) || 
+                            log.user.toLowerCase().includes(auditSearch.toLowerCase());
+      const matchesFilter = auditFilter === 'ALL' ? true : 
+                            auditFilter === 'AUTH' ? (log.action === 'LOGIN' || log.action === 'LOGOUT') :
+                            auditFilter === 'PRODUCT' ? (log.module === 'Product Catalog') :
+                            true;
+      return matchesSearch && matchesFilter;
+    });
+  }, [auditLogs, auditSearch, auditFilter]);
+
+  const handleExportAudit = () => {
+    const headers = ['Timestamp', 'User', 'Action', 'Module', 'Details'];
+    const rows = filteredLogs.map(log => [
+      new Date(log.timestamp).toLocaleString(),
+      log.user,
+      log.action,
+      log.module,
+      `"${log.details.replace(/"/g, '""')}"` 
+    ]);
+    
+    const csvContent = [
+      headers.join(','), 
+      ...rows.map(row => row.join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `audit_log_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+  };
 
   if (!hasAccess) {
       return (
@@ -369,14 +412,80 @@ const AdminPanel: React.FC<Props> = ({
          )}
          
          {activeTab === 'audit' && (
-             <div className="bg-[#0b1120] text-emerald-400 p-6 rounded-[2rem] font-mono text-xs h-96 overflow-y-auto shadow-inner border border-slate-800 custom-scrollbar animate-in slide-in-from-bottom-4">
-                <p className="opacity-50 border-b border-emerald-900/50 pb-2 mb-4 uppercase tracking-widest font-black text-[9px]">Institutional Audit Log // Level 4 Authorization Verified</p>
-                <p className="mb-2 text-sky-400 font-black underline uppercase tracking-widest text-[10px]">Security Monitoring Enabled</p>
-                <div className="space-y-1 opacity-90">
-                  <p><span className="text-emerald-800">[{new Date().toLocaleTimeString()}]</span> SYS: Session authenticated for UID {currentUser?.id}</p>
-                  <p><span className="text-emerald-800">[{new Date().toLocaleTimeString()}]</span> AUTH: Privileged access granted to section [ADMIN]</p>
-                  <p><span className="text-emerald-800">[{new Date().toLocaleTimeString()}]</span> DB: Verification sync successful (Latency 14ms)</p>
-                  <p className="text-emerald-200 mt-4 animate-pulse italic">&gt; Awaiting global command...</p>
+             <div className="space-y-6 animate-in fade-in">
+                {/* Audit Controls */}
+                <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div className="flex items-center gap-2 w-full md:w-auto">
+                        <div className="relative flex-1 md:w-64">
+                            <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+                            <input 
+                                type="text" 
+                                placeholder="Search logs..." 
+                                value={auditSearch}
+                                onChange={(e) => setAuditSearch(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none"
+                            />
+                        </div>
+                        <select 
+                            value={auditFilter}
+                            onChange={(e) => setAuditFilter(e.target.value as any)}
+                            className="p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold outline-none"
+                        >
+                            <option value="ALL">All Events</option>
+                            <option value="AUTH">Auth Only</option>
+                            <option value="PRODUCT">Products</option>
+                        </select>
+                    </div>
+                    <button 
+                        onClick={handleExportAudit}
+                        className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-black uppercase tracking-wider transition-colors"
+                    >
+                        <FileText className="w-4 h-4" /> Export CSV
+                    </button>
+                </div>
+
+                {/* Audit List */}
+                <div className="bg-[#0b1120] text-emerald-400 p-6 rounded-[2rem] font-mono text-xs h-[500px] overflow-y-auto shadow-inner border border-slate-800 custom-scrollbar relative">
+                    <div className="sticky top-0 bg-[#0b1120] z-10 pb-4 border-b border-slate-800 mb-4 flex justify-between items-end">
+                        <div>
+                            <p className="text-sky-400 font-black underline uppercase tracking-widest text-[10px]">Secure Institutional Log</p>
+                            <p className="text-slate-500 mt-1">Tracking ID: {currentUser?.id || 'GUEST'}</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            <span className="text-[9px] text-red-500 font-bold uppercase">Live Recording</span>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        {filteredLogs.length === 0 ? (
+                            <p className="text-slate-600 italic text-center mt-10">No records found matching query.</p>
+                        ) : (
+                            filteredLogs.map((log) => (
+                                <div key={log.id} className="group flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-2 hover:bg-white/5 rounded-lg border border-transparent hover:border-white/5 transition-all">
+                                    <span className="text-slate-500 min-w-[140px] shrink-0">[{new Date(log.timestamp).toLocaleString()}]</span>
+                                    
+                                    <span className={`px-2 py-0.5 rounded text-[9px] font-bold w-fit ${
+                                        log.action === 'LOGIN' ? 'bg-emerald-500/20 text-emerald-400' :
+                                        log.action === 'LOGOUT' ? 'bg-slate-500/20 text-slate-400' :
+                                        log.action === 'DELETE' ? 'bg-red-500/20 text-red-400' :
+                                        log.action === 'CREATE' ? 'bg-blue-500/20 text-blue-400' :
+                                        'bg-amber-500/20 text-amber-400'
+                                    }`}>
+                                        {log.action}
+                                    </span>
+
+                                    <span className="text-purple-400 font-bold min-w-[100px]">{log.module}</span>
+                                    
+                                    <span className="text-slate-300 flex-1 truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:bg-[#0b1120] group-hover:z-50">
+                                        <span className="text-slate-500 mr-2">{log.user}:</span>
+                                        {log.details}
+                                    </span>
+                                </div>
+                            ))
+                        )}
+                        <p className="text-emerald-500/50 mt-4 animate-pulse italic">&gt; Awaiting next event...</p>
+                    </div>
                 </div>
              </div>
          )}
