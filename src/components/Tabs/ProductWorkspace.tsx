@@ -7,11 +7,10 @@ import { translations } from '../../translations';
 import ProductionSpecs from './ProductionSpecs';
 import CostCalculator from './CostCalculator';
 import TariffRates from './TariffRates';
-import InternalIntelligence from './CompetitorAnalysis';
-import CompetitorAnalysisAI from '../CompetitorAnalysis';
+import CompetitorAnalysis from './CompetitorAnalysis';
 import LaunchTimeline from './LaunchTimeline';
 import AIStrategy from './AIStrategy';
-import { ExchangeRateView } from './ExchangeRateView';
+import ExchangeRateView from './ExchangeRateView';
 import HSLookup from './HSLookup';
 import SCMAIStrategist from '../SCMAIStrategist';
 import PrintWizard from '../PrintWizard';
@@ -19,21 +18,7 @@ import PrintWizard from '../PrintWizard';
 // Wizards
 import NewProductWizard from './NewProductWizard';
 import NewSampleWizard from './NewSampleWizard';
-import { Printer } from 'lucide-react';
-
-// --- ICONS ---
-const SearchIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>);
-const BackIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>);
-const CubeIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>);
-const SpecsIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>);
-const CostIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>);
-const GlobeIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>);
-const DownloadIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>);
-const SparklesIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>);
-const PlusIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>);
-const BeakerIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>);
-const BrainIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>);
-const ToolIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 3.31a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>);
+import { Printer, Search, ArrowLeft, Box as CubeIcon, FileText, DollarSign, Globe, Download, Sparkles, Plus, FlaskConical as BeakerIcon, Brain, Wrench as ToolIcon } from 'lucide-react';
 
 interface Props {
   products: Product[];
@@ -86,8 +71,7 @@ const ProductWorkspace: React.FC<Props> = ({
   const [showSampleWizard, setShowSampleWizard] = useState(false);
   const [showPrintWizard, setShowPrintWizard] = useState(false);
 
-  // --- FIX: STATE SYNCHRONIZATION ---
-  // If the master list 'products' changes (e.g. after a save), update the locally 'selectedProduct'.
+  // --- STATE SYNCHRONIZATION ---
   useEffect(() => {
     if (selectedProduct) {
         const fresh = products.find(p => p.id === selectedProduct.id);
@@ -107,19 +91,18 @@ const ProductWorkspace: React.FC<Props> = ({
 
   // 2. DATA: Tab Groups
   const opsTabs = useMemo(() => [
-    { id: 'specs', label: t.tabs?.specs || "Specs", icon: SpecsIcon, restricted: false }, 
-    { id: 'costing', label: t.tabs?.costing || "Costing", icon: CostIcon, restricted: true }, // Restricted
-    { id: 'tariffs', label: t.tabs?.tariffs || "Tariffs", icon: SearchIcon, restricted: true }, // Restricted
-    { id: 'hs_lookup', label: "HS Lookup", icon: GlobeIcon, restricted: false },
-    { id: 'exchange', label: t.tabs?.exchange || "Exchange", icon: GlobeIcon, restricted: false },
-    { id: 'timeline', label: t.tabs?.timeline || "Timeline", icon: SearchIcon, restricted: false },
+    { id: 'specs', label: t.tabs?.specs || "Specs", icon: FileText, restricted: false }, 
+    { id: 'costing', label: t.tabs?.costing || "Costing", icon: DollarSign, restricted: true }, 
+    { id: 'tariffs', label: t.tabs?.tariffs || "Tariffs", icon: Search, restricted: true }, 
+    { id: 'hs_lookup', label: "HS Lookup", icon: Globe, restricted: false },
+    { id: 'exchange', label: t.tabs?.exchange || "Exchange", icon: Globe, restricted: false },
+    { id: 'timeline', label: t.tabs?.timeline || "Timeline", icon: Search, restricted: false },
   ], [t]);
 
   const stratTabs = useMemo(() => [
-    { id: 'scm_ai', label: "SCM AI Strategist", icon: SparklesIcon, restricted: false },
-    { id: 'intelligence', label: "Intelligence", icon: CubeIcon, restricted: false },
-    { id: 'competitor_analysis', label: "Competitor Analysis", icon: CubeIcon, restricted: false },
-    { id: 'ai', label: t.tabs?.ai || "AI Strategy", icon: BrainIcon, restricted: false },
+    { id: 'scm_ai', label: "SCM AI Strategist", icon: Sparkles, restricted: false },
+    { id: 'competitor_analysis', label: t.tabs?.competitors || "Competitor Analysis", icon: CubeIcon, restricted: false },
+    { id: 'ai', label: t.tabs?.ai || "AI Strategy", icon: Brain, restricted: false },
   ], [t]);
 
   // 3. LOGIC: Filter Tabs
@@ -196,6 +179,15 @@ const ProductWorkspace: React.FC<Props> = ({
     }
   };
 
+  const handleAddCompetitor = (newCompetitor: any) => {
+    if(!selectedProduct) return;
+    const updatedProduct = { 
+        ...selectedProduct, 
+        competitors: [...(selectedProduct.competitors || []), newCompetitor] 
+    };
+    onSave(updatedProduct);
+  };
+
   if (selectedProduct) {
     return (
       <div className="flex flex-col lg:flex-row gap-8 animate-in fade-in h-full pb-10">
@@ -229,7 +221,7 @@ const ProductWorkspace: React.FC<Props> = ({
               <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
                       <button onClick={handleBackToExplorer} className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-[#003d5b] dark:hover:bg-blue-600 hover:text-white rounded-xl transition-all group-active:scale-95">
-                        <BackIcon className="w-4 h-4" />
+                        <ArrowLeft className="w-4 h-4" />
                       </button>
                       <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded-lg uppercase tracking-wider">
                         {selectedProduct.id}
@@ -240,14 +232,14 @@ const ProductWorkspace: React.FC<Props> = ({
                   <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{selectedProduct.brand}</p>
                   
                   <div className="mt-5 pt-5 border-t border-slate-50 dark:border-slate-800 flex justify-between items-center">
-                     <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">Status</span>
-                     <span className={`px-3 py-1 text-xs font-bold rounded-full ${
+                      <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">Status</span>
+                      <span className={`px-3 py-1 text-xs font-bold rounded-full ${
                         selectedProduct.status === 'Active' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 
                         selectedProduct.status === 'Development' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
                         'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
-                     }`}>
+                      }`}>
                         {selectedProduct.status || 'Draft'}
-                     </span>
+                      </span>
                   </div>
               </div>
            </div>
@@ -285,7 +277,7 @@ const ProductWorkspace: React.FC<Props> = ({
                     onClick={() => handleModeSwitch('strat')} 
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${viewMode === 'strat' ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
                   >
-                      <SparklesIcon className="w-4 h-4" /> Strategy
+                      <Sparkles className="w-4 h-4" /> Strategy
                   </button>
               </div>
 
@@ -304,7 +296,7 @@ const ProductWorkspace: React.FC<Props> = ({
                       <Printer className="w-4 h-4" />
                   </button>
                   <button onClick={handleExportCSV} className="p-2 text-slate-400 hover:text-[#003d5b] dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all" title="Download CSV">
-                      <DownloadIcon className="w-4 h-4" />
+                      <Download className="w-4 h-4" />
                   </button>
               </div>
           </div>
@@ -314,9 +306,8 @@ const ProductWorkspace: React.FC<Props> = ({
               {canSeeFinancials && activeTab === 'costing' && <CostCalculator product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {canSeeFinancials && activeTab === 'tariffs' && <TariffRates product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} globalTariffs={globalTariffs} lockedTariffs={lockedTariffs} />}
               {activeTab === 'hs_lookup' && <HSLookup product={selectedProduct} onSave={onSave} onUpdateGlobalTariff={onUpdateGlobalTariff} />}
-              {activeTab === 'intelligence' && <InternalIntelligence product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {activeTab === 'scm_ai' && <SCMAIStrategist />}
-              {activeTab === 'competitor_analysis' && <CompetitorAnalysisAI product={selectedProduct} />}
+              {activeTab === 'competitor_analysis' && <CompetitorAnalysis product={selectedProduct} lang={lang} onAddCompetitor={handleAddCompetitor} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {activeTab === 'exchange' && <ExchangeRateView />}
               {activeTab === 'timeline' && <LaunchTimeline product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {activeTab === 'ai' && <AIStrategy product={selectedProduct} lang={lang} />}
@@ -343,13 +334,13 @@ const ProductWorkspace: React.FC<Props> = ({
         
         <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative flex-grow md:w-64 group">
-                <SearchIcon className="absolute right-3 top-3 w-4 h-4 text-slate-400 group-focus-within:text-[#003d5b] dark:group-focus-within:text-blue-400 transition-colors" />
+                <Search className="absolute right-3 top-3 w-4 h-4 text-slate-400 group-focus-within:text-[#003d5b] dark:group-focus-within:text-blue-400 transition-colors" />
                 <input className="w-full pl-4 pr-10 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-[#003d5b]/10 transition-all dark:text-slate-100" placeholder="Search Workspace..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
             </div>
             
             {canModify && (
                 <button onClick={() => setShowProductWizard(true)} className="px-4 py-2.5 bg-[#003d5b] dark:bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-sky-900 dark:hover:bg-blue-500 flex items-center gap-2 shrink-0 transition-all active:scale-95">
-                    <PlusIcon className="w-4 h-4" /> <span>New Product</span>
+                    <Plus className="w-4 h-4" /> <span>New Product</span>
                 </button>
             )}
         </div>

@@ -97,9 +97,11 @@ export default function ContextualMessageBoard({
   isOpen, onClose, onNavigateToCustomer, onNavigateToOrder, lang 
 }: ContextualMessageBoardProps) {
   
+  // Safe Translation Access
   const rootT = translations[lang] || translations['en'];
   const t = rootT.hub;
   const commonT = rootT.common;
+  const navT = rootT.nav;
 
   const [threads, setThreads] = useState<CustomerThread[]>(MOCK_THREADS);
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
@@ -198,7 +200,7 @@ export default function ContextualMessageBoard({
     <div className={containerClasses}>
       <div className={windowClasses}>
         
-        {/* WINDOW HEADER */}
+        {/* HEADER */}
         <div className="bg-[#003d5b] p-3 flex justify-between items-center text-white shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-white/10 rounded-lg"><MessageSquare className="w-5 h-5" /></div>
@@ -334,7 +336,7 @@ export default function ContextualMessageBoard({
                    <button onClick={() => setShowNewThreadModal(false)} className="text-slate-400 hover:text-red-500"><X className="w-5 h-5"/></button>
                 </div>
                 <div>
-                   <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{rootT?.crm?.title?.replace('Directory', '') || "Customer"}</label>
+                   <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{navT?.crm?.replace('Directory', '') || "Customer"}</label>
                    <select className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20" value={newThreadData.customerId} onChange={e => setNewThreadData({...newThreadData, customerId: e.target.value})}>
                       <option value="">{t?.selectCustomer || "Select Customer..."}</option>
                       {customers.map(c => <option key={c.id} value={c.id}>{c.companyName}</option>)}

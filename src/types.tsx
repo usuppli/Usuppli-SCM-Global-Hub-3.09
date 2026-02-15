@@ -48,6 +48,13 @@ export interface HubTranslations {
   selectCustomer: string;
   startConversation: string;
   initialMessage: string;
+  pinThread: string;
+  unpinThread: string;
+  clearHistory: string;
+  resetDemo: string;
+  participants: string;
+  linkType: string;
+  selectItem: string;
 }
 
 export interface CalendarTranslations {
@@ -56,6 +63,11 @@ export interface CalendarTranslations {
   addEvent: string;
   addPlan: string;
   calculator: string;
+  eta: string;
+  totalDays: string;
+  start: string;
+  end: string;
+  region: string;
 }
 
 export interface CrmTranslations {
@@ -119,6 +131,26 @@ export interface Translation {
     refreshPulse: string;
   };
   // ... existing sections mapped dynamically ...
+  production: any;
+  catalog: any;
+  workspace: any;
+  teamChat: any;
+  competitor: any;
+  timeline: any;
+  hsLookup: any;
+  exchange: any;
+  scorecard: any;
+  ai: any;
+  logistics: any;
+  admin: any;
+  login: any;
+  specs: any;
+  costing: any;
+  tariffs: any;
+  factory: any;
+  shopFloor: any;
+  
+  // NEW SECTIONS
   hub: HubTranslations;
   calendar: CalendarTranslations;
   crm: CrmTranslations;

@@ -65,7 +65,14 @@ export const translations: any = {
       message: "Message",
       selectCustomer: "Select Customer...",
       startConversation: "Select a thread to start collaborating",
-      initialMessage: "Initial message..."
+      initialMessage: "Initial message...",
+      pinThread: "Pin Thread",
+      unpinThread: "Unpin Thread",
+      clearHistory: "Clear History",
+      resetDemo: "Reset Demo Data",
+      participants: "Participants",
+      linkType: "Link Type",
+      selectItem: "Select Item..."
     },
     dashboard: {
       title: "Operations Dashboard",
@@ -380,7 +387,14 @@ export const translations: any = {
       message: "消息",
       selectCustomer: "选择客户...",
       startConversation: "选择一个话题开始协作",
-      initialMessage: "初始消息..."
+      initialMessage: "初始消息...",
+      pinThread: "固定话题",
+      unpinThread: "取消固定话题",
+      clearHistory: "清除历史",
+      resetDemo: "重置演示数据",
+      participants: "参与者",
+      linkType: "链接类型",
+      selectItem: "选择项目..."
     },
     dashboard: {
       title: "运营仪表板",
@@ -676,9 +690,9 @@ export const translations: any = {
     },
     calendar: {
       title: "約束日曆",
-      subtitle: "全球生產和物流約束",
+      subtitle: "全球生產與物流約束",
       addEvent: "添加事件",
-      addPlan: "將計劃添加到日曆",
+      addPlan: "添加計劃到日曆",
       calculator: "提前期計算器",
       eta: "預計到達時間 (ETA)",
       totalDays: "總天數",
