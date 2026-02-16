@@ -160,7 +160,8 @@ const AppContent = () => {
     const commonProps = { lang, isReadOnly: user?.role === 'viewer' };
 
     switch (current) {
-      case 'DASHBOARD': return <Dashboard {...commonProps} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: Product) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
+      // Added missing activeTab prop to Dashboard
+      case 'DASHBOARD': return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: Product) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
       case 'PRODUCT_CATALOG': return <ProductCatalog {...commonProps} products={products} onAddProduct={() => setActiveWizard('product')} onUpdateProduct={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Updated product: ${u.name}`);}} onOpenWorkspace={handleOpenWorkspace} userRole={user?.role as UserRole} />;
       case 'PRODUCT_WORKSPACE': return <ProductWorkspace {...commonProps} products={products} customers={customers} factories={factories} onSave={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Modified workspace for: ${u.name}`);}} onAddProduct={(n) => { setProducts(p => [n, ...p]); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`);}} onSaveSample={(s) => setSamples(prev => [...prev, s])} initialSelectedId={selectedProductId} onSelectProduct={setSelectedProductId} userRole={user?.role as UserRole} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} />;
       case 'FACTORY_MASTER': return <FactoryMaster {...commonProps} factories={factories} products={products} onSaveFactory={(f) => {setFactories(prev => prev.some(x => x.id === f.id) ? prev.map(x => x.id === f.id ? f : x) : [...prev, f]); logEvent('UPDATE', 'Factory Master', `Updated factory: ${f.name}`);}} onDeleteFactory={(id) => setFactories(p => p.filter(x => x.id !== id))} onOpenWizard={() => setActiveWizard('supplier')} />;
@@ -171,7 +172,7 @@ const AppContent = () => {
       case 'EXCHANGE': return <ExchangeRateView />;
       case 'TEAM_CHAT': return <TeamChat currentUser={user!} users={users} lang={lang} isOpen={true} onClose={() => setActiveTab('DASHBOARD')} />;
       case 'AI_STRATEGIST': return <SCMAIStrategist />;
-      default: return <Dashboard {...commonProps} products={products} factories={factories} jobs={jobs} />;
+      default: return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: Product) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
     }
   };
 
@@ -183,6 +184,8 @@ const AppContent = () => {
         <Sidebar 
           user={user} activeTab={activeTab} setActiveTab={setActiveTab} 
           currentLang={lang} setCurrentLang={handleLanguageChange}
+          // Added missing isReadOnly prop to Sidebar
+          isReadOnly={user?.role === 'viewer'}
           onOpenProductWizard={() => setActiveWizard('product')} onLogout={handleLogout}
           onToggleChat={() => setChatOpen(!chatOpen)} onOpenCommandPalette={() => setCommandPaletteOpen(true)}
           isPinned={isSidebarPinned} setIsPinned={setIsSidebarPinned} onHide={() => setIsSidebarHidden(true)}
@@ -202,6 +205,8 @@ const AppContent = () => {
         lang={lang} products={products} jobs={jobs} customers={customers}
         onNavigate={(t) => { setActiveTab(t); setCommandPaletteOpen(false); }}
         onCreateProduct={() => { setActiveWizard('product'); setCommandPaletteOpen(false); }}
+        // Added missing onCreateJob prop to CommandPalette
+        onCreateJob={() => { setActiveWizard('job'); setCommandPaletteOpen(false); }}
       />
 
       {activeWizard === 'product' && <NewProductWizard factories={factories} customers={customers} onComplete={(n) => { setProducts(p => [n, ...p]); setActiveWizard(null); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`); }} onCancel={() => setActiveWizard(null)} />}

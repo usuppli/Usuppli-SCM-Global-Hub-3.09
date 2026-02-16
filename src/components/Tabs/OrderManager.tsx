@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Job, Language, Customer, Factory, Product } from '../../types';
 import { translations } from '../../translations';
@@ -378,7 +379,7 @@ const OrderManager: React.FC<Props> = ({ jobs = [], lang, onUpdateJob, onDeleteJ
         mode="order"
         job={editingJob as Job} 
         factory={factories.find(f => f.id === editingJob.factoryId) || { id: 'unknown', name: 'Unknown Factory', location: 'N/A', country: 'N/A', contactPerson: 'N/A', contactEmail: 'N/A', rating: 0, contact: '', phone: '' }} 
-        customer={customers.find(c => c.id === editingJob.customerId) || { id: 'unknown', companyName: 'Unknown Customer', email: '', region: 'N/A', contactPerson: '' }} 
+        customer={customers.find(c => c.id === editingJob.customerId) || { id: 'unknown', companyName: 'Unknown Customer', email: '', region: 'N/A', contactPerson: '', totalOrders: 0 }} 
         product={products.find(p => p.id === editingJob.productRefId)}
         onClose={() => setShowPrintWizard(false)} 
       />

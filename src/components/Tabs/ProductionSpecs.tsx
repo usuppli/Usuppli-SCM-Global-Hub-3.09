@@ -49,20 +49,21 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
   
   const [isEditing, setIsEditing] = useState(false);
   
-  // Safe initialization
+  // Removed 'id' from SKU initialization objects to match type definition
   const [formData, setFormData] = useState<Product>(() => ({
     ...product,
     dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 },
-    skus: (product.skus && product.skus.length > 0) ? product.skus : [{ id: '1', code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]
+    skus: (product.skus && product.skus.length > 0) ? product.skus : [{ code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]
   }));
   
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    // Removed 'id' from SKU fallback initialization
     setFormData({
         ...product,
         dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 },
-        skus: (product.skus && product.skus.length > 0) ? product.skus : [{ id: '1', code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]
+        skus: (product.skus && product.skus.length > 0) ? product.skus : [{ code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]
     });
     setErrors({});
   }, [product]);
@@ -100,15 +101,15 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
     if (field === 'price') {
         newSkus[index] = { ...newSkus[index], prices: { ...newSkus[index].prices, USA: parseFloat(value) || 0 } };
     } else {
-        newSkus[index] = { ...newSkus[index], [field]: value };
+        newSkus[index] = { ...newSkus[index], [field as keyof typeof newSkus[0]]: value };
     }
     setFormData(prev => ({ ...prev, skus: newSkus }));
   };
 
   const handleAddSku = (e: React.MouseEvent) => {
       e.stopPropagation();
+      // Removed 'id' from new SKU object
       const newSku = { 
-          id: Date.now().toString(), 
           code: `${formData.id}-${(formData.skus?.length || 0) + 1}`, 
           size: '', 
           prices: { USA: 0 } 
@@ -119,9 +120,9 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
   const handleDuplicateSku = (index: number, e: React.MouseEvent) => {
       e.stopPropagation();
       const skuToCopy = formData.skus![index];
+      // Removed 'id' from duplicate SKU object
       const newSku = { 
           ...skuToCopy, 
-          id: Date.now().toString(),
           code: `${skuToCopy.code}-COPY` 
       };
       
@@ -173,7 +174,7 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
             {!isReadOnly && (
                 isEditing ? (
                     <>
-                        <button onClick={() => { setIsEditing(false); setFormData({...product, dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 }, skus: (product.skus && product.skus.length > 0) ? product.skus : [{ id: '1', code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]}); setErrors({}); }} className="px-4 py-2 text-slate-500 dark:text-slate-400 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                        <button onClick={() => { setIsEditing(false); setFormData({...product, dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 }, skus: (product.skus && product.skus.length > 0) ? product.skus : [{ code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]}); setErrors({}); }} className="px-4 py-2 text-slate-500 dark:text-slate-400 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
                             {t.common.cancel}
                         </button>
                         <button onClick={handleSave} className="px-4 py-2 bg-[#003d5b] dark:bg-blue-600 text-white font-bold text-xs rounded-xl hover:bg-sky-900 shadow-lg transition-colors">

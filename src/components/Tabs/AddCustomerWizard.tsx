@@ -144,6 +144,8 @@ export default function AddCustomerWizard({ lang = 'en', users = [], onSave, onC
       status: mode === 'ADVANCED' ? 'Active' : 'Pending',
       tier: formData.tier as any || 'Standard',
       totalSpend: 0,
+      // Fixed: totalOrders is required in Customer type
+      totalOrders: 0,
       orders: 0,
       lastOrder: new Date().toISOString().split('T')[0],
       region: finalCountry || 'North America',

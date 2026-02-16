@@ -71,6 +71,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Stanley Ice Flow 2.0',
     brand: 'Stanley',
     category: 'Cups',
+    // Added missing 'sku' property
+    sku: 'ICE-FLOW-2.0',
     image: 'https://uk.stanley1913.com/cdn/shop/files/Web_PNG_Square-2025-10-07_TheIceFlow_FlipStraw2.0Tumbler30OZ-BlueSky-Front.png?v=1767114959&width=1515',
     hsCode: '6109.10.00',
     status: 'Production',
@@ -87,6 +89,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Classic Racerback Bra',
     brand: 'Toccara',
     category: 'Apparel',
+    // Added missing 'sku' property
+    sku: 'RACERBACK-BRA',
     image: 'https://www.iamtoccara.com/cdn/shop/products/B0000082.jpg?v=1606785700',
     hsCode: '6212.10.00',
     status: 'Sampling',

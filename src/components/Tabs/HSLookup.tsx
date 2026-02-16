@@ -35,8 +35,8 @@ export default function HSLookup({ product, lang, onSave, onUpdateGlobalTariff }
     setSyncedToProduct(false);
 
     try {
-      // FIX: Use Vite env variable
-      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY || "";
+      // Always use process.env.API_KEY as per coding guidelines
+      const apiKey = process.env.API_KEY || "";
       
       if (!apiKey) {
          // Simulation Mode if no API Key
@@ -53,6 +53,7 @@ export default function HSLookup({ product, lang, onSave, onUpdateGlobalTariff }
          return;
       }
 
+      // Initialize GoogleGenAI with named parameter
       const ai = new GoogleGenAI({ apiKey });
       
       const prompt = `You are an expert Customs Broker. 
@@ -67,10 +68,12 @@ export default function HSLookup({ product, lang, onSave, onUpdateGlobalTariff }
       
       Do not include markdown formatting like ** or ##. Just plain text lines.`;
 
-      const model = ai.getGenerativeModel({ model: "gemini-pro" });
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
+      // Use ai.models.generateContent directly with the model and prompt
+      const response = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: prompt,
+      });
+      const text = response.text; // Use .text property directly
 
       if (text) {
         const lines = text.split('\n');

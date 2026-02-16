@@ -305,12 +305,14 @@ const ProductWorkspace: React.FC<Props> = ({
               {activeTab === 'specs' && <ProductionSpecs product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {canSeeFinancials && activeTab === 'costing' && <CostCalculator product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {canSeeFinancials && activeTab === 'tariffs' && <TariffRates product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} globalTariffs={globalTariffs} lockedTariffs={lockedTariffs} />}
-              {activeTab === 'hs_lookup' && <HSLookup product={selectedProduct} onSave={onSave} onUpdateGlobalTariff={onUpdateGlobalTariff} />}
-              {activeTab === 'scm_ai' && <SCMAIStrategist />}
+              {/* Added missing lang prop to HSLookup */}
+              {activeTab === 'hs_lookup' && <HSLookup product={selectedProduct} lang={lang} onSave={onSave} onUpdateGlobalTariff={onUpdateGlobalTariff} />}
+              {activeTab === 'scm_ai' && <SCMAIStrategist lang={lang} />}
               {activeTab === 'competitor_analysis' && <CompetitorAnalysis product={selectedProduct} lang={lang} onAddCompetitor={handleAddCompetitor} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {activeTab === 'exchange' && <ExchangeRateView />}
               {activeTab === 'timeline' && <LaunchTimeline product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
-              {activeTab === 'ai' && <AIStrategy product={selectedProduct} lang={lang} />}
+              {/* Removed unnecessary product prop from AIStrategy */}
+              {activeTab === 'ai' && <AIStrategy lang={lang} />}
           </div>
         </div>
 

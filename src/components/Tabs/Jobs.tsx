@@ -42,8 +42,9 @@ const Select = ({ label, children, ...props }: any) => (
 
 // --- PRE-POPULATED DATA ---
 const DEMO_JOBS: Job[] = [
-    { id: 'JOB-2024-001', jobName: 'Spring Collection Launch', productRefId: 'PROD-001', quantity: 5000, status: 'Production', completionPercent: 60, productionStage: 'Assembly', startDate: '2024-01-15', deliveryDate: '2024-03-01', targetDelivery: '2024-03-01', priority: 'High' },
-    { id: 'JOB-2024-002', jobName: 'Urgent Restock - Black Tees', productRefId: 'PROD-004', quantity: 2000, status: 'Inquiry', completionPercent: 10, productionStage: 'Material Prep', startDate: '2024-02-01', deliveryDate: '2024-02-28', targetDelivery: '2024-02-28', priority: 'Urgent' },
+    // Added missing factoryId to DEMO_JOBS
+    { id: 'JOB-2024-001', jobName: 'Spring Collection Launch', productRefId: 'PROD-001', factoryId: 'FAC-001', quantity: 5000, status: 'Production', completionPercent: 60, productionStage: 'Assembly', startDate: '2024-01-15', deliveryDate: '2024-03-01', targetDelivery: '2024-03-01', priority: 'High' },
+    { id: 'JOB-2024-002', jobName: 'Urgent Restock - Black Tees', productRefId: 'PROD-004', factoryId: 'FAC-002', quantity: 2000, status: 'Inquiry', completionPercent: 10, productionStage: 'Material Prep', startDate: '2024-02-01', deliveryDate: '2024-02-28', targetDelivery: '2024-02-28', priority: 'Urgent' },
 ];
 
 const DEMO_SAMPLES: SampleRequest[] = [
@@ -198,7 +199,18 @@ const Jobs: React.FC<Props> = ({
 
       <div className="min-h-[600px]">
           {activeSubTab === 'production' ? (
-            <OrderManager jobs={allJobs.filter(j => j.jobName.toLowerCase().includes(searchTerm.toLowerCase()))} viewMode="board" lang={lang} products={products} factories={factories} customers={customers} isReadOnly={isReadOnly} />
+            // Added missing onUpdateJob and onDeleteJob handlers
+            <OrderManager 
+              jobs={allJobs.filter(j => j.jobName.toLowerCase().includes(searchTerm.toLowerCase()))} 
+              viewMode="board" 
+              lang={lang} 
+              products={products} 
+              factories={factories} 
+              customers={customers} 
+              isReadOnly={isReadOnly} 
+              onUpdateJob={(job) => onSaveJobsList(allJobs.map(j => j.id === job.id ? job : j))}
+              onDeleteJob={(id) => onSaveJobsList(allJobs.filter(j => j.id !== id))}
+            />
           ) : (
             <div className="flex flex-col lg:flex-row h-[calc(100vh-280px)] gap-6">
                 {/* List View */}

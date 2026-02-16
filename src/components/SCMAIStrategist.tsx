@@ -59,9 +59,8 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
     setError(null);
 
     try {
-      // NOTE: For Vite, use import.meta.env.VITE_GOOGLE_API_KEY
-      // If you are using a different build system, verify how environment variables are loaded.
-      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY || ""; 
+      // Always use process.env.API_KEY as per coding guidelines
+      const apiKey = process.env.API_KEY || ""; 
       
       if (!apiKey) {
         // Fallback Simulation if no API key is present
@@ -78,13 +77,19 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
         return;
       }
 
+      // Initialize GoogleGenAI with named parameter
       const ai = new GoogleGenAI({ apiKey });
       const systemContext = "You are an expert Supply Chain Strategist. Keep answers professional, concise, and actionable.";
       
-      const model = ai.getGenerativeModel({ model: "gemini-pro", systemInstruction: systemContext });
-      const result = await model.generateContent(userMsg.text);
-      const response = await result.response;
-      const aiText = response.text() || "No response generated.";
+      // Use ai.models.generateContent directly with model name and contents
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: userMsg.text,
+        config: {
+          systemInstruction: systemContext,
+        },
+      });
+      const aiText = response.text || "No response generated."; // Use .text property directly
 
       setMessages((prev) => [...prev, {
         id: (Date.now() + 1).toString(),

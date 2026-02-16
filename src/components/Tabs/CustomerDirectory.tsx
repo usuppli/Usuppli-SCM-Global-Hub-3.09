@@ -29,7 +29,17 @@ const DEMO_SUPPLIERS: Supplier[] = [
 ];
 
 const DEMO_PRODUCTS: Product[] = [
-  { id: 'PROD-001', name: 'Organic Cotton Tee', brand: 'Generic', status: 'Active', category: 'Tops', dimensions: { lengthCm: 0, widthCm: 0, heightCm: 0, weightKg: 0 }, costVariables: { materials: 12.50 }, skus: [] },
+  { 
+    id: 'PROD-001', 
+    name: 'Organic Cotton Tee', 
+    brand: 'Generic', 
+    status: 'Active', 
+    category: 'Tops', 
+    sku: 'ORG-TEE', // Added missing 'sku' property
+    dimensions: { lengthCm: 0, widthCm: 0, heightCm: 0, weightKg: 0 }, 
+    costVariables: { materials: 12.50 }, 
+    skus: [] 
+  },
 ];
 
 const COLORS = [
