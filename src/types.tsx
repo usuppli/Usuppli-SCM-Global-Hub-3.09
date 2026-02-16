@@ -92,6 +92,18 @@ export interface CrmTranslations {
   search: string;
 }
 
+export interface SearchTranslation {
+  placeholder: string;
+  quickActions: string;
+  noResults: string;
+  commands: {
+    newProduct: string;
+    newOrder: string;
+    goDashboard: string;
+    goSettings: string;
+  };
+}
+
 export interface Translation {
   common: {
     save: string;
@@ -114,6 +126,25 @@ export interface Translation {
     finish: string;
     command: string;
     close: string;
+    // Added missing keys from your other files
+    status: string;
+    date: string;
+    user: string;
+    page: string;
+    file: string;
+    action: string;
+    select: string;
+    navigate: string;
+    noResults: string;
+    noResultsDesc: string;
+    searchPlaceholder: string;
+    recent: string;
+    navigation: string;
+    notifications: string;
+    settings: string;
+    profile: string;
+    logout: string;
+    error: string;
   };
   nav: {
     dashboard: string;
@@ -135,6 +166,7 @@ export interface Translation {
     aiStrategist: string;
     calendar: string;
     hub: string;
+    exchange: string; // Added
   };
   dashboard: {
     title: string;
@@ -145,6 +177,12 @@ export interface Translation {
     supplierHealth: string;
     recentActivity: string;
     refreshPulse: string;
+    // Added missing keys
+    totalRevenue: string;
+    activeOrders: string;
+    pendingShipments: string;
+    productionEfficiency: string;
+    revenueVsCost: string;
   };
   // ... existing sections mapped dynamically ...
   production: any;
@@ -170,6 +208,7 @@ export interface Translation {
   hub: HubTranslations;
   calendar: CalendarTranslations;
   crm: CrmTranslations;
+  search: SearchTranslation; // Added SearchTranslation
 }
 
 // ==========================================
@@ -219,6 +258,13 @@ export interface Supplier {
   lastAuditDate: string;
   certifications: string[];
   contactEmail?: string;
+  // Added properties from other files
+  location?: string;
+  rating?: number;
+  status?: 'Active' | 'Pending' | 'Blacklisted';
+  contact?: string;
+  email?: string;
+  productsSupplied?: number;
 }
 
 // ==========================================
@@ -267,7 +313,7 @@ export interface Factory {
 
 export interface Job {
   id: string;
-  jobName?: string; // Alias
+  jobName: string; // Made required based on typical usage
   orderNumber?: string; // Alias
   description?: string;
   poNumber?: string;
@@ -276,22 +322,23 @@ export interface Job {
   customerId?: string;
   factory?: string;
   factoryName?: string;
-  factoryId: string;
+  factoryId?: string; // Made optional to support early drafts
   sku?: string;
   productRefId?: string; // Alias
   productId?: string; // Alias
-  quantity: number;
-  value?: number;
-  status: string;
+  quantity?: number; // Made optional
+  value: number; // Made required based on typical usage
+  status: 'Pending' | 'In Production' | 'Shipped' | 'Delivered' | 'Cancelled' | string;
   date?: string;
   orderDate?: string;
-  startDate?: string;
+  startDate?: string; // Made optional
+  deadline?: string; // Added property
   deliveryDate?: string;
   targetDelivery?: string;
-  progress?: number;
+  progress: number; // Made required
   completionPercent?: number;
   productionStage?: string;
-  priority?: 'Low' | 'Medium' | 'High' | 'Urgent';
+  priority: 'Low' | 'Medium' | 'High' | 'Urgent'; // Made required
   isSoncapRequired?: boolean;
   notes?: string;
   leadBuyer?: string;
@@ -300,6 +347,7 @@ export interface Job {
   destinationAddress?: string;
   shippingMethod?: 'Air' | 'Sea' | 'Rail' | 'Truck' | 'Express' | string;
   paymentTerms?: string;
+  client?: string; // Added alias
 }
 
 export interface Shipment {
@@ -325,20 +373,22 @@ export interface Shipment {
 export interface Customer {
   id: string;
   name?: string; 
-  companyName?: string; // Alias
+  companyName: string; // Made required
   company?: string; // Alias
   email: string;
-  contactPerson?: string;
+  contactPerson: string; // Made required
   contactName?: string;
-  phone?: string;
+  phone: string;
   location?: string;
-  region: string;
+  region?: string; // Made optional
   totalOrders: number;
+  totalValue: number; // Added property
   totalSpend?: number;
   tier?: 'VIP' | 'Standard' | 'New' | 'Strategic' | 'Probation';
   businessType?: string;
   customerNo?: string;
-  status?: 'Active' | 'Lead' | 'Inactive' | 'Pending' | 'Probation';
+  status: 'Active' | 'Inactive' | 'Lead' | 'Pending' | 'Probation';
+  country: string; // Added property
   address?: string;
   stateRegion?: string;
   postalCode?: string;
@@ -362,6 +412,7 @@ export interface Customer {
   incoterms?: string;
   notes?: string;
   lastOrder?: string;
+  lastOrderDate?: string; // Added alias
   orders?: number;
 }
 
@@ -441,9 +492,16 @@ export interface CostVariables {
 export interface Product {
   id: string;
   name: string;
+  sku: string; // Made required
   category: string;
   brand?: string;
-  status: string;
+  status: 'Draft' | 'Active' | 'Archived' | string; // Updated type
+  price: number; // Added property
+  cost: number; // Made required (merged cost/costPrice)
+  costPrice?: number; // Alias
+  stock: number; // Added property
+  supplier: string; // Added property
+  lastUpdated: string; // Added property
   thumbnail?: string;
   image?: string;
   cadLink?: string;
@@ -451,8 +509,6 @@ export interface Product {
   material?: string;
   construction?: string;
   moq?: number;
-  cost?: number; // Alias
-  costPrice?: number; // Alias
   currency?: string;
   supplierId?: string;
   specs?: any;
@@ -491,7 +547,6 @@ export interface Product {
   dutyOverrides?: Record<string, number>;
   additionalFees?: Record<string, number>;
   customerId?: string;
-  sku: string;
   leadTime?: string | number; 
   weight?: string;
   retailPrice?: number;

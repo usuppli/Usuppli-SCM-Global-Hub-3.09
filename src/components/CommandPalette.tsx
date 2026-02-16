@@ -75,13 +75,16 @@ const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, products, jobs
 
     if (!q && res.length > 0) return res;
 
-    const prodMatches = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)).slice(0, 3).map(p => ({ type: 'product', id: p.id, label: p.name, sub: p.category, icon: BoxIcon }));
+    // Filter Products
+    const prodMatches = (products || []).filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)).slice(0, 3).map(p => ({ type: 'product', id: p.id, label: p.name, sub: p.category, icon: BoxIcon }));
     res = [...res, ...prodMatches];
 
-    const jobMatches = jobs.filter(j => j.jobName.toLowerCase().includes(q) || j.id.toLowerCase().includes(q)).slice(0, 3).map(j => ({ type: 'job', id: j.id, label: j.jobName, sub: j.status, icon: ClipboardIcon }));
+    // Filter Jobs
+    const jobMatches = (jobs || []).filter(j => j.jobName.toLowerCase().includes(q) || j.id.toLowerCase().includes(q)).slice(0, 3).map(j => ({ type: 'job', id: j.id, label: j.jobName, sub: j.status, icon: ClipboardIcon }));
     res = [...res, ...jobMatches];
 
-    const custMatches = customers.filter(c => c.companyName.toLowerCase().includes(q) || c.contactPerson.toLowerCase().includes(q)).slice(0, 3).map(c => ({ type: 'customer', id: c.id, label: c.companyName, sub: c.contactPerson, icon: UsersIcon }));
+    // Filter Customers
+    const custMatches = (customers || []).filter(c => c.companyName.toLowerCase().includes(q) || c.contactPerson.toLowerCase().includes(q)).slice(0, 3).map(c => ({ type: 'customer', id: c.id, label: c.companyName, sub: c.contactPerson, icon: UsersIcon }));
     res = [...res, ...custMatches];
 
     return res;
@@ -134,15 +137,11 @@ const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, products, jobs
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
       <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
       
-      {/* UPDATED CONTAINER: 
-          Added dark:bg-slate-900 and dark:border-slate-700
-      */}
       <div className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden relative z-10 animate-in fade-in zoom-in-95 duration-200 border border-slate-200 dark:border-slate-700">
         
         {/* HEADER */}
         <div className="flex items-center px-4 py-4 border-b border-slate-100 dark:border-slate-800">
           <SearchIcon className="w-5 h-5 text-slate-400 mr-3" />
-          {/* UPDATED INPUT: Added dark:text-slate-100 */}
           <input 
             ref={inputRef} 
             type="text" 
@@ -151,7 +150,6 @@ const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, products, jobs
             value={query} 
             onChange={e => setQuery(e.target.value)} 
           />
-          {/* UPDATED CLOSE BUTTON: Added dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 */}
           <button 
             onClick={onClose}
             className="text-[10px] font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 hover:text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 px-2 py-1 rounded transition-colors cursor-pointer"
@@ -170,7 +168,6 @@ const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, products, jobs
                     key={item.id + idx} 
                     onClick={() => handleSelect(item)} 
                     onMouseEnter={() => setSelectedIndex(idx)} 
-                    // UPDATED LIST ITEM: Added dark:text-slate-300 dark:hover:bg-slate-800
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors ${
                       idx === selectedIndex 
                         ? 'bg-blue-600 text-white' 
@@ -180,13 +177,12 @@ const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, products, jobs
                   <div className={`p-2 rounded-lg ${
                     idx === selectedIndex 
                       ? 'bg-white/20 text-white' 
-                      : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400' // UPDATED ICON BG
+                      : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400' 
                   }`}>
                     <item.icon className="w-5 h-5" />
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                      {/* UPDATED TEXT COLOR */}
                       <p className={`text-sm font-bold truncate ${
                         idx === selectedIndex ? 'text-white' : 'text-slate-800 dark:text-slate-200'
                       }`}>
@@ -195,7 +191,7 @@ const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, products, jobs
                       <p className={`text-xs truncate ${
                         idx === selectedIndex ? 'text-blue-100' : 'text-slate-400'
                       }`}>
-                        {item.sub}
+                        {item.sub || item.type}
                       </p>
                   </div>
                   

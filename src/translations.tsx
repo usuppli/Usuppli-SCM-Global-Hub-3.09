@@ -1,7 +1,8 @@
 
 // src/translations.tsx
+import { Translation } from './types';
 
-export const translations: any = {
+export const translations: Record<string, Translation> = {
   en: {
     common: {
       save: "Save",
@@ -23,7 +24,26 @@ export const translations: any = {
       back: "Back",
       finish: "Finish",
       command: "Command",
-      close: "Close"
+      close: "Close",
+      // Added missing keys
+      status: "Status",
+      date: "Date",
+      user: "User",
+      page: "Page",
+      file: "File",
+      action: "Action",
+      select: "Select",
+      navigate: "Navigate",
+      noResults: "No results found",
+      noResultsDesc: "We couldn't find anything with that term.",
+      searchPlaceholder: "Search for files, pages, or actions...",
+      recent: "Recent",
+      navigation: "Navigation",
+      notifications: "Notifications",
+      settings: "Settings",
+      profile: "Profile",
+      logout: "Log out",
+      error: "Error"
     },
     nav: {
       dashboard: "Dashboard",
@@ -44,7 +64,19 @@ export const translations: any = {
       system: "System",
       aiStrategist: "AI Strategist",
       calendar: "Calendar",
-      hub: "Hub"
+      hub: "Hub",
+      exchange: "Exchange"
+    },
+    search: {
+      placeholder: "Search...",
+      quickActions: "Quick Actions",
+      noResults: "No results found.",
+      commands: {
+        newProduct: "New Product",
+        newOrder: "New Order",
+        goDashboard: "Go to Dashboard",
+        goSettings: "Go to Settings"
+      }
     },
     calendar: {
       title: "Constraint Calendar",
@@ -57,7 +89,6 @@ export const translations: any = {
       start: "Start Date",
       end: "End Date",
       region: "Region",
-      // --- CALCULATOR TRANSLATIONS ---
       calculationFor: "Calculation For",
       selectItem: "Select Item",
       quantity: "Quantity",
@@ -68,7 +99,6 @@ export const translations: any = {
       shipping: "Shipping",
       customs: "Customs",
       enterCity: "Enter city or port...",
-      // --- NEW: TYPES & DROPDOWN ---
       typeJob: "Job",
       typeSample: "Sample",
       typeProduct: "Product",
@@ -100,7 +130,12 @@ export const translations: any = {
       inventoryVal: "Inventory Value",
       supplierHealth: "Supplier Health",
       recentActivity: "Recent Activity",
-      refreshPulse: "Refresh Pulse"
+      refreshPulse: "Refresh Pulse",
+      totalRevenue: "Total Revenue",
+      activeOrders: "Active Orders",
+      pendingShipments: "Pending Shipments",
+      productionEfficiency: "Production Efficiency",
+      revenueVsCost: "Revenue vs Cost"
     },
     production: {
       title: "Order Manager",
@@ -361,7 +396,26 @@ export const translations: any = {
       back: "返回",
       finish: "完成",
       command: "命令",
-      close: "关闭"
+      close: "关闭",
+      // Added missing keys
+      status: "状态",
+      date: "日期",
+      user: "用户",
+      page: "页面",
+      file: "文件",
+      action: "操作",
+      select: "选择",
+      navigate: "导航",
+      noResults: "未找到结果",
+      noResultsDesc: "我们找不到任何匹配项。",
+      searchPlaceholder: "搜索文件、页面或操作...",
+      recent: "最近",
+      navigation: "导航",
+      notifications: "通知",
+      settings: "设置",
+      profile: "个人资料",
+      logout: "登出",
+      error: "错误"
     },
     nav: {
       dashboard: "仪表板",
@@ -382,7 +436,19 @@ export const translations: any = {
       system: "系统设置",
       aiStrategist: "AI 策略师",
       calendar: "日历",
-      hub: "中心"
+      hub: "中心",
+      exchange: "汇率"
+    },
+    search: {
+      placeholder: "搜索...",
+      quickActions: "快速操作",
+      noResults: "未找到结果。",
+      commands: {
+        newProduct: "新建产品",
+        newOrder: "新建订单",
+        goDashboard: "前往仪表盘",
+        goSettings: "前往设置"
+      }
     },
     calendar: {
       title: "约束日历",
@@ -395,7 +461,6 @@ export const translations: any = {
       start: "开始日期",
       end: "结束日期",
       region: "地区",
-      // --- CALCULATOR TRANSLATIONS ---
       calculationFor: "计算对象",
       selectItem: "选择项目",
       quantity: "数量",
@@ -406,7 +471,6 @@ export const translations: any = {
       shipping: "运输",
       customs: "报关",
       enterCity: "输入城市或港口...",
-      // --- NEW: TYPES & DROPDOWN ---
       typeJob: "订单",
       typeSample: "样品",
       typeProduct: "产品",
@@ -438,7 +502,12 @@ export const translations: any = {
       inventoryVal: "库存价值",
       supplierHealth: "供应商评分",
       recentActivity: "近期动态",
-      refreshPulse: "刷新脉动"
+      refreshPulse: "刷新脉动",
+      totalRevenue: "总收入",
+      activeOrders: "活跃订单",
+      pendingShipments: "待发货",
+      productionEfficiency: "生产效率",
+      revenueVsCost: "收入与成本"
     },
     production: {
       title: "订单管理",
@@ -699,7 +768,26 @@ export const translations: any = {
       back: "返回",
       finish: "完成",
       command: "命令",
-      close: "關閉"
+      close: "關閉",
+      // Added missing keys
+      status: "狀態",
+      date: "日期",
+      user: "用戶",
+      page: "頁面",
+      file: "文件",
+      action: "操作",
+      select: "選擇",
+      navigate: "導航",
+      noResults: "未找到結果",
+      noResultsDesc: "我們找不到任何匹配項。",
+      searchPlaceholder: "搜尋文件、頁面或操作...",
+      recent: "最近",
+      navigation: "導航",
+      notifications: "通知",
+      settings: "設定",
+      profile: "個人資料",
+      logout: "登出",
+      error: "錯誤"
     },
     nav: {
       dashboard: "儀表板",
@@ -720,7 +808,19 @@ export const translations: any = {
       system: "系統設置",
       aiStrategist: "AI 策略師",
       calendar: "約束日曆",
-      hub: "中心"
+      hub: "中心",
+      exchange: "匯率"
+    },
+    search: {
+      placeholder: "搜尋...",
+      quickActions: "快速操作",
+      noResults: "未找到結果。",
+      commands: {
+        newProduct: "新增產品",
+        newOrder: "新增訂單",
+        goDashboard: "前往儀表板",
+        goSettings: "前往設定"
+      }
     },
     calendar: {
       title: "約束日曆",
@@ -733,7 +833,6 @@ export const translations: any = {
       start: "開始日期",
       end: "結束日期",
       region: "地區",
-      // --- CALCULATOR TRANSLATIONS ---
       calculationFor: "計算對象",
       selectItem: "選擇項目",
       quantity: "數量",
@@ -744,7 +843,6 @@ export const translations: any = {
       shipping: "運輸",
       customs: "報關",
       enterCity: "輸入城市或港口...",
-      // --- NEW: TYPES & DROPDOWN ---
       typeJob: "訂單",
       typeSample: "樣品",
       typeProduct: "產品",
@@ -759,7 +857,14 @@ export const translations: any = {
       message: "消息",
       selectCustomer: "選擇客戶...",
       startConversation: "選擇一個話題開始協作",
-      initialMessage: "初始消息..."
+      initialMessage: "初始消息...",
+      pinThread: "固定話題",
+      unpinThread: "取消固定話題",
+      clearHistory: "清除歷史",
+      resetDemo: "重置演示數據",
+      participants: "參與者",
+      linkType: "鏈接類型",
+      selectItem: "選擇項目..."
     },
     dashboard: {
       title: "運營儀表板",
@@ -769,7 +874,12 @@ export const translations: any = {
       inventoryVal: "庫存價值",
       supplierHealth: "供應商評分",
       recentActivity: "近期動態",
-      refreshPulse: "刷新脈動"
+      refreshPulse: "刷新脈動",
+      totalRevenue: "總收入",
+      activeOrders: "活躍訂單",
+      pendingShipments: "待發貨",
+      productionEfficiency: "生產效率",
+      revenueVsCost: "收入與成本"
     },
     production: {
       title: "訂單管理",
