@@ -68,6 +68,22 @@ export interface CalendarTranslations {
   start: string;
   end: string;
   region: string;
+  // --- NEW CALCULATOR CONSTANTS ---
+  calculationFor: string;
+  selectItem: string;
+  quantity: string;
+  destination: string;
+  breakdown: string;
+  production: string;
+  qualityCheck: string;
+  shipping: string;
+  customs: string;
+  enterCity: string;
+  // --- ADDED MISSING TYPES ---
+  typeJob: string;
+  typeSample: string;
+  typeProduct: string;
+  select: string;
 }
 
 export interface CrmTranslations {

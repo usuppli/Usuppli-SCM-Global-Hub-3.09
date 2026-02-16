@@ -16,6 +16,9 @@ const SaveIcon = ({ className }: { className: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
 );
 
+// Matching Styles from Workspace/Tariffs
+const INPUT_STYLE = "w-full p-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-lg font-black text-slate-700 dark:text-slate-200 outline-none transition-all duration-200 focus:bg-white dark:focus:bg-slate-900 focus:border-[#003d5b] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#003d5b]/20";
+
 export const ExchangeRateView: React.FC = () => {
   const { rates, loading, refresh, lastUpdated, getTrendData } = useExchangeRates();
   const currencies = Object.keys(rates);
@@ -42,7 +45,7 @@ export const ExchangeRateView: React.FC = () => {
             <div className="flex gap-2">
                 <button 
                     onClick={() => setIsEditing(!isEditing)}
-                    className={`p-3 rounded-xl transition-all shadow-sm active:scale-95 ${isEditing ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'}`}
+                    className={`p-3 rounded-xl transition-all shadow-sm active:scale-95 ${isEditing ? 'bg-[#003d5b] text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'}`}
                     title={isEditing ? "Save Changes" : "Edit Rates"}
                 >
                     {isEditing ? <SaveIcon className="w-5 h-5" /> : <EditIcon className="w-5 h-5" />}
@@ -63,20 +66,19 @@ export const ExchangeRateView: React.FC = () => {
                 <div 
                     key={curr} 
                     onClick={() => setSelectedCurrency(curr)}
-                    className={`bg-white dark:bg-slate-800 border p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all cursor-pointer group relative ${selectedCurrency === curr ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-100 dark:border-slate-700 hover:-translate-y-1'}`}
+                    className={`bg-white dark:bg-slate-800 border p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all cursor-pointer group relative ${selectedCurrency === curr ? 'border-[#003d5b] ring-2 ring-[#003d5b]/20' : 'border-slate-100 dark:border-slate-700 hover:-translate-y-1'}`}
                 >
+                    {/* Header - Arrows Removed */}
                     <div className="flex justify-between items-start mb-2">
                         <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">{curr} / USD</span>
-                        <div className={`p-1.5 rounded-lg transition-opacity border ${selectedCurrency === curr ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 border-blue-100' : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 border-emerald-100 dark:border-emerald-900 opacity-0 group-hover:opacity-100'}`}>
-                            <TrendingUpIcon className="w-3 h-3" />
-                        </div>
                     </div>
                     
-                    <div className="flex items-baseline gap-2">
+                    {/* Rate Display / Edit Input */}
+                    <div className="flex items-baseline gap-2 mb-1">
                         {isEditing ? (
                             <input 
                                 type="number" 
-                                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-600 rounded-lg px-2 py-1 text-lg font-black text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                className={INPUT_STYLE}
                                 value={displayRate(curr)}
                                 onChange={(e) => handleOverride(curr, e.target.value)}
                                 onFocus={() => setSelectedCurrency(curr)}
@@ -87,7 +89,7 @@ export const ExchangeRateView: React.FC = () => {
                         <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{curr}</span>
                     </div>
 
-                    <div className="mt-3 pt-3 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center">
+                    <div className="pt-3 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center">
                         <span className="text-[8px] text-slate-400 dark:text-slate-500 font-black uppercase tracking-widest">Base: 1.00 USD</span>
                         <span className="text-[9px] text-slate-300 dark:text-slate-600 font-mono font-bold bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded">
                             {lastUpdated ? new Date(lastUpdated).toLocaleDateString() : '--'}
@@ -102,7 +104,7 @@ export const ExchangeRateView: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h4 className="text-lg font-black text-slate-800 dark:text-white flex items-center gap-2">
-                        <TrendingUpIcon className="w-5 h-5 text-blue-500" />
+                        <TrendingUpIcon className="w-5 h-5 text-[#003d5b]" />
                         {selectedCurrency} Historical Trend
                     </h4>
                     <p className="text-xs text-slate-500 dark:text-slate-400">30-Day Rate Fluctuation Analysis</p>
@@ -119,8 +121,8 @@ export const ExchangeRateView: React.FC = () => {
                     <AreaChart data={trendData}>
                         <defs>
                             <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#003d5b" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#003d5b" stopOpacity={0}/>
                             </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" strokeOpacity={0.5} />
@@ -131,7 +133,7 @@ export const ExchangeRateView: React.FC = () => {
                             itemStyle={{ color: '#fff' }}
                             formatter={(value: number) => [value.toFixed(4), 'Rate']}
                         />
-                        <Area type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorRate)" />
+                        <Area type="monotone" dataKey="value" stroke="#003d5b" strokeWidth={3} fillOpacity={1} fill="url(#colorRate)" />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>

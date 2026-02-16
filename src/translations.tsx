@@ -1,4 +1,6 @@
 
+// src/translations.tsx
+
 export const translations: any = {
   en: {
     common: {
@@ -54,7 +56,23 @@ export const translations: any = {
       totalDays: "Total Days",
       start: "Start Date",
       end: "End Date",
-      region: "Region"
+      region: "Region",
+      // --- CALCULATOR TRANSLATIONS ---
+      calculationFor: "Calculation For",
+      selectItem: "Select Item",
+      quantity: "Quantity",
+      destination: "Destination",
+      breakdown: "Breakdown (Days)",
+      production: "Production",
+      qualityCheck: "Quality Check",
+      shipping: "Shipping",
+      customs: "Customs",
+      enterCity: "Enter city or port...",
+      // --- NEW: TYPES & DROPDOWN ---
+      typeJob: "Job",
+      typeSample: "Sample",
+      typeProduct: "Product",
+      select: "Select"
     },
     hub: {
       title: "Collaboration Hub",
@@ -376,7 +394,23 @@ export const translations: any = {
       totalDays: "总天数",
       start: "开始日期",
       end: "结束日期",
-      region: "地区"
+      region: "地区",
+      // --- CALCULATOR TRANSLATIONS ---
+      calculationFor: "计算对象",
+      selectItem: "选择项目",
+      quantity: "数量",
+      destination: "目的地",
+      breakdown: "明细 (天)",
+      production: "生产",
+      qualityCheck: "质检",
+      shipping: "运输",
+      customs: "报关",
+      enterCity: "输入城市或港口...",
+      // --- NEW: TYPES & DROPDOWN ---
+      typeJob: "订单",
+      typeSample: "样品",
+      typeProduct: "产品",
+      select: "选择"
     },
     hub: {
       title: "协作中心",
@@ -698,7 +732,23 @@ export const translations: any = {
       totalDays: "總天數",
       start: "開始日期",
       end: "結束日期",
-      region: "地區"
+      region: "地區",
+      // --- CALCULATOR TRANSLATIONS ---
+      calculationFor: "計算對象",
+      selectItem: "選擇項目",
+      quantity: "數量",
+      destination: "目的地",
+      breakdown: "明細 (天)",
+      production: "生產",
+      qualityCheck: "質檢",
+      shipping: "運輸",
+      customs: "報關",
+      enterCity: "輸入城市或港口...",
+      // --- NEW: TYPES & DROPDOWN ---
+      typeJob: "訂單",
+      typeSample: "樣品",
+      typeProduct: "產品",
+      select: "選擇"
     },
     hub: {
       title: "協作中心",
