@@ -64,6 +64,148 @@ export const zhHans: Translation = {
     hub: "中心",
     exchange: "汇率"
   },
+  orderManager: {
+    title: "订单管理",
+    newJob: "新增订单",
+    requestSample: "申请样品",
+    sampleTracker: "样品追踪",
+    activeOrders: "活跃订单",
+    recordsFound: "找到记录",
+    printOrder: "打印订单",
+    editOrder: "编辑订单详情",
+    jobName: "订单名称",
+    factory: "工厂",
+    customer: "客户",
+    status: "状态",
+    desc: "项目描述",
+    quantity: "数量",
+    deliveryDate: "交货日期",
+    incoterms: "国际贸易术语",
+    packaging: "包装要求",
+    progress: "总体进度",
+    exportPO: "导出 PO",
+    emailFactory: "发送邮件给工厂",
+    saveChanges: "保存更改",
+    tabs: {
+      production: "生产",
+      samples: "样品"
+    }
+  },
+  workspace: {
+    title: "产品工作区",
+    searchPlaceholder: "搜索工作区...",
+    newProduct: "新建产品",
+    opsMode: "运营",
+    strategyMode: "战略",
+    tabs: {
+      specs: "规格",
+      costing: "成本",
+      tariffs: "关税",
+      hsLookup: "HS 查询",
+      exchange: "汇率",
+      timeline: "时间表",
+      scmAi: "SCM AI 策略师",
+      competitors: "竞争分析",
+      aiStrategy: "AI 策略"
+    },
+    header: {
+      env: "全球环境",
+      protocol: "运行协议",
+      optimal: "系统最优"
+    },
+    specs: {
+      title: "产品规格",
+      subtitle: "工程控制与资产管理",
+      mediaAssets: "媒体与资产",
+      imageUrl: "产品图片链接",
+      cadLink: "3D模型 / CAD链接",
+      internalId: "内部 ID",
+      skuMatrix: "SKU 矩阵",
+      addVariant: "添加新变体",
+      table: {
+        sku: "SKU 代码",
+        variant: "变体 / 尺寸",
+        msrp: "目标零售价",
+        actions: "操作"
+      }
+    },
+    costing: {
+      title: "智能成本引擎",
+      subtitle: "到岸成本估算与利润分析",
+      structure: "成本结构 (单件)",
+      logistics: "物流指标",
+      profit: "利润模拟器",
+      fob: "FOB 小计 (工厂)",
+      freight: "运费 (运输)",
+      duty: "进口关税",
+      total: "总到岸成本",
+      volumetric: "体积重",
+      chargeable: "计费重",
+      payingVolume: "按体积计费，而非重量",
+      targetRetail: "目标零售价",
+      margin: "利润率",
+      netProfit: "净利润",
+      addComponent: "添加成本组件",
+      table: {
+        component: "组件",
+        value: "数值 (USD)",
+        percent: "占比"
+      }
+    },
+    tariffs: {
+      title: "全球市场关税",
+      subtitleRead: "已验证成本视图",
+      subtitleEdit: "管理区域关税",
+      modify: "修改费率",
+      finish: "完成编辑",
+      allMarkets: "所有市场",
+      table: {
+        dest: "目的地",
+        base: "基本费率",
+        fees: "附加费",
+        total: "总关税",
+        integrity: "来源完整性"
+      },
+      status: {
+        locked: "管理员锁定",
+        precision: "精确应用",
+        default: "系统默认"
+      },
+      infoRead: "您的账户类型仅可查看成本数据。",
+      infoEdit: "精确费率按产品保存。管理员锁定将强制使用规定费率。"
+    },
+    competitors: {
+      title: "竞争对手情报",
+      subtitle: "市场分析与追踪",
+      trackNew: "追踪竞争对手",
+      pricePos: "价格定位",
+      marketShare: "市场份额",
+      table: {
+        brand: "品牌",
+        price: "价格",
+        origin: "原产地",
+        strength: "优势"
+      },
+      modal: {
+        title: "追踪新竞争对手",
+        brand: "品牌名称",
+        price: "零售价 ($)",
+        share: "预计份额 (%)",
+        origin: "原产国",
+        strength: "核心优势"
+      }
+    },
+    timeline: {
+      title: "产品发布时间表",
+      subtitle: "关键路径管理",
+      table: {
+        phase: "阶段",
+        time: "时间线",
+        region: "地区",
+        activity: "主要活动"
+      }
+    }
+  },
   print: {
     common: {
       billTo: "账单地址",
@@ -275,25 +417,6 @@ export const zhHans: Translation = {
     liveTracking: "实时工厂吞吐量追踪",
     searchJobs: "搜索活跃订单..."
   },
-  orderManager: {
-    activeOrders: "活跃订单",
-    recordsFound: "找到记录",
-    printOrder: "打印订单",
-    editOrder: "编辑订单详情",
-    jobName: "订单名称",
-    factory: "工厂",
-    customer: "客户",
-    status: "状态",
-    desc: "项目描述",
-    quantity: "数量",
-    deliveryDate: "交货日期",
-    incoterms: "国际贸易术语",
-    packaging: "包装要求",
-    progress: "总体进度",
-    exportPO: "导出 PO",
-    emailFactory: "发送邮件给工厂",
-    saveChanges: "保存更改"
-  },
   factory: {
     title: "供应商与工厂组合",
     subtitle: "全球制造网络",
@@ -375,121 +498,6 @@ export const zhHans: Translation = {
       newOrder: "新建订单",
       goDashboard: "前往仪表盘",
       goSettings: "前往设置"
-    }
-  },
-  workspace: {
-    title: "产品工作区",
-    searchPlaceholder: "搜索工作区...",
-    newProduct: "新建产品",
-    opsMode: "运营",
-    strategyMode: "战略",
-    tabs: {
-      specs: "规格",
-      costing: "成本",
-      tariffs: "关税",
-      hsLookup: "HS 查询",
-      exchange: "汇率",
-      timeline: "时间表",
-      scmAi: "SCM AI 策略师",
-      competitors: "竞争分析",
-      aiStrategy: "AI 策略"
-    },
-    header: {
-      env: "全球环境",
-      protocol: "运行协议",
-      optimal: "系统最优"
-    },
-    specs: {
-      title: "产品规格",
-      subtitle: "工程控制与资产管理",
-      mediaAssets: "媒体与资产",
-      imageUrl: "产品图片链接",
-      cadLink: "3D模型 / CAD链接",
-      internalId: "内部 ID",
-      skuMatrix: "SKU 矩阵",
-      addVariant: "添加新变体",
-      table: {
-        sku: "SKU 代码",
-        variant: "变体 / 尺寸",
-        msrp: "目标零售价",
-        actions: "操作"
-      }
-    },
-    costing: {
-      title: "智能成本引擎",
-      subtitle: "到岸成本估算与利润分析",
-      structure: "成本结构 (单件)",
-      logistics: "物流指标",
-      profit: "利润模拟器",
-      fob: "FOB 小计 (工厂)",
-      freight: "运费 (运输)",
-      duty: "进口关税",
-      total: "总到岸成本",
-      volumetric: "体积重",
-      chargeable: "计费重",
-      payingVolume: "按体积计费，而非重量",
-      targetRetail: "目标零售价",
-      margin: "利润率",
-      netProfit: "净利润",
-      addComponent: "添加成本组件",
-      table: {
-        component: "组件",
-        value: "数值 (USD)",
-        percent: "占比"
-      }
-    },
-    tariffs: {
-      title: "全球市场关税",
-      subtitleRead: "已验证成本视图",
-      subtitleEdit: "管理区域关税",
-      modify: "修改费率",
-      finish: "完成编辑",
-      allMarkets: "所有市场",
-      table: {
-        dest: "目的地",
-        base: "基本费率",
-        fees: "附加费",
-        total: "总关税",
-        integrity: "来源完整性"
-      },
-      status: {
-        locked: "管理员锁定",
-        precision: "精确应用",
-        default: "系统默认"
-      },
-      infoRead: "您的账户类型仅可查看成本数据。",
-      infoEdit: "精确费率按产品保存。管理员锁定将强制使用规定费率。"
-    },
-    competitors: {
-      title: "竞争对手情报",
-      subtitle: "市场分析与追踪",
-      trackNew: "追踪竞争对手",
-      pricePos: "价格定位",
-      marketShare: "市场份额",
-      table: {
-        brand: "品牌",
-        price: "价格",
-        origin: "原产地",
-        strength: "优势"
-      },
-      modal: {
-        title: "追踪新竞争对手",
-        brand: "品牌名称",
-        price: "零售价 ($)",
-        share: "预计份额 (%)",
-        origin: "原产国",
-        strength: "核心优势"
-      }
-    },
-    timeline: {
-      title: "产品发布时间表",
-      subtitle: "关键路径管理",
-      table: {
-        phase: "阶段",
-        time: "时间线",
-        region: "地区",
-        activity: "主要活动"
-      }
     }
   },
   wizards: {

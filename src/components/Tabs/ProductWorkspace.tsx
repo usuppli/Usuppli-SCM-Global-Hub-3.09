@@ -54,7 +54,8 @@ const ProductWorkspace: React.FC<Props> = ({
   userRole: propUserRole
 }) => {
   const rootT = translations[lang] || translations['en'];
-  const t = rootT.workspace || { tabs: { specs: 'Specs', costing: 'Costing', tariffs: 'Tariffs', exchange: 'FX', competitors: 'Intel', timeline: 'Plan', ai: 'AI' } };
+  // Ensure we have a valid object, falling back to English structure if needed
+  const t = rootT.workspace || translations['en'].workspace;
 
   const userRole = propUserRole || localStorage.getItem('userRole') || 'viewer';
   const canModify = userRole === 'admin' || userRole === 'super_admin' || userRole === 'editor';
@@ -89,20 +90,20 @@ const ProductWorkspace: React.FC<Props> = ({
     }
   }, [initialSelectedId, products]);
 
-  // 2. DATA: Tab Groups
+  // 2. DATA: Tab Groups (Using Translations)
   const opsTabs = useMemo(() => [
     { id: 'specs', label: t.tabs?.specs || "Specs", icon: FileText, restricted: false }, 
     { id: 'costing', label: t.tabs?.costing || "Costing", icon: DollarSign, restricted: true }, 
     { id: 'tariffs', label: t.tabs?.tariffs || "Tariffs", icon: Search, restricted: true }, 
-    { id: 'hs_lookup', label: "HS Lookup", icon: Globe, restricted: false },
+    { id: 'hs_lookup', label: t.tabs?.hsLookup || "HS Lookup", icon: Globe, restricted: false },
     { id: 'exchange', label: t.tabs?.exchange || "Exchange", icon: Globe, restricted: false },
     { id: 'timeline', label: t.tabs?.timeline || "Timeline", icon: Search, restricted: false },
   ], [t]);
 
   const stratTabs = useMemo(() => [
-    { id: 'scm_ai', label: "SCM AI Strategist", icon: Sparkles, restricted: false },
+    { id: 'scm_ai', label: t.tabs?.scmAi || "SCM AI Strategist", icon: Sparkles, restricted: false },
     { id: 'competitor_analysis', label: t.tabs?.competitors || "Competitor Analysis", icon: CubeIcon, restricted: false },
-    { id: 'ai', label: t.tabs?.ai || "AI Strategy", icon: Brain, restricted: false },
+    { id: 'ai', label: t.tabs?.aiStrategy || "AI Strategy", icon: Brain, restricted: false },
   ], [t]);
 
   // 3. LOGIC: Filter Tabs
@@ -271,13 +272,13 @@ const ProductWorkspace: React.FC<Props> = ({
                     onClick={() => handleModeSwitch('ops')} 
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${viewMode === 'ops' ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
                   >
-                      <ToolIcon className="w-4 h-4" /> Ops
+                      <ToolIcon className="w-4 h-4" /> {t.opsMode}
                   </button>
                   <button 
                     onClick={() => handleModeSwitch('strat')} 
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${viewMode === 'strat' ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
                   >
-                      <Sparkles className="w-4 h-4" /> Strategy
+                      <Sparkles className="w-4 h-4" /> {t.strategyMode}
                   </button>
               </div>
 
@@ -331,18 +332,18 @@ const ProductWorkspace: React.FC<Props> = ({
     <div className="space-y-6 animate-in fade-in pb-10">
       <div className="flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 gap-4">
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-          <CubeIcon className="w-7 h-7 text-[#003d5b] dark:text-blue-500" /> Product Workspace
+          <CubeIcon className="w-7 h-7 text-[#003d5b] dark:text-blue-500" /> {t.title}
         </h2>
         
         <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative flex-grow md:w-64 group">
                 <Search className="absolute right-3 top-3 w-4 h-4 text-slate-400 group-focus-within:text-[#003d5b] dark:group-focus-within:text-blue-400 transition-colors" />
-                <input className="w-full pl-4 pr-10 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-[#003d5b]/10 transition-all dark:text-slate-100" placeholder="Search Workspace..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                <input className="w-full pl-4 pr-10 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-[#003d5b]/10 transition-all dark:text-slate-100" placeholder={t.searchPlaceholder} value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
             </div>
             
             {canModify && (
                 <button onClick={() => setShowProductWizard(true)} className="px-4 py-2.5 bg-[#003d5b] dark:bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-sky-900 dark:hover:bg-blue-500 flex items-center gap-2 shrink-0 transition-all active:scale-95">
-                    <Plus className="w-4 h-4" /> <span>New Product</span>
+                    <Plus className="w-4 h-4" /> <span>{t.newProduct}</span>
                 </button>
             )}
         </div>

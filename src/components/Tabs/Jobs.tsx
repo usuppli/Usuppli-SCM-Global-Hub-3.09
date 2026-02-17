@@ -42,9 +42,8 @@ const Select = ({ label, children, ...props }: any) => (
 
 // --- PRE-POPULATED DATA ---
 const DEMO_JOBS: Job[] = [
-    // Added missing factoryId to DEMO_JOBS
-    { id: 'JOB-2024-001', jobName: 'Spring Collection Launch', productRefId: 'PROD-001', factoryId: 'FAC-001', quantity: 5000, status: 'Production', completionPercent: 60, productionStage: 'Assembly', startDate: '2024-01-15', deliveryDate: '2024-03-01', targetDelivery: '2024-03-01', priority: 'High' },
-    { id: 'JOB-2024-002', jobName: 'Urgent Restock - Black Tees', productRefId: 'PROD-004', factoryId: 'FAC-002', quantity: 2000, status: 'Inquiry', completionPercent: 10, productionStage: 'Material Prep', startDate: '2024-02-01', deliveryDate: '2024-02-28', targetDelivery: '2024-02-28', priority: 'Urgent' },
+    { id: 'JOB-2024-001', jobName: 'Spring Collection Launch', productRefId: 'PROD-001', factoryId: 'FAC-001', quantity: 5000, status: 'Production', completionPercent: 60, productionStage: 'Assembly', startDate: '2024-01-15', deliveryDate: '2024-03-01', targetDelivery: '2024-03-01', priority: 'High', value: 12000, progress: 60 },
+    { id: 'JOB-2024-002', jobName: 'Urgent Restock - Black Tees', productRefId: 'PROD-004', factoryId: 'FAC-002', quantity: 2000, status: 'Inquiry', completionPercent: 10, productionStage: 'Material Prep', startDate: '2024-02-01', deliveryDate: '2024-02-28', targetDelivery: '2024-02-28', priority: 'Urgent', value: 5000, progress: 10 },
 ];
 
 const DEMO_SAMPLES: SampleRequest[] = [
@@ -83,9 +82,9 @@ const Jobs: React.FC<Props> = ({
   onRequestNewSample,
   isReadOnly = false 
 }) => {
-  // Safe Translation Access
   const rootT = translations[lang] || translations['en'];
-  const t = rootT.production;
+  // FIX: Access the correct key 'orderManager' instead of 'production'
+  const t = rootT.orderManager;
   const commonT = rootT.common;
   
   const userRole = localStorage.getItem('userRole') || 'viewer';
@@ -162,6 +161,7 @@ const Jobs: React.FC<Props> = ({
          <div className="flex items-center gap-4">
              <div className="flex items-center gap-2">
                  <Icons.Order className="w-6 h-6 text-slate-400" />
+                 {/* Fixed: Use optional chaining or fallback to prevent crash if 'title' is missing */}
                  <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{t?.title || "Order Manager"}</h3>
              </div>
              <div className="flex gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
@@ -199,7 +199,6 @@ const Jobs: React.FC<Props> = ({
 
       <div className="min-h-[600px]">
           {activeSubTab === 'production' ? (
-            // Added missing onUpdateJob and onDeleteJob handlers
             <OrderManager 
               jobs={allJobs.filter(j => j.jobName.toLowerCase().includes(searchTerm.toLowerCase()))} 
               viewMode="board" 

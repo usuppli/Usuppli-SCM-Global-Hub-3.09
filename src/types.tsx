@@ -102,7 +102,7 @@ export interface NavTranslations {
   exchange: string;
 }
 
-// --- NEW PRINT TRANSLATIONS ---
+// --- PRINT TRANSLATIONS ---
 export interface PrintTranslations {
   common: {
     billTo: string;
@@ -163,7 +163,7 @@ export interface PrintTranslations {
   };
 }
 
-// --- NEW WIDGET TRANSLATIONS ---
+// --- WIDGET TRANSLATIONS ---
 export interface WidgetTranslations {
   clock: {
     title: string;
@@ -325,6 +325,10 @@ export interface ShopFloorTranslations {
 }
 
 export interface OrderManagerTranslations {
+  title: string; // Added to prevent crash
+  newJob: string; // Added to prevent crash
+  requestSample: string; // Added to prevent crash
+  sampleTracker: string; // Added to prevent crash
   activeOrders: string;
   recordsFound: string;
   printOrder: string;
@@ -342,6 +346,10 @@ export interface OrderManagerTranslations {
   exportPO: string;
   emailFactory: string;
   saveChanges: string;
+  tabs: { // Added to prevent crash
+    production: string;
+    samples: string;
+  };
 }
 
 export interface FactoryTranslations {
@@ -549,8 +557,6 @@ export interface WorkspaceTranslations {
     };
   };
 }
-
-// --- WIZARD TYPES ---
 
 export interface WizardCommonTranslations {
   step: string;
@@ -843,7 +849,7 @@ export interface Translation {
   search: SearchTranslation;
   wizards: WizardsTranslation;
   
-  // *** ADDED NEW SECTIONS ***
+  // *** NEW SECTIONS ***
   print: PrintTranslations;
   widgets: WidgetTranslations;
 
@@ -851,7 +857,7 @@ export interface Translation {
 }
 
 // ==========================================
-// THEME & ANALYTICS TYPES
+// OTHER DATA INTERFACES (UNCHANGED)
 // ==========================================
 
 export interface ThemeContextType {
@@ -869,12 +875,6 @@ export interface DashboardStats {
   pendingShipments: number;
   shipmentTrend: number;
 }
-
-// ==========================================
-// GLOBAL SOURCING & SCORECARD TYPES
-// ==========================================
-
-export type ProductSector = 'Electronics' | 'Textiles' | 'Industrial' | 'Consumer' | 'Raw Materials' | 'Other';
 
 export interface SupplierMetric {
   id: string;
@@ -902,10 +902,6 @@ export interface Supplier {
   email?: string;
   productsSupplied?: number;
 }
-
-// ==========================================
-// FACTORY & SUPPLY CHAIN TYPES
-// ==========================================
 
 export interface Factory {
   id: string;
@@ -1087,10 +1083,6 @@ export interface SampleRequest {
   }[];
 }
 
-// ==========================================
-// FINANCE & HS CODE TYPES
-// ==========================================
-
 export interface ExchangeRate {
   id: string;
   pair: string;
@@ -1099,16 +1091,6 @@ export interface ExchangeRate {
   change: number;
   lastUpdated: string;
 }
-
-export interface HSCodeData {
-  code: string;
-  description: string;
-  dutyRate: number;
-}
-
-// ==========================================
-// PRODUCT & COSTING TYPES
-// ==========================================
 
 export interface CostVariables {
   [key: string]: number | undefined; 
@@ -1192,10 +1174,6 @@ export interface Product {
   sourcingCountry?: string;
 }
 
-// ==========================================
-// AUDIT, LOG & CHAT TYPES
-// ==========================================
-
 export interface AuditLogEntry {
   id: string;
   timestamp: string | Date;
@@ -1237,10 +1215,6 @@ export interface ChatThread {
   isOnline?: boolean;
   isTyping?: boolean;
 }
-
-// ==========================================
-// UTILITY & FILTER TYPES
-// ==========================================
 
 export interface FilterRule {
   id: string;
