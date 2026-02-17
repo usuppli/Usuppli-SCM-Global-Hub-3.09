@@ -35,8 +35,244 @@ export type TabType =
 export type Language = 'en' | 'zh-Hans' | 'zh-Hant';
 
 // ==========================================
-// TRANSLATION TYPES (NEWLY ADDED)
+// TRANSLATION INTERFACES
 // ==========================================
+
+export interface CommonTranslations {
+  save: string;
+  cancel: string;
+  edit: string;
+  delete: string;
+  refresh: string;
+  share: string;
+  clickToEdit: string;
+  copied: string;
+  search: string;
+  loading: string;
+  actions: string;
+  view: string;
+  export: string;
+  print: string;
+  submit: string;
+  next: string;
+  back: string;
+  finish: string;
+  command: string;
+  close: string;
+  status: string;
+  date: string;
+  user: string;
+  page: string;
+  file: string;
+  action: string;
+  select: string;
+  navigate: string;
+  noResults: string;
+  noResultsDesc: string;
+  searchPlaceholder: string;
+  recent: string;
+  navigation: string;
+  notifications: string;
+  settings: string;
+  profile: string;
+  logout: string;
+  error: string;
+}
+
+export interface NavTranslations {
+  dashboard: string;
+  productCatalog: string;
+  productWorkspace: string;
+  factoryMaster: string;
+  production: string;
+  shopFloor: string;
+  logistics: string;
+  crm: string;
+  collaboration: string;
+  teamChat: string;
+  admin: string;
+  newProduct: string;
+  analytics: string;
+  sourcing: string;
+  executionGroup: string;
+  system: string;
+  aiStrategist: string;
+  calendar: string;
+  hub: string;
+  exchange: string;
+}
+
+// --- NEW PRINT TRANSLATIONS ---
+export interface PrintTranslations {
+  common: {
+    billTo: string;
+    shipTo: string;
+    contact: string;
+    email: string;
+    phone: string;
+    date: string;
+    page: string;
+    authorizedSig: string;
+    generatedBy: string;
+    terms: string;
+  };
+  order: {
+    title: string;
+    poNumber: string;
+    vendor: string;
+    deliveryDate: string;
+    incoterms: string;
+    item: string;
+    description: string;
+    qty: string;
+    unitPrice: string;
+    total: string;
+    subtotal: string;
+    tax: string;
+    shipping: string;
+    grandTotal: string;
+    notes: string;
+  };
+  sample: {
+    title: string;
+    requestId: string;
+    factory: string;
+    courier: string;
+    tracking: string;
+    estCost: string;
+    details: string;
+  };
+  shipment: {
+    title: string;
+    refId: string;
+    carrier: string;
+    method: string;
+    origin: string;
+    destination: string;
+    eta: string;
+    manifest: string;
+  };
+  customer: {
+    title: string;
+    profile: string;
+    internalId: string;
+    region: string;
+    accountOwner: string;
+    activeOrders: string;
+    totalValue: string;
+  };
+}
+
+// --- NEW WIDGET TRANSLATIONS ---
+export interface WidgetTranslations {
+  clock: {
+    title: string;
+    localTime: string;
+    businessHours: string;
+    open: string;
+    closed: string;
+    timeZone: string;
+  };
+  exchange: {
+    title: string;
+    base: string;
+    target: string;
+    rate: string;
+  };
+}
+
+export interface AdminTranslations {
+  title: string;
+  subtitle: string;
+  accessDenied: string;
+  accessDeniedDesc: string;
+  deleteAccount: string;
+  deleteConfirm: string;
+  timeSync: string;
+  tabs: {
+    system: string;
+    users: string;
+    backup: string;
+    audit: string;
+    preferences: string;
+  };
+  system: {
+    dbStatus: string;
+    connected: string;
+    version: string;
+    matrix: string;
+  };
+  users: {
+    registerIdentity: string;
+    title: string;
+  };
+  backup: {
+    jsonTitle: string;
+    jsonDesc: string;
+    generate: string;
+    restoreDB: string;
+    upload: string;
+  };
+  audit: {
+    exportCSV: string;
+    logTitle: string;
+  };
+}
+
+export interface ChatTranslations {
+  title: string;
+  channels: string;
+  directMessages: string;
+  typing: string;
+  online: string;
+  offline: string;
+  shareVia: string;
+  recording: string;
+  cancel: string;
+  typeMessage: string;
+  deleteMsg: string;
+  teamGeneral: string;
+}
+
+export interface CrmTranslations {
+  title: string;
+  subtitle: string;
+  search: string;
+  addCustomer: string;
+  accountActive: string;
+}
+
+export interface CalendarTranslations {
+  title: string;
+  subtitle: string;
+  addEvent: string;
+  addPlan: string;
+  calculator: string;
+  eta: string;
+  totalDays: string;
+  start: string;
+  end: string;
+  region: string;
+  calculationFor: string;
+  selectItem: string;
+  select: string;
+  quantity: string;
+  destination: string;
+  enterCity: string;
+  breakdown: string;
+  production: string;
+  qualityCheck: string;
+  shipping: string;
+  customs: string;
+  typeJob: string;
+  typeSample: string;
+  typeProduct: string;
+  eventTitle: string;
+  type: string;
+  severity: string;
+  linkRecord: string;
+  saveEvent: string;
+}
 
 export interface HubTranslations {
   title: string;
@@ -51,45 +287,139 @@ export interface HubTranslations {
   pinThread: string;
   unpinThread: string;
   clearHistory: string;
-  resetDemo: string;
   participants: string;
   linkType: string;
   selectItem: string;
 }
 
-export interface CalendarTranslations {
+export interface LogisticsTranslations {
   title: string;
   subtitle: string;
-  addEvent: string;
-  addPlan: string;
-  calculator: string;
-  eta: string;
-  totalDays: string;
-  start: string;
-  end: string;
-  region: string;
-  // --- NEW CALCULATOR CONSTANTS ---
-  calculationFor: string;
-  selectItem: string;
-  quantity: string;
-  destination: string;
-  breakdown: string;
-  production: string;
-  qualityCheck: string;
-  shipping: string;
-  customs: string;
-  enterCity: string;
-  // --- ADDED MISSING TYPES ---
-  typeJob: string;
-  typeSample: string;
-  typeProduct: string;
-  select: string;
+  inboundAir: string;
+  inboundOcean: string;
+  customsHold: string;
+  activeUnits: string;
+  nextArrival: string;
+  loadSimulation: string;
+  sortBy: string;
+  addShipment: string;
+  editShipment: string;
+  saveChanges: string;
 }
 
-export interface CrmTranslations {
+export interface ShopFloorTranslations {
   title: string;
-  addCustomer: string;
+  connected: string;
+  standby: string;
+  activeStream: string;
+  killConnection: string;
+  syncLine: string;
+  efficiencyMatrix: string;
+  oee: string;
+  target: string;
+  envSensors: string;
+  alerts: string;
+  queueStatus: string;
+  liveTracking: string;
+  searchJobs: string;
+}
+
+export interface OrderManagerTranslations {
+  activeOrders: string;
+  recordsFound: string;
+  printOrder: string;
+  editOrder: string;
+  jobName: string;
+  factory: string;
+  customer: string;
+  status: string;
+  desc: string;
+  quantity: string;
+  deliveryDate: string;
+  incoterms: string;
+  packaging: string;
+  progress: string;
+  exportPO: string;
+  emailFactory: string;
+  saveChanges: string;
+}
+
+export interface FactoryTranslations {
+  title: string;
+  subtitle: string;
+  explorer: string;
+  partners: string;
   search: string;
+  addBtn: string;
+  viewAudit: string;
+  supplierId: string;
+  location: string;
+  status: string;
+  actions: string;
+  noResults: string;
+}
+
+export interface CatalogTranslations {
+  subtitle: string;
+  allCategories: string;
+}
+
+export interface DashboardTranslations {
+  title: string;
+  subtitle: string;
+  activeJobs: string;
+  globalSkus: string;
+  inventoryVal: string;
+  supplierHealth: string;
+  recentActivity: string;
+  viewAll: string;
+  logisticsControl: string;
+  openLogistics: string;
+  refreshPulse: string;
+  totalRevenue: string;
+  activeOrders: string;
+  pendingShipments: string;
+  productionEfficiency: string;
+  revenueVsCost: string;
+}
+
+export interface CurrencyTranslations {
+  converter: string;
+  trend: string;
+  live: string;
+  viewGraph: string;
+  viewCalc: string;
+  trendingUp: string;
+  trendingDown: string;
+}
+
+export interface LoginTranslations {
+  subtitle: string;
+  email: string;
+  password: string;
+  loginBtn: string;
+  forgot: string;
+  quickAccess: string;
+  sendCode: string;
+  backToLogin: string;
+  verifyCode: string;
+  resend: string;
+  setPass: string;
+}
+
+export interface HSLookupTranslations {
+  title: string;
+  subtitle: string;
+  searchPlaceholder: string;
+  analyze: string;
+  identify: string;
+  code: string;
+  detectedRate: string;
+  description: string;
+  dutyClass: string;
+  aiLogic: string;
+  applyTo: string;
+  locked: string;
 }
 
 export interface SearchTranslation {
@@ -104,121 +434,428 @@ export interface SearchTranslation {
   };
 }
 
-export interface Translation {
-  common: {
-    save: string;
-    cancel: string;
-    edit: string;
-    delete: string;
-    refresh: string;
-    share: string;
-    clickToEdit: string;
-    copied: string;
-    search: string;
-    loading: string;
-    actions: string;
-    view: string;
-    export: string;
-    print: string;
-    submit: string;
-    next: string;
-    back: string;
-    finish: string;
-    command: string;
-    close: string;
-    // Added missing keys from your other files
-    status: string;
-    date: string;
-    user: string;
-    page: string;
-    file: string;
-    action: string;
-    select: string;
-    navigate: string;
-    noResults: string;
-    noResultsDesc: string;
-    searchPlaceholder: string;
-    recent: string;
-    navigation: string;
-    notifications: string;
-    settings: string;
-    profile: string;
-    logout: string;
-    error: string;
+export interface WorkspaceTranslations {
+  title: string;
+  searchPlaceholder: string;
+  newProduct: string;
+  opsMode: string;
+  strategyMode: string;
+  tabs: {
+    specs: string;
+    costing: string;
+    tariffs: string;
+    hsLookup: string;
+    exchange: string;
+    timeline: string;
+    scmAi: string;
+    competitors: string;
+    aiStrategy: string;
   };
-  nav: {
-    dashboard: string;
-    productCatalog: string;
-    productWorkspace: string;
-    factoryMaster: string;
-    production: string;
-    shopFloor: string;
-    logistics: string;
-    crm: string;
-    collaboration: string;
-    teamChat: string;
-    admin: string;
-    newProduct: string;
-    analytics: string;
-    sourcing: string;
-    executionGroup: string;
-    system: string;
-    aiStrategist: string;
-    calendar: string;
-    hub: string;
-    exchange: string; // Added
+  header: {
+    env: string;
+    protocol: string;
+    optimal: string;
   };
-  dashboard: {
+  specs: {
     title: string;
     subtitle: string;
-    activeJobs: string;
-    globalSkus: string;
-    inventoryVal: string;
-    supplierHealth: string;
-    recentActivity: string;
-    refreshPulse: string;
-    // Added missing keys
-    totalRevenue: string;
-    activeOrders: string;
-    pendingShipments: string;
-    productionEfficiency: string;
-    revenueVsCost: string;
+    mediaAssets: string;
+    imageUrl: string;
+    cadLink: string;
+    internalId: string;
+    skuMatrix: string;
+    addVariant: string;
+    table: {
+      sku: string;
+      variant: string;
+      msrp: string;
+      actions: string;
+    };
   };
-  // ... existing sections mapped dynamically ...
-  production: any;
-  catalog: any;
-  workspace: any;
-  teamChat: any;
-  competitor: any;
-  timeline: any;
-  hsLookup: any;
-  exchange: any;
-  scorecard: any;
-  ai: any;
-  logistics: any;
-  admin: any;
-  login: any;
-  specs: any;
-  costing: any;
-  tariffs: any;
-  factory: any;
-  shopFloor: any;
-  
-  // NEW SECTIONS
-  hub: HubTranslations;
-  calendar: CalendarTranslations;
+  costing: {
+    title: string;
+    subtitle: string;
+    structure: string;
+    logistics: string;
+    profit: string;
+    fob: string;
+    freight: string;
+    duty: string;
+    total: string;
+    volumetric: string;
+    chargeable: string;
+    payingVolume: string;
+    targetRetail: string;
+    margin: string;
+    netProfit: string;
+    addComponent: string;
+    table: {
+      component: string;
+      value: string;
+      percent: string;
+    };
+  };
+  tariffs: {
+    title: string;
+    subtitleRead: string;
+    subtitleEdit: string;
+    modify: string;
+    finish: string;
+    allMarkets: string;
+    table: {
+      dest: string;
+      base: string;
+      fees: string;
+      total: string;
+      integrity: string;
+    };
+    status: {
+      locked: string;
+      precision: string;
+      default: string;
+    };
+    infoRead: string;
+    infoEdit: string;
+  };
+  competitors: {
+    title: string;
+    subtitle: string;
+    trackNew: string;
+    pricePos: string;
+    marketShare: string;
+    table: {
+      brand: string;
+      price: string;
+      origin: string;
+      strength: string;
+    };
+    modal: {
+      title: string;
+      brand: string;
+      price: string;
+      share: string;
+      origin: string;
+      strength: string;
+    };
+  };
+  timeline: {
+    title: string;
+    subtitle: string;
+    table: {
+      phase: string;
+      time: string;
+      region: string;
+      activity: string;
+    };
+  };
+}
+
+// --- WIZARD TYPES ---
+
+export interface WizardCommonTranslations {
+  step: string;
+  expressWorkflow: string;
+  advancedWorkflow: string;
+  nextStep: string;
+  back: string;
+  cancel: string;
+  create: string;
+  review: string;
+  upload: string;
+  attach: string;
+  required: string;
+  save: string;
+}
+
+export interface NewProductWizardTranslations {
+  title: string;
+  headers: {
+    expressIdentity: string;
+    expressIdentityDesc: string;
+    sourcingStrategy: string;
+    sourcingStrategyDesc: string;
+    basicSpecs: string;
+    basicSpecsDesc: string;
+    roughCosting: string;
+    roughCostingDesc: string;
+    advConcept: string;
+    advConceptDesc: string;
+    advEngineering: string;
+    advBOM: string;
+    advSourcing: string;
+    advCost: string;
+    advPackaging: string;
+    reviewComplete: string;
+    reviewDesc: string;
+  };
+  labels: {
+    productName: string;
+    brand: string;
+    category: string;
+    primarySupplier: string;
+    originCountry: string;
+    moq: string;
+    leadTime: string;
+    skuCode: string;
+    hsCode: string;
+    materialComp: string;
+    estFactoryCost: string;
+    description: string;
+    techPack: string;
+    externalUrl: string;
+    length: string;
+    width: string;
+    height: string;
+    bomFile: string;
+    materialNotes: string;
+    supplier: string;
+    origin: string;
+    materialCost: string;
+    laborCost: string;
+    packaging: string;
+    logistics: string;
+    packagingType: string;
+    masterCartonQty: string;
+    unitWeight: string;
+  };
+  placeholders: {
+    nameEx: string;
+    selectOrType: string;
+    selectFactory: string;
+    autoGen: string;
+    hsEx: string;
+    materialEx: string;
+    retailSkip: string;
+    attachTechPack: string;
+    driveLink: string;
+    attachBom: string;
+    matNotesEx: string;
+  };
+  errors: {
+    nameRequired: string;
+  };
+  categories: Record<string, string>;
+  packagingOptions: Record<string, string>;
+}
+
+export interface ShipmentWizardTranslations {
+  title: string;
+  subtitle: string;
+  headers: {
+    routeInfo: string;
+    linkContext: string;
+  };
+  labels: {
+    refId: string;
+    trackingNumber: string;
+    carrier: string;
+    type: string;
+    method: string;
+    status: string;
+    manager: string;
+    origin: string;
+    destination: string;
+    etd: string;
+    eta: string;
+    linkJob: string;
+    linkSample: string;
+    toggleJob: string;
+    toggleSample: string;
+  };
+  placeholders: {
+    trackingEx: string;
+    managerName: string;
+    cityCountry: string;
+    selectJob: string;
+    selectSample: string;
+  };
+  errors: {
+    trackingRequired: string;
+    managerRequired: string;
+    originRequired: string;
+    destRequired: string;
+    etaRequired: string;
+    linkJobRequired: string;
+    linkSampleRequired: string;
+  };
+  methods: Record<string, string>;
+  statuses: Record<string, string>;
+  accountTypes: Record<string, string>;
+}
+
+export interface SampleWizardTranslations {
+  title: string;
+  subtitle: string;
+  labels: {
+    id: string;
+    type: string;
+    productModel: string;
+    factory: string;
+    estSampleCost: string;
+    estCourierCost: string;
+    attachments: string;
+    instructions: string;
+  };
+  placeholders: {
+    noProducts: string;
+    noFactories: string;
+    uploadCta: string;
+    notesEx: string;
+  };
+  errors: {
+    productRequired: string;
+    factoryRequired: string;
+  };
+  types: Record<string, string>;
+}
+
+export interface JobWizardTranslations {
+  title: string;
+  subtitle: string;
+  headers: {
+    scope: string;
+    logistics: string;
+    shipping: string;
+  };
+  labels: {
+    jobId: string;
+    jobName: string;
+    poNumber: string;
+    productModel: string;
+    quantity: string;
+    customer: string;
+    leadBuyer: string;
+    initialStage: string;
+    priority: string;
+    description: string;
+    partner: string;
+    startDate: string;
+    targetDate: string;
+    incoterms: string;
+    shippingMethod: string;
+    destAddress: string;
+    paymentTerms: string;
+    packInstr: string;
+  };
+  placeholders: {
+    nameEx: string;
+    poEx: string;
+    unassigned: string;
+    buyerEx: string;
+    descEx: string;
+    whEx: string;
+    payEx: string;
+    packEx: string;
+  };
+  errors: {
+    nameRequired: string;
+    poRequired: string;
+  };
+  stages: Record<string, string>;
+  priorities: Record<string, string>;
+}
+
+export interface CustomerWizardTranslations {
+  title: string;
+  subtitle: string;
+  modes: {
+    fast: string;
+    advanced: string;
+  };
+  headers: {
+    identityContact: string;
+    bizLocation: string;
+    corpIdentity: string;
+    contactPrefs: string;
+    globalLoc: string;
+    review: string;
+  };
+  labels: {
+    internalId: string;
+    accountOwner: string;
+    companyName: string;
+    contactPerson: string;
+    email: string;
+    contactNo: string;
+    bizType: string;
+    socialMedia: string;
+    address: string;
+    street: string;
+    city: string;
+    state: string;
+    industry: string;
+    source: string;
+    commPref: string;
+    country: string;
+    zip: string;
+    creatingFor: string;
+  };
+  placeholders: {
+    salesRep: string;
+    ifBlank: string;
+    selectType: string;
+    selectPlatform: string;
+    socialEx: string;
+    selectIndustry: string;
+    selectSource: string;
+    typeCountry: string;
+    unassigned: string;
+  };
+  errors: {
+    contactRequired: string;
+    emailRequired: string;
+    phoneRequired: string;
+  };
+  bizTypes: Record<string, string>;
+  industries: Record<string, string>;
+  sources: Record<string, string>;
+}
+
+export interface WizardsTranslation {
+  common: WizardCommonTranslations;
+  newProduct: NewProductWizardTranslations;
+  shipment: ShipmentWizardTranslations;
+  sample: SampleWizardTranslations;
+  job: JobWizardTranslations;
+  customer: CustomerWizardTranslations;
+}
+
+// --- MAIN TRANSLATION INTERFACE ---
+
+export interface Translation {
+  common: CommonTranslations;
+  nav: NavTranslations;
+  admin: AdminTranslations;
+  teamChat: ChatTranslations;
   crm: CrmTranslations;
-  search: SearchTranslation; // Added SearchTranslation
+  calendar: CalendarTranslations;
+  hub: HubTranslations;
+  logistics: LogisticsTranslations;
+  shopFloor: ShopFloorTranslations;
+  orderManager: OrderManagerTranslations;
+  factory: FactoryTranslations;
+  catalog: CatalogTranslations;
+  dashboard: DashboardTranslations;
+  currency: CurrencyTranslations;
+  login: LoginTranslations;
+  hsLookup: HSLookupTranslations;
+  workspace: WorkspaceTranslations;
+  search: SearchTranslation;
+  wizards: WizardsTranslation;
+  
+  // *** ADDED NEW SECTIONS ***
+  print: PrintTranslations;
+  widgets: WidgetTranslations;
+
+  [key: string]: any;
 }
 
 // ==========================================
 // THEME & ANALYTICS TYPES
 // ==========================================
 
-export type ThemeMode = 'light' | 'dark';
-
 export interface ThemeContextType {
-  theme: ThemeMode;
+  theme: 'light' | 'dark';
   toggleTheme: () => void;
 }
 
@@ -258,7 +895,6 @@ export interface Supplier {
   lastAuditDate: string;
   certifications: string[];
   contactEmail?: string;
-  // Added properties from other files
   location?: string;
   rating?: number;
   status?: 'Active' | 'Pending' | 'Blacklisted';
@@ -283,19 +919,19 @@ export interface Factory {
   phone?: string;
   contactPhone?: string;
   contactEmail: string;
-  email?: string; // Alias for contactEmail
+  email?: string;
   website?: string;
-  websiteUrl?: string; // Wizard compatibility
-  rating: number; // For Factory Master
-  overallGrade?: 'A' | 'B' | 'C' | 'D'; // For Supplier Scorecard
+  websiteUrl?: string;
+  rating: number;
+  overallGrade?: 'A' | 'B' | 'C' | 'D';
   businessType?: 'Manufacturer' | 'Trading Company' | 'Agent' | 'Wholesaler';
-  supplierType?: string; // Wizard compatibility
+  supplierType?: string;
   capabilities?: string[];
   mainCategory?: string;
-  productCategories?: string[]; // Wizard compatibility
+  productCategories?: string[];
   moq?: number;
   capacity?: number;
-  productionCapacity?: string; // Wizard compatibility
+  productionCapacity?: string;
   leadTimeDays?: number;
   certificationsList?: string;
   certifications?: string[];
@@ -313,8 +949,8 @@ export interface Factory {
 
 export interface Job {
   id: string;
-  jobName: string; // Made required based on typical usage
-  orderNumber?: string; // Alias
+  jobName: string;
+  orderNumber?: string;
   description?: string;
   poNumber?: string;
   customer?: string; 
@@ -322,23 +958,23 @@ export interface Job {
   customerId?: string;
   factory?: string;
   factoryName?: string;
-  factoryId?: string; // Made optional to support early drafts
+  factoryId?: string;
   sku?: string;
-  productRefId?: string; // Alias
-  productId?: string; // Alias
-  quantity?: number; // Made optional
-  value: number; // Made required based on typical usage
+  productRefId?: string;
+  productId?: string;
+  quantity?: number;
+  value: number;
   status: 'Pending' | 'In Production' | 'Shipped' | 'Delivered' | 'Cancelled' | string;
   date?: string;
   orderDate?: string;
-  startDate?: string; // Made optional
-  deadline?: string; // Added property
+  startDate?: string;
+  deadline?: string;
   deliveryDate?: string;
   targetDelivery?: string;
-  progress: number; // Made required
+  progress: number;
   completionPercent?: number;
   productionStage?: string;
-  priority: 'Low' | 'Medium' | 'High' | 'Urgent'; // Made required
+  priority: 'Low' | 'Medium' | 'High' | 'Urgent';
   isSoncapRequired?: boolean;
   notes?: string;
   leadBuyer?: string;
@@ -347,7 +983,7 @@ export interface Job {
   destinationAddress?: string;
   shippingMethod?: 'Air' | 'Sea' | 'Rail' | 'Truck' | 'Express' | string;
   paymentTerms?: string;
-  client?: string; // Added alias
+  client?: string;
 }
 
 export interface Shipment {
@@ -359,7 +995,7 @@ export interface Shipment {
   eta: string;
   status: 'Booked' | 'In Transit' | 'Customs' | 'Delivered' | 'Exception' | 'Delayed';
   carrier: string;
-  method?: string; // Alias for type
+  method?: string;
   type?: 'Air' | 'Ocean' | 'Road';
   jobId?: string;
   lastUpdated?: string;
@@ -373,22 +1009,22 @@ export interface Shipment {
 export interface Customer {
   id: string;
   name?: string; 
-  companyName: string; // Made required
-  company?: string; // Alias
+  companyName: string;
+  company?: string;
   email: string;
-  contactPerson: string; // Made required
+  contactPerson: string;
   contactName?: string;
   phone: string;
   location?: string;
-  region?: string; // Made optional
+  region?: string;
   totalOrders: number;
-  totalValue: number; // Added property
+  totalValue: number;
   totalSpend?: number;
   tier?: 'VIP' | 'Standard' | 'New' | 'Strategic' | 'Probation';
   businessType?: string;
   customerNo?: string;
   status: 'Active' | 'Inactive' | 'Lead' | 'Pending' | 'Probation';
-  country: string; // Added property
+  country: string;
   address?: string;
   stateRegion?: string;
   postalCode?: string;
@@ -412,7 +1048,7 @@ export interface Customer {
   incoterms?: string;
   notes?: string;
   lastOrder?: string;
-  lastOrderDate?: string; // Added alias
+  lastOrderDate?: string;
   orders?: number;
 }
 
@@ -492,16 +1128,16 @@ export interface CostVariables {
 export interface Product {
   id: string;
   name: string;
-  sku: string; // Made required
+  sku: string;
   category: string;
   brand?: string;
-  status: 'Draft' | 'Active' | 'Archived' | string; // Updated type
-  price: number; // Added property
-  cost: number; // Made required (merged cost/costPrice)
-  costPrice?: number; // Alias
-  stock: number; // Added property
-  supplier: string; // Added property
-  lastUpdated: string; // Added property
+  status: 'Draft' | 'Active' | 'Archived' | string;
+  price: number;
+  cost: number;
+  costPrice?: number;
+  stock: number;
+  supplier: string;
+  lastUpdated: string;
   thumbnail?: string;
   image?: string;
   cadLink?: string;
