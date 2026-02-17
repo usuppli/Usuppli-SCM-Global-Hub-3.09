@@ -64,6 +64,83 @@ export const en: Translation = {
     hub: "Hub",
     exchange: "Exchange"
   },
+  // --- NEW: PERSONALIZATION & SECURITY HUB ---
+  preferences: {
+    title: "Personalization & Security Hub",
+    security: "Security",
+    currentPassword: "Current Password",
+    newPassword: "New Password",
+    confirmPassword: "Confirm Password",
+    changePassword: "Change Password",
+    accountType: "Account Type",
+    roles: {
+      viewer: "Viewer",
+      editor: "Editor",
+      admin: "Admin",
+      super_admin: "Super Admin",
+      customer: "Customer"
+    },
+    roleHint: "Contact a Super Admin to upgrade your privileges."
+  },
+  // --- NEW: CALENDAR TRANSLATIONS ---
+  calendar: {
+    title: "Constraint Calendar",
+    subtitle: "Global Production & Logistics Constraints",
+    addEvent: "Add Constraint / Event",
+    addPlan: "Add Plan to Calendar",
+    calculator: "Lead Time Calculator",
+    eta: "Est. Arrival (ETA)",
+    totalDays: "Total Days",
+    start: "Start Date",
+    end: "End Date",
+    region: "Region",
+    calculationFor: "Calculation For",
+    selectItem: "Select Item",
+    select: "Select",
+    quantity: "Quantity",
+    destination: "Destination",
+    enterCity: "Enter city or port...",
+    breakdown: "Breakdown (Days)",
+    production: "Production",
+    qualityCheck: "Quality Check",
+    shipping: "Shipping",
+    customs: "Customs",
+    typeJob: "Job",
+    typeSample: "Sample",
+    typeProduct: "Product",
+    eventTitle: "Event Title",
+    description: "Description",
+    type: "Type",
+    severity: "Severity",
+    startDate: "Start Date",
+    endDate: "End Date",
+    linkRecord: "Link to Record (Optional)",
+    saveEvent: "Save Event",
+    types: {
+      production: "Production",
+      logistics: "Logistics",
+      compliance: "Compliance",
+      holiday: "Holiday",
+      other: "Other"
+    }
+  },
+  // --- NEW: CURRENCY WIDGET ---
+  currency: {
+    title: "Currency Converter",
+    base: "Base Currency",
+    target: "Target Currency",
+    rate: "Exchange Rate",
+    amount: "Amount",
+    result: "Result",
+    converter: "Converter",
+    trend: "7-Day Trend",
+    live: "Live",
+    viewGraph: "View Graph",
+    viewCalc: "View Calculator",
+    trendingUp: "Trending Up",
+    trendingDown: "Trending Down"
+  },
+  // --- ORDER MANAGER ---
   orderManager: {
     title: "Order Manager",
     newJob: "New Order",
@@ -107,6 +184,135 @@ export const en: Translation = {
       scmAi: "SCM AI Strategist",
       competitors: "Intel",
       aiStrategy: "AI Strategy"
+    }
+  },
+  // --- WIZARDS (ALL 5 MISSING WIZARDS) ---
+  wizards: {
+    common: {
+      step: "Step",
+      next: "Next",
+      back: "Back",
+      save: "Save",
+      cancel: "Cancel",
+      finish: "Finish",
+      create: "Create",
+      review: "Review",
+      upload: "Upload",
+      attach: "Attach",
+      required: "Required",
+      expressWorkflow: "Express Workflow",
+      advancedWorkflow: "Advanced Workflow"
+    },
+    shipment: {
+      title: "New Shipment",
+      subtitle: "Logistics & Tracking Protocol",
+      refId: "Reference ID",
+      carrier: "Carrier",
+      trackingNumber: "Tracking Number",
+      origin: "Origin",
+      destination: "Destination",
+      eta: "Est. Arrival",
+      type: "Type",
+      method: "Transport Method",
+      status: "Status",
+      manager: "Manager",
+      etd: "Departure Date",
+      linkJob: "Link Job",
+      linkSample: "Link Sample",
+      toggleJob: "Job",
+      toggleSample: "Sample",
+      methods: { air: "Air", ocean: "Ocean", rail: "Rail", truck: "Truck" },
+      statuses: { Booked: "Booked", "In Transit": "In Transit", Customs: "Customs", Delivered: "Delivered", Exception: "Exception" },
+      accountTypes: { "Usuppli/Axcess": "Usuppli/Axcess", "Existing Customer": "Existing Customer", "New Customer": "New Customer" },
+      placeholders: { trackingEx: "e.g. MSKU90123", managerName: "Manager Name", cityCountry: "City, Country", selectJob: "Select Job", selectSample: "Select Sample" },
+      errors: { trackingRequired: "Tracking Required", managerRequired: "Manager Required", originRequired: "Origin Required", destRequired: "Destination Required", etaRequired: "ETA Required", linkJobRequired: "Job Link Required", linkSampleRequired: "Sample Link Required" },
+      headers: { routeInfo: "Route Info", linkContext: "Link Context" }
+    },
+    job: {
+      title: "New Production Order",
+      subtitle: "Create Job Protocol",
+      jobName: "Job Name",
+      poNumber: "PO Number",
+      productModel: "Product",
+      quantity: "Quantity",
+      factory: "Factory",
+      partner: "Partner",
+      customer: "Customer",
+      leadBuyer: "Lead Buyer",
+      initialStage: "Initial Stage",
+      startDate: "Start Date",
+      targetDate: "Target Delivery",
+      incoterms: "Incoterms",
+      shippingMethod: "Shipping Method",
+      destAddress: "Destination Address",
+      paymentTerms: "Payment Terms",
+      packInstr: "Packaging Instructions",
+      priority: "Priority",
+      description: "Description",
+      priorities: { low: "Low", medium: "Medium", high: "High", urgent: "Urgent" },
+      stages: { Inquiry: "Inquiry", Costing: "Costing", Sampling: "Sampling", Production: "Production" },
+      headers: { scope: "Scope", logistics: "Logistics", shipping: "Shipping" },
+      placeholders: { nameEx: "Order Name", poEx: "PO-2026...", unassigned: "Unassigned", buyerEx: "Buyer Name", descEx: "Notes...", whEx: "Warehouse", payEx: "30% Deposit", packEx: "Instructions..." },
+      errors: { nameRequired: "Name Required", poRequired: "PO Required" }
+    },
+    sample: {
+      title: "Request New Sample",
+      subtitle: "Production or Counter Sample",
+      type: "Sample Type",
+      productModel: "Product",
+      factory: "Factory",
+      estSampleCost: "Est. Cost",
+      estCourierCost: "Est. Courier",
+      attachments: "Attachments",
+      instructions: "Notes / Instructions",
+      id: "Request ID",
+      types: { "Counter Sample": "Counter", "Pre-Production": "Pre-Prod", "Top of Production": "TOP", "Photo Sample": "Photo", "Size Set": "Size Set" },
+      placeholders: { noProducts: "No Products", noFactories: "No Factories", uploadCta: "Upload Files", notesEx: "Details..." },
+      errors: { productRequired: "Product Required", factoryRequired: "Factory Required" }
+    },
+    supplier: {
+      title: "Add Supplier",
+      name: "Company Name",
+      location: "Location",
+      contact: "Contact Person",
+      email: "Email",
+      type: "Business Type"
+    },
+    newProduct: {
+      title: "New Product",
+      name: "Product Name",
+      category: "Category",
+      brand: "Brand",
+      headers: {
+        expressIdentity: "Identity", expressIdentityDesc: "Core Details", sourcingStrategy: "Sourcing", sourcingStrategyDesc: "Partner",
+        basicSpecs: "Specs", basicSpecsDesc: "Attributes", roughCosting: "Costing", roughCostingDesc: "Economics",
+        advConcept: "Concept", advConceptDesc: "Definition", advEngineering: "Engineering", advBOM: "BOM", advSourcing: "Sourcing",
+        advCost: "Cost", advPackaging: "Packaging", reviewComplete: "Review", reviewDesc: "Complete"
+      },
+      labels: {
+        productName: "Product Name", brand: "Brand", category: "Category", primarySupplier: "Supplier", originCountry: "Origin",
+        moq: "MOQ", leadTime: "Lead Time", skuCode: "SKU", hsCode: "HS Code", materialComp: "Material", estFactoryCost: "Est Cost",
+        description: "Desc", techPack: "Tech Pack", externalUrl: "URL", length: "Length", width: "Width", height: "Height",
+        bomFile: "BOM File", materialNotes: "Notes", supplier: "Supplier", origin: "Origin", materialCost: "Mat. Cost",
+        laborCost: "Labor", packaging: "Packaging", logistics: "Logistics", packagingType: "Pkg Type", masterCartonQty: "Carton Qty", unitWeight: "Weight"
+      },
+      placeholders: {
+        nameEx: "Name", selectOrType: "Select...", selectFactory: "Factory...", autoGen: "Auto", hsEx: "0000.00", materialEx: "Material",
+        retailSkip: "Skip", attachTechPack: "Attach", driveLink: "Link", attachBom: "Attach", matNotesEx: "Notes..."
+      },
+      errors: { nameRequired: "Required" },
+      categories: { "Consumer Electronics": "Electronics" }, // Simplified map
+      packagingOptions: { "Polybag": "Polybag", "Retail Box": "Box", "Custom": "Custom" }
+    },
+    customer: {
+      title: "New Customer",
+      subtitle: "Onboarding",
+      modes: { fast: "Fast", advanced: "Advanced" },
+      headers: { identityContact: "Identity", bizLocation: "Location", corpIdentity: "Corp ID", contactPrefs: "Prefs", globalLoc: "Global", review: "Review" },
+      labels: { internalId: "ID", accountOwner: "Owner", companyName: "Company", contactPerson: "Contact", email: "Email", contactNo: "Phone", bizType: "Type", socialMedia: "Social", address: "Address", street: "Street", city: "City", state: "State", industry: "Industry", source: "Source", commPref: "Prefs", country: "Country", zip: "Zip", creatingFor: "Creating For" },
+      placeholders: { salesRep: "Rep", ifBlank: "Same", selectType: "Select", selectPlatform: "Platform", socialEx: "@", selectIndustry: "Industry", selectSource: "Source", typeCountry: "Country", unassigned: "Unassigned" },
+      errors: { contactRequired: "Required", emailRequired: "Required", phoneRequired: "Required" },
+      bizTypes: { Importer: "Importer" }, industries: { Retail: "Retail" }, sources: { Referral: "Referral" }
     }
   },
   print: {
@@ -242,37 +448,6 @@ export const en: Translation = {
     addCustomer: "Add Customer",
     accountActive: "Account Active"
   },
-  calendar: {
-    title: "Constraint Calendar",
-    subtitle: "Global Production & Logistics Constraints",
-    addEvent: "Add Constraint / Event",
-    addPlan: "Add Plan to Calendar",
-    calculator: "Lead Time Calculator",
-    eta: "Est. Arrival (ETA)",
-    totalDays: "Total Days",
-    start: "Start Date",
-    end: "End Date",
-    region: "Region",
-    calculationFor: "Calculation For",
-    selectItem: "Select Item",
-    select: "Select",
-    quantity: "Quantity",
-    destination: "Destination",
-    enterCity: "Enter city or port...",
-    breakdown: "Breakdown (Days)",
-    production: "Production",
-    qualityCheck: "Quality Check",
-    shipping: "Shipping",
-    customs: "Customs",
-    typeJob: "Job",
-    typeSample: "Sample",
-    typeProduct: "Product",
-    eventTitle: "Event Title",
-    type: "Type",
-    severity: "Severity",
-    linkRecord: "Link to Record (Optional)",
-    saveEvent: "Save Event"
-  },
   hub: {
     title: "Collaboration Hub",
     subtitle: "Global Message Board",
@@ -356,15 +531,6 @@ export const en: Translation = {
     productionEfficiency: "Production Efficiency",
     revenueVsCost: "Revenue vs Cost"
   },
-  currency: {
-    converter: "Converter",
-    trend: "7-Day Trend",
-    live: "Live",
-    viewGraph: "View Graph",
-    viewCalc: "View Calculator",
-    trendingUp: "Trending Up",
-    trendingDown: "Trending Down"
-  },
   login: {
     subtitle: "Enterprise Supply Chain Manager",
     email: "Email Address",
@@ -402,22 +568,5 @@ export const en: Translation = {
       goDashboard: "Go to Dashboard",
       goSettings: "Go to Settings"
     }
-  },
-  wizards: {
-    common: {
-      step: "Step {step} of {total}",
-      expressWorkflow: "Express Workflow",
-      advancedWorkflow: "Advanced Workflow",
-      nextStep: "Next Step",
-      back: "Back",
-      cancel: "Cancel",
-      create: "Create",
-      review: "Review",
-      upload: "Upload File",
-      attach: "Attach",
-      required: "Required",
-      save: "Save"
-    },
-    // ... Sub-wizard objects (NewProduct, Shipment, etc) ...
   }
 };

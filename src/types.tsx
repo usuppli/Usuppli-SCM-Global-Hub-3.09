@@ -102,6 +102,25 @@ export interface NavTranslations {
   exchange: string;
 }
 
+// --- NEW PREFERENCES TRANSLATIONS (Security Hub) ---
+export interface PreferencesTranslations {
+  title: string;
+  security: string;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  changePassword: string;
+  accountType: string;
+  roles: {
+    viewer: string;
+    editor: string;
+    admin: string;
+    super_admin: string;
+    customer: string;
+  };
+  roleHint: string;
+}
+
 // --- PRINT TRANSLATIONS ---
 export interface PrintTranslations {
   common: {
@@ -242,6 +261,7 @@ export interface CrmTranslations {
   accountActive: string;
 }
 
+// --- EXPANDED CALENDAR TRANSLATIONS ---
 export interface CalendarTranslations {
   title: string;
   subtitle: string;
@@ -272,6 +292,16 @@ export interface CalendarTranslations {
   severity: string;
   linkRecord: string;
   saveEvent: string;
+  startDate?: string; // Added optional
+  endDate?: string;   // Added optional
+  description?: string; // Added optional
+  types?: { // Added optional
+    production: string;
+    logistics: string;
+    compliance: string;
+    holiday: string;
+    other: string;
+  };
 }
 
 export interface HubTranslations {
@@ -325,10 +355,10 @@ export interface ShopFloorTranslations {
 }
 
 export interface OrderManagerTranslations {
-  title: string; // Added to prevent crash
-  newJob: string; // Added to prevent crash
-  requestSample: string; // Added to prevent crash
-  sampleTracker: string; // Added to prevent crash
+  title: string; 
+  newJob: string; 
+  requestSample: string; 
+  sampleTracker: string; 
   activeOrders: string;
   recordsFound: string;
   printOrder: string;
@@ -346,7 +376,7 @@ export interface OrderManagerTranslations {
   exportPO: string;
   emailFactory: string;
   saveChanges: string;
-  tabs: { // Added to prevent crash
+  tabs: {
     production: string;
     samples: string;
   };
@@ -391,6 +421,7 @@ export interface DashboardTranslations {
   revenueVsCost: string;
 }
 
+// --- EXPANDED CURRENCY TRANSLATIONS ---
 export interface CurrencyTranslations {
   converter: string;
   trend: string;
@@ -399,6 +430,12 @@ export interface CurrencyTranslations {
   viewCalc: string;
   trendingUp: string;
   trendingDown: string;
+  title?: string; // Added
+  base?: string; // Added
+  target?: string; // Added
+  rate?: string; // Added
+  amount?: string; // Added
+  result?: string; // Added
 }
 
 export interface LoginTranslations {
@@ -571,6 +608,7 @@ export interface WizardCommonTranslations {
   attach: string;
   required: string;
   save: string;
+  finish?: string; // Added optional
 }
 
 export interface NewProductWizardTranslations {
@@ -817,6 +855,7 @@ export interface CustomerWizardTranslations {
   sources: Record<string, string>;
 }
 
+// --- CONSOLIDATED WIZARD INTERFACE ---
 export interface WizardsTranslation {
   common: WizardCommonTranslations;
   newProduct: NewProductWizardTranslations;
@@ -824,6 +863,8 @@ export interface WizardsTranslation {
   sample: SampleWizardTranslations;
   job: JobWizardTranslations;
   customer: CustomerWizardTranslations;
+  // Optional extras for simple wizards
+  supplier?: { title: string; name: string; location: string; contact: string; email: string; type: string; };
 }
 
 // --- MAIN TRANSLATION INTERFACE ---
@@ -852,6 +893,7 @@ export interface Translation {
   // *** NEW SECTIONS ***
   print: PrintTranslations;
   widgets: WidgetTranslations;
+  preferences: PreferencesTranslations; // Added
 
   [key: string]: any;
 }
