@@ -73,13 +73,13 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
     setAIError(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.REACT_APP_GOOGLE_API_KEY || 'YOUR_API_KEY' });
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const prompt = `Generate a strategic market analysis for the "${market}" industry. Focus on 3 areas: 1. Key Trends (Bullet points), 2. Top Competitor Risks, 3. Supply Chain Opportunities. Keep it professional and concise.`;
 
       let text = "";
       try {
           const response = await ai.models.generateContent({
-            model: 'gemini-1.5-flash',
+            model: 'gemini-3-flash-preview',
             contents: prompt,
           });
           text = response.text || "No report generated.";
@@ -278,7 +278,8 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
                         <BarChart data={priceData} barCategoryGap={20}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} strokeOpacity={0.1} />
                             <XAxis dataKey="name" tick={{fontSize: 10}} axisLine={false} tickLine={false} interval={0} />
-                            <YAxis tick={{fontSize: 10}} axisLine={false} tickLine={false} prefix="$" />
+                            {/* Fix: use tickFormatter instead of prefix */}
+                            <YAxis tick={{fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => `$${val}`} />
                             <Tooltip cursor={{fill: 'transparent'}} contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'}} />
                             <Bar dataKey="price" radius={[6, 6, 0, 0]}>
                                 {priceData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.fill} />)}
@@ -388,7 +389,7 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
                             {report.text}
                         </div>
                         <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 flex justify-between">
-                            <span>Source: Gemini 1.5 Flash</span>
+                            <span>Source: Gemini 3 Flash</span>
                             <span>Generated: {report.date}</span>
                         </div>
                     </div>

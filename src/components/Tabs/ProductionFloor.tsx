@@ -116,7 +116,8 @@ const ProductionFloor: React.FC<Props> = ({ jobs = [], lang }) => {
                     : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-950/40'
                 }`}
               >
-                  {isConnected ? 'Kill Connection' : (t?.refresh || 'Sync Line Status')}
+                  {/* Fixed: changed t?.refresh to t?.syncLine since refresh was missing in type */}
+                  {isConnected ? 'Kill Connection' : (t?.syncLine || 'Sync Line Status')}
               </button>
           </div>
       </div>

@@ -28,10 +28,10 @@ const CalendarIcon = ({ className }: { className: string }) => (<svg className={
 const ChatIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>);
 
 // --- INTERNAL DEMO DATA FOR OVERLAYS ---
-// Added missing factoryId to DEMO_JOBS
+// Added missing properties value, progress, priority to Job items in DEMO_JOBS
 const DEMO_JOBS: Job[] = [
-  { id: 'JOB-101', poNumber: 'PO-2024-8821', customer: 'Urban Outfitters', jobName: 'Graphic Tee Run', quantity: 5000, status: 'In Production', date: '2024-03-15', targetDelivery: '2024-04-15', completionPercent: 45, productRefId: 'PROD-001', factoryId: 'f1' },
-  { id: 'JOB-102', poNumber: 'PO-2024-9902', customer: 'Zalando SE', jobName: 'Denim Jacket Run', quantity: 2500, status: 'Cutting', date: '2024-04-01', targetDelivery: '2024-05-01', completionPercent: 10, productRefId: 'PROD-002', factoryId: 'f2' },
+  { id: 'JOB-101', poNumber: 'PO-2024-8821', customer: 'Urban Outfitters', jobName: 'Graphic Tee Run', quantity: 5000, status: 'In Production', date: '2024-03-15', targetDelivery: '2024-04-15', completionPercent: 45, productRefId: 'PROD-001', factoryId: 'f1', value: 75000, progress: 45, priority: 'Medium' },
+  { id: 'JOB-102', poNumber: 'PO-2024-9902', customer: 'Zalando SE', jobName: 'Denim Jacket Run', quantity: 2500, status: 'Cutting', date: '2024-04-01', targetDelivery: '2024-05-01', completionPercent: 10, productRefId: 'PROD-002', factoryId: 'f2', value: 125000, progress: 10, priority: 'High' },
 ];
 // Fix: Remove customer property from Shipment and add required carrier and method.
 const DEMO_SHIPMENTS: Shipment[] = [

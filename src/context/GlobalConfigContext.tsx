@@ -43,7 +43,8 @@ export const useGlobalConfig = () => {
 };
 
 // 5. EXPORT PROVIDER
-export const GlobalConfigProvider = ({ children }: { children: ReactNode }) => {
+/* Changed to React.FC with optional children to avoid TSX issues in App.tsx */
+export const GlobalConfigProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {
     // Initialize Tariffs
     const [tariffs, setTariffs] = useState<Record<string, number>>(() => {
         try {

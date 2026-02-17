@@ -1,4 +1,3 @@
-
 // src/types.tsx
 
 // ==========================================
@@ -102,7 +101,6 @@ export interface NavTranslations {
   exchange: string;
 }
 
-// --- NEW PREFERENCES TRANSLATIONS (Security Hub) ---
 export interface PreferencesTranslations {
   title: string;
   security: string;
@@ -121,7 +119,6 @@ export interface PreferencesTranslations {
   roleHint: string;
 }
 
-// --- PRINT TRANSLATIONS ---
 export interface PrintTranslations {
   common: {
     billTo: string;
@@ -182,7 +179,6 @@ export interface PrintTranslations {
   };
 }
 
-// --- WIDGET TRANSLATIONS ---
 export interface WidgetTranslations {
   clock: {
     title: string;
@@ -251,6 +247,7 @@ export interface ChatTranslations {
   typeMessage: string;
   deleteMsg: string;
   teamGeneral: string;
+  copied: string;
 }
 
 export interface CrmTranslations {
@@ -261,7 +258,6 @@ export interface CrmTranslations {
   accountActive: string;
 }
 
-// --- EXPANDED CALENDAR TRANSLATIONS ---
 export interface CalendarTranslations {
   title: string;
   subtitle: string;
@@ -292,10 +288,10 @@ export interface CalendarTranslations {
   severity: string;
   linkRecord: string;
   saveEvent: string;
-  startDate?: string; // Added optional
-  endDate?: string;   // Added optional
-  description?: string; // Added optional
-  types?: { // Added optional
+  startDate?: string;
+  endDate?: string;
+  description?: string;
+  types?: {
     production: string;
     logistics: string;
     compliance: string;
@@ -352,6 +348,7 @@ export interface ShopFloorTranslations {
   queueStatus: string;
   liveTracking: string;
   searchJobs: string;
+  refresh: string;
 }
 
 export interface OrderManagerTranslations {
@@ -414,14 +411,13 @@ export interface DashboardTranslations {
   logisticsControl: string;
   openLogistics: string;
   refreshPulse: string;
-  totalRevenue: string;
-  activeOrders: string;
-  pendingShipments: string;
+  totalRevenue: number;
+  activeOrders: number;
+  pendingShipments: number;
   productionEfficiency: string;
   revenueVsCost: string;
 }
 
-// --- EXPANDED CURRENCY TRANSLATIONS ---
 export interface CurrencyTranslations {
   converter: string;
   trend: string;
@@ -430,12 +426,12 @@ export interface CurrencyTranslations {
   viewCalc: string;
   trendingUp: string;
   trendingDown: string;
-  title?: string; // Added
-  base?: string; // Added
-  target?: string; // Added
-  rate?: string; // Added
-  amount?: string; // Added
-  result?: string; // Added
+  title?: string;
+  base?: string;
+  target?: string;
+  rate?: string;
+  amount?: string;
+  result?: string;
 }
 
 export interface LoginTranslations {
@@ -510,6 +506,13 @@ export interface WorkspaceTranslations {
     internalId: string;
     skuMatrix: string;
     addVariant: string;
+    dna: string;
+    fabrication: string;
+    logistics: string;
+    hsCode: string;
+    dims: string;
+    material: string;
+    construction: string;
     table: {
       sku: string;
       variant: string;
@@ -568,6 +571,13 @@ export interface WorkspaceTranslations {
     trackNew: string;
     pricePos: string;
     marketShare: string;
+    pricePosition: string;
+    headers?: {
+      brand: string;
+      price: string;
+      origin: string;
+      strength: string;
+    };
     table: {
       brand: string;
       price: string;
@@ -608,7 +618,7 @@ export interface WizardCommonTranslations {
   attach: string;
   required: string;
   save: string;
-  finish?: string; // Added optional
+  finish?: string;
 }
 
 export interface NewProductWizardTranslations {
@@ -767,6 +777,7 @@ export interface JobWizardTranslations {
     poNumber: string;
     productModel: string;
     quantity: string;
+    factory: string;
     customer: string;
     leadBuyer: string;
     initialStage: string;
@@ -855,7 +866,6 @@ export interface CustomerWizardTranslations {
   sources: Record<string, string>;
 }
 
-// --- CONSOLIDATED WIZARD INTERFACE ---
 export interface WizardsTranslation {
   common: WizardCommonTranslations;
   newProduct: NewProductWizardTranslations;
@@ -863,11 +873,8 @@ export interface WizardsTranslation {
   sample: SampleWizardTranslations;
   job: JobWizardTranslations;
   customer: CustomerWizardTranslations;
-  // Optional extras for simple wizards
   supplier?: { title: string; name: string; location: string; contact: string; email: string; type: string; };
 }
-
-// --- MAIN TRANSLATION INTERFACE ---
 
 export interface Translation {
   common: CommonTranslations;
@@ -877,7 +884,8 @@ export interface Translation {
   crm: CrmTranslations;
   calendar: CalendarTranslations;
   hub: HubTranslations;
-  logistics: LogisticsTranslations;
+  // Fix: Reference correct interface name LogisticsTranslations instead of LogisticsTower
+  logistics: LogisticsTranslations; 
   shopFloor: ShopFloorTranslations;
   orderManager: OrderManagerTranslations;
   factory: FactoryTranslations;
@@ -889,22 +897,11 @@ export interface Translation {
   workspace: WorkspaceTranslations;
   search: SearchTranslation;
   wizards: WizardsTranslation;
-  
-  // *** NEW SECTIONS ***
   print: PrintTranslations;
   widgets: WidgetTranslations;
-  preferences: PreferencesTranslations; // Added
+  preferences: PreferencesTranslations;
 
   [key: string]: any;
-}
-
-// ==========================================
-// OTHER DATA INTERFACES (UNCHANGED)
-// ==========================================
-
-export interface ThemeContextType {
-  theme: 'light' | 'dark';
-  toggleTheme: () => void;
 }
 
 export interface DashboardStats {

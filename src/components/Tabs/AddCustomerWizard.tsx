@@ -134,24 +134,27 @@ export default function AddCustomerWizard({ lang = 'en', users = [], onSave, onC
       ? `Social: ${customSocialValue} | ${formData.notes || ''}` 
       : formData.notes;
 
+    {/* Fixed: ensuring all required fields are correctly mapped and defaulting to empty strings or 0s as necessary */}
     const newCustomer: Customer = {
+      ...formData,
       id: formData.id!,
       companyName: finalCompany || 'Unknown',
       contactName: formData.contactName || '',
+      contactPerson: formData.contactName || '', // Required mapping
       email: formData.email || '',
       phone: formData.phone || '',
       location: formData.location || (finalCountry ? `${formData.billingCity || ''}, ${finalCountry}` : 'Unknown Location'),
-      status: mode === 'ADVANCED' ? 'Active' : 'Pending',
-      tier: formData.tier as any || 'Standard',
-      totalSpend: 0,
-      // Fixed: totalOrders is required in Customer type
-      totalOrders: 0,
-      orders: 0,
-      lastOrder: new Date().toISOString().split('T')[0],
+      status: (mode === 'ADVANCED' ? 'Active' : 'Pending') as any,
+      tier: (formData.tier as any) || 'Standard',
+      totalSpend: formData.totalSpend || 0,
+      totalOrders: formData.totalOrders || 0,
+      totalValue: formData.totalValue || 0,
+      orders: formData.orders || 0,
+      lastOrder: formData.lastOrder || new Date().toISOString().split('T')[0],
       region: finalCountry || 'North America',
-      billingCountry: finalCountry,
-      notes: finalNotes,
-      ...formData
+      billingCountry: finalCountry || 'USA',
+      country: finalCountry || 'USA', // Required mapping
+      notes: finalNotes || ''
     };
 
     // FIXED: Now calls onSave instead of onComplete

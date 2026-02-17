@@ -11,9 +11,10 @@ import ConstraintCalendar from '../ConstraintCalendar';
 import { Search, Grid, List, UserPlus, Calendar, MessageSquare, Globe, Mail, MoreVertical, Building2 } from 'lucide-react';
 
 // --- INTERNAL DEMO DATA TO PREVENT CRASHES ---
+// Added missing properties value, progress, priority to Job items in DEMO_JOBS
 const DEMO_JOBS: Job[] = [
-  { id: 'JOB-101', poNumber: 'PO-2024-8821', customer: 'Urban Outfitters', jobName: 'Graphic Tee Run', quantity: 5000, status: 'In Production', date: '2024-03-15', targetDelivery: '2024-04-15', completionPercent: 20, productRefId: 'PROD-001', factoryId: 'FAC-001' },
-  { id: 'JOB-102', poNumber: 'PO-2024-9902', customer: 'Zalando SE', jobName: 'Denim Jacket Batch', quantity: 2500, status: 'Cutting', date: '2024-04-01', targetDelivery: '2024-05-01', completionPercent: 10, productRefId: 'PROD-002', factoryId: 'FAC-002' },
+  { id: 'JOB-101', poNumber: 'PO-2024-8821', customer: 'Urban Outfitters', jobName: 'Graphic Tee Run', quantity: 5000, status: 'In Production', date: '2024-03-15', targetDelivery: '2024-04-15', completionPercent: 20, productRefId: 'PROD-001', factoryId: 'FAC-001', value: 75000, progress: 20, priority: 'High' },
+  { id: 'JOB-102', poNumber: 'PO-2024-9902', customer: 'Zalando SE', jobName: 'Denim Jacket Batch', quantity: 2500, status: 'Cutting', date: '2024-04-01', targetDelivery: '2024-05-01', completionPercent: 10, productRefId: 'PROD-002', factoryId: 'FAC-002', value: 125000, progress: 10, priority: 'Medium' },
 ];
 
 const DEMO_SHIPMENTS: Shipment[] = [
@@ -38,7 +39,13 @@ const DEMO_PRODUCTS: Product[] = [
     sku: 'ORG-TEE', // Added missing 'sku' property
     dimensions: { lengthCm: 0, widthCm: 0, heightCm: 0, weightKg: 0 }, 
     costVariables: { materials: 12.50 }, 
-    skus: [] 
+    skus: [],
+    /* Added missing required properties */
+    price: 25.00,
+    cost: 12.50,
+    stock: 500,
+    supplier: 'Generic Supplier',
+    lastUpdated: '2024-02-15T00:00:00Z'
   },
 ];
 

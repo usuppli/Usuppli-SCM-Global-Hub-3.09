@@ -44,12 +44,12 @@ interface Props {
 }
 
 const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) => {
-  const t = translations[lang];
+  const rootT = translations[lang] || translations['en'];
+  const t = rootT.workspace;
   const s = t.specs; 
   
   const [isEditing, setIsEditing] = useState(false);
   
-  // Removed 'id' from SKU initialization objects to match type definition
   const [formData, setFormData] = useState<Product>(() => ({
     ...product,
     dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 },
@@ -59,7 +59,6 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    // Removed 'id' from SKU fallback initialization
     setFormData({
         ...product,
         dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 },
@@ -90,11 +89,9 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
   const handleDimChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      dimensions: { ...prev.dimensions, [field]: parseFloat(value) || 0 }
+      dimensions: { ...prev.dimensions!, [field]: parseFloat(value) || 0 }
     }));
   };
-
-  // --- SKU ACTIONS ---
 
   const handleSkuChange = (index: number, field: string, value: string) => {
     const newSkus = [...(formData.skus || [])];
@@ -108,7 +105,6 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
 
   const handleAddSku = (e: React.MouseEvent) => {
       e.stopPropagation();
-      // Removed 'id' from new SKU object
       const newSku = { 
           code: `${formData.id}-${(formData.skus?.length || 0) + 1}`, 
           size: '', 
@@ -120,7 +116,6 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
   const handleDuplicateSku = (index: number, e: React.MouseEvent) => {
       e.stopPropagation();
       const skuToCopy = formData.skus![index];
-      // Removed 'id' from duplicate SKU object
       const newSku = { 
           ...skuToCopy, 
           code: `${skuToCopy.code}-COPY` 
@@ -155,7 +150,7 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
   const ClickToEditOverlay = () => (
     !isEditing && !isReadOnly ? (
       <div className="absolute top-4 right-4 text-[10px] font-bold text-sky-500 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-wider pointer-events-none">
-        {t.common?.clickToEdit || "Click to Edit"}
+        {rootT.common?.clickToEdit || "Click to Edit"}
       </div>
     ) : null
   );
@@ -168,22 +163,22 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
       <div className="flex justify-between items-center no-print mb-4">
           <div>
             <h3 className="text-xl font-bold text-slate-800 dark:text-white">{s.title}</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Engineering control and asset management</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{s.subtitle}</p>
           </div>
           <div className="flex gap-2">
             {!isReadOnly && (
                 isEditing ? (
                     <>
                         <button onClick={() => { setIsEditing(false); setFormData({...product, dimensions: product.dimensions || { weightKg: 0, lengthCm: 0, widthCm: 0, heightCm: 0 }, skus: (product.skus && product.skus.length > 0) ? product.skus : [{ code: `${product.id}-001`, size: 'One Size', prices: { USA: 0 } }]}); setErrors({}); }} className="px-4 py-2 text-slate-500 dark:text-slate-400 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
-                            {t.common.cancel}
+                            {rootT.common.cancel}
                         </button>
                         <button onClick={handleSave} className="px-4 py-2 bg-[#003d5b] dark:bg-blue-600 text-white font-bold text-xs rounded-xl hover:bg-sky-900 shadow-lg transition-colors">
-                            {t.common.save}
+                            {rootT.common.save}
                         </button>
                     </>
                 ) : (
                     <button onClick={() => setIsEditing(true)} className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl hover:bg-slate-50 transition-colors">
-                        {t.common.edit} Specs
+                        {rootT.common.edit} Specs
                     </button>
                 )
             )}
@@ -194,10 +189,10 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
           
           <div className={getCardClassName()} onClick={handleCardClick}>
               <ClickToEditOverlay />
-              <h4 className="font-bold text-sky-700 dark:text-sky-400 uppercase text-xs tracking-widest mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">Media & Assets</h4>
+              <h4 className="font-bold text-sky-700 dark:text-sky-400 uppercase text-xs tracking-widest mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">{s.mediaAssets}</h4>
               <div className="space-y-4">
-                  <Input label="Product Image URL" disabled={!isEditing} value={formData.image || ''} placeholder="https://..." onChange={(e:any) => handleChange('image', e.target.value)} className="font-mono text-xs" />
-                  <Input label="3D Model / CAD Link" disabled={!isEditing} value={formData.cadLink || ''} placeholder="Cloud Link" onChange={(e:any) => handleChange('cadLink', e.target.value)} className="font-mono text-xs" />
+                  <Input label={s.imageUrl} disabled={!isEditing} value={formData.image || ''} placeholder="https://..." onChange={(e:any) => handleChange('image', e.target.value)} className="font-mono text-xs" />
+                  <Input label={s.cadLink} disabled={!isEditing} value={formData.cadLink || ''} placeholder="Cloud Link" onChange={(e:any) => handleChange('cadLink', e.target.value)} className="font-mono text-xs" />
               </div>
           </div>
 
@@ -209,7 +204,7 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
                   <Input label="Product Name" disabled={!isEditing} value={formData.name || ''} onChange={(e:any) => handleChange('name', e.target.value)} error={errors.name} />
                   <Input label="Category" disabled={!isEditing} value={formData.category || ''} onChange={(e:any) => handleChange('category', e.target.value)} />
                   <div className="space-y-1">
-                      <label className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Internal ID</label>
+                      <label className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">{s.internalId}</label>
                       <p className="font-mono text-xs text-slate-500 dark:text-slate-400 p-2">{product.id}</p>
                   </div>
               </div>
@@ -248,10 +243,10 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
                   <table className="w-full text-left text-xs">
                       <thead className="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-950">
                           <tr>
-                              <th className="p-3 px-4">SKU Code</th>
-                              <th className="p-3 px-4">Variant / Size</th>
-                              <th className="p-3 px-4 text-right">Target MSRP</th>
-                              <th className="p-3 px-4 w-20 text-center">Actions</th>
+                              <th className="p-3 px-4">{s.table.sku}</th>
+                              <th className="p-3 px-4">{s.table.variant}</th>
+                              <th className="p-3 px-4 text-right">{s.table.msrp}</th>
+                              <th className="p-3 px-4 w-20 text-center">{s.table.actions}</th>
                           </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -307,7 +302,6 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
                               </tr>
                           ))}
                           
-                          {/* ADD BUTTON FOOTER */}
                           {isEditing && (
                               <tr>
                                   <td colSpan={4} className="p-2">
@@ -315,7 +309,7 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
                                         onClick={handleAddSku} 
                                         className="w-full py-2 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl text-slate-400 hover:text-[#003d5b] dark:hover:text-blue-400 hover:border-[#003d5b]/30 dark:hover:border-blue-500/30 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider"
                                       >
-                                          <PlusIcon className="w-4 h-4" /> Add New Variant
+                                          <PlusIcon className="w-4 h-4" /> {s.addVariant}
                                       </button>
                                   </td>
                               </tr>

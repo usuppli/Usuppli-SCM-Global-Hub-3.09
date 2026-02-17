@@ -1,4 +1,3 @@
-
 import { Translation } from '../types';
 
 export const zhHans: Translation = {
@@ -64,7 +63,6 @@ export const zhHans: Translation = {
     hub: "中心",
     exchange: "汇率"
   },
-  // --- NEW: PERSONALIZATION & SECURITY HUB ---
   preferences: {
     title: "个性化与安全中心",
     security: "安全",
@@ -82,7 +80,6 @@ export const zhHans: Translation = {
     },
     roleHint: "请联系超级管理员以升级权限。"
   },
-  // --- NEW: CALENDAR TRANSLATIONS ---
   calendar: {
     title: "约束日历",
     subtitle: "全球生产与物流约束",
@@ -124,7 +121,6 @@ export const zhHans: Translation = {
       other: "其他"
     }
   },
-  // --- NEW: CURRENCY WIDGET ---
   currency: {
     title: "汇率转换器",
     base: "基础货币",
@@ -140,7 +136,6 @@ export const zhHans: Translation = {
     trendingUp: "趋势上升",
     trendingDown: "趋势下降"
   },
-  // --- ORDER MANAGER ---
   orderManager: {
     title: "订单管理",
     newJob: "新增订单",
@@ -199,6 +194,13 @@ export const zhHans: Translation = {
       internalId: "内部 ID",
       skuMatrix: "SKU 矩阵",
       addVariant: "添加新变体",
+      dna: "技术 DNA",
+      fabrication: "工艺制作",
+      logistics: "物流与合规",
+      hsCode: "HS 编码",
+      dims: "产品尺寸",
+      material: "材质",
+      construction: "结构工艺",
       table: {
         sku: "SKU 代码",
         variant: "变体 / 尺寸",
@@ -256,7 +258,14 @@ export const zhHans: Translation = {
       subtitle: "市场分析与追踪",
       trackNew: "追踪竞争对手",
       pricePos: "价格定位",
-      marketShare: "市场份额",
+      marketShare: "市场份客",
+      pricePosition: "价格定位",
+      headers: {
+        brand: "品牌",
+        price: "价格",
+        origin: "原产地",
+        strength: "优势"
+      },
       table: {
         brand: "品牌",
         price: "价格",
@@ -283,261 +292,6 @@ export const zhHans: Translation = {
       }
     }
   },
-  print: {
-    common: {
-      billTo: "账单地址",
-      shipTo: "收货地址",
-      contact: "联系人",
-      email: "电子邮箱",
-      phone: "电话",
-      date: "日期",
-      page: "页码",
-      authorizedSig: "授权签名",
-      generatedBy: "生成者",
-      terms: "条款与条件"
-    },
-    order: {
-      title: "采购订单",
-      poNumber: "PO 单号",
-      vendor: "供应商",
-      deliveryDate: "交货日期",
-      incoterms: "贸易术语",
-      item: "项目",
-      description: "描述",
-      qty: "数量",
-      unitPrice: "单价",
-      total: "总计",
-      subtotal: "小计",
-      tax: "税额",
-      shipping: "运费",
-      grandTotal: "累计总额",
-      notes: "备注 / 说明"
-    },
-    sample: {
-      title: "样品申请单",
-      requestId: "申请 ID",
-      factory: "工厂",
-      courier: "快递",
-      tracking: "追踪单号",
-      estCost: "预计成本",
-      details: "样品详情"
-    },
-    shipment: {
-      title: "货运清单",
-      refId: "参考 ID",
-      carrier: "承运商",
-      method: "运输方式",
-      origin: "始发地",
-      destination: "目的地",
-      eta: "预计到达",
-      manifest: "清单详情"
-    },
-    customer: {
-      title: "客户档案",
-      profile: "概况",
-      internalId: "内部 ID",
-      region: "区域",
-      accountOwner: "客户经理",
-      activeOrders: "活跃订单",
-      totalValue: "总价值"
-    }
-  },
-  widgets: {
-    clock: {
-      title: "世界时钟",
-      localTime: "当地时间",
-      businessHours: "营业时间",
-      open: "营业中",
-      closed: "已关闭",
-      timeZone: "时区"
-    },
-    exchange: {
-      title: "汇率",
-      base: "基础货币",
-      target: "目标货币",
-      rate: "汇率"
-    }
-  },
-  admin: {
-    title: "管理面板",
-    subtitle: "全球配置与身份管理",
-    accessDenied: "访问被拒绝",
-    accessDeniedDesc: "机构协议限制此部分仅供管理账户使用。",
-    deleteAccount: "删除账户？",
-    deleteConfirm: "您确定要删除此用户吗？此操作不可逆。",
-    timeSync: "全球时间同步",
-    tabs: {
-      system: "系统",
-      users: "用户",
-      backup: "备份",
-      audit: "审计",
-      preferences: "偏好设置"
-    },
-    system: {
-      dbStatus: "数据库状态",
-      connected: "系统在线",
-      version: "版本控制",
-      matrix: "全球关税矩阵"
-    },
-    users: {
-      registerIdentity: "注册身份",
-      title: "用户注册表"
-    },
-    backup: {
-      jsonTitle: "导出数据库",
-      jsonDesc: "下载完整系统快照",
-      generate: "生成快照",
-      restoreDB: "恢复数据库",
-      upload: "上传并恢复"
-    },
-    audit: {
-      exportCSV: "导出 CSV",
-      logTitle: "安全机构日志"
-    }
-  },
-  teamChat: {
-    title: "团队聊天",
-    channels: "频道",
-    directMessages: "私信",
-    typing: "输入中...",
-    online: "在线",
-    offline: "离线",
-    shareVia: "分享至",
-    recording: "录音中...",
-    cancel: "取消",
-    typeMessage: "输入消息...",
-    deleteMsg: "删除消息",
-    teamGeneral: "综合团队"
-  },
-  crm: {
-    title: "客户名录",
-    subtitle: "管理客户关系和区域",
-    search: "搜索客户...",
-    addCustomer: "添加客户",
-    accountActive: "账户活跃"
-  },
-  hub: {
-    title: "协作中心",
-    subtitle: "全球留言板",
-    newThread: "新话题",
-    startNewThread: "开始新话题",
-    topic: "话题",
-    message: "消息",
-    selectCustomer: "选择客户...",
-    startConversation: "选择一个话题开始协作",
-    initialMessage: "初始消息...",
-    pinThread: "固定话题",
-    unpinThread: "取消固定话题",
-    clearHistory: "清除历史",
-    participants: "参与者",
-    linkType: "链接类型",
-    selectItem: "选择项目..."
-  },
-  logistics: {
-    title: "物流塔",
-    subtitle: "实时货运追踪",
-    inboundAir: "空运",
-    inboundOcean: "海运",
-    customsHold: "海关扣留",
-    activeUnits: "单位",
-    nextArrival: "下次到达",
-    loadSimulation: "加载模拟",
-    sortBy: "按预计到达时间排序",
-    addShipment: "添加运输",
-    editShipment: "编辑运输",
-    saveChanges: "保存更改"
-  },
-  shopFloor: {
-    title: "生产车间遥测",
-    connected: "已连接",
-    standby: "工位待机",
-    activeStream: "活跃流",
-    killConnection: "断开连接",
-    syncLine: "同步产线状态",
-    efficiencyMatrix: "实时效率矩阵",
-    oee: "设备综合效率 (OEE)",
-    target: "目标",
-    envSensors: "环境传感器",
-    alerts: "诊断警报",
-    queueStatus: "生产队列状态",
-    liveTracking: "实时工厂吞吐量追踪",
-    searchJobs: "搜索活跃订单..."
-  },
-  factory: {
-    title: "供应商与工厂组合",
-    subtitle: "全球制造网络",
-    explorer: "组合浏览器",
-    partners: "活跃制造合作伙伴",
-    search: "搜索...",
-    addBtn: "添加供应商",
-    viewAudit: "查看审计",
-    supplierId: "供应商身份",
-    location: "地点",
-    status: "状态",
-    actions: "操作",
-    noResults: "未找到结果"
-  },
-  catalog: {
-    subtitle: "全球 SKU 目录",
-    allCategories: "所有类别"
-  },
-  dashboard: {
-    title: "运营仪表板",
-    subtitle: "全球供应链脉动",
-    activeJobs: "活跃订单",
-    globalSkus: "全球 SKU",
-    inventoryVal: "库存价值",
-    supplierHealth: "供应商健康度",
-    recentActivity: "近期活动",
-    viewAll: "查看全部",
-    logisticsControl: "物流控制",
-    openLogistics: "打开物流塔",
-    refreshPulse: "刷新脉动",
-    totalRevenue: "总收入",
-    activeOrders: "活跃订单",
-    pendingShipments: "待发货",
-    productionEfficiency: "生产效率",
-    revenueVsCost: "收入与成本"
-  },
-  login: {
-    subtitle: "企业级供应链管理器",
-    email: "电子邮件地址",
-    password: "密码",
-    loginBtn: "安全登录",
-    forgot: "忘记密码？",
-    quickAccess: "或快速访问 (开发)",
-    sendCode: "发送重置代码",
-    backToLogin: "返回登录",
-    verifyCode: "验证代码",
-    resend: "重新发送代码",
-    setPass: "设置新密码"
-  },
-  hsLookup: {
-    title: "精确 HS 查询",
-    subtitle: "全球分类与合规",
-    searchPlaceholder: "例如：不锈钢保温旅行杯",
-    analyze: "分析中...",
-    identify: "识别",
-    code: "推荐 HS 编码",
-    detectedRate: "检测税率",
-    description: "描述",
-    dutyClass: "关税分类",
-    aiLogic: "AI 报关逻辑",
-    applyTo: "应用到",
-    locked: "精确费率已锁定"
-  },
-  search: {
-    placeholder: "搜索...",
-    quickActions: "快速操作",
-    noResults: "未找到结果。",
-    commands: {
-      newProduct: "新建产品",
-      newOrder: "新建订单",
-      goDashboard: "前往仪表盘",
-      goSettings: "前往设置"
-    }
-  },
-  // --- WIZARDS (ALL) ---
   wizards: {
     common: {
       step: "第 {step} 步 / 共 {total} 步",
@@ -551,7 +305,8 @@ export const zhHans: Translation = {
       upload: "上传文件",
       attach: "添加附件",
       required: "必填",
-      save: "保存"
+      save: "保存",
+      finish: "完成"
     },
     shipment: {
       title: "创建新货运",
@@ -577,87 +332,23 @@ export const zhHans: Translation = {
         toggleJob: "生产订单",
         toggleSample: "样品请求"
       },
-      placeholders: {
-        trackingEx: "例如 MSKU901283",
-        managerName: "经理姓名",
-        cityCountry: "城市, 国家",
-        selectJob: "选择活跃订单...",
-        selectSample: "选择样品请求..."
-      },
-      errors: {
-        trackingRequired: "追踪单号必填",
-        managerRequired: "客户经理必填",
-        originRequired: "始发地必填",
-        destRequired: "目的地必填",
-        etaRequired: "ETA 必填",
-        linkJobRequired: "请关联一个订单",
-        linkSampleRequired: "请关联一个样品请求"
-      },
-      methods: {
-        "Air": "空运",
-        "Ocean": "海运 (Ocean)",
-        "Sea": "海运 (Sea)",
-        "Rail": "铁路",
-        "Truck": "陆运/卡车"
-      },
-      statuses: {
-        "Booked": "已订舱",
-        "In Transit": "运输中",
-        "Customs": "清关中",
-        "Delivered": "已送达",
-        "Exception": "异常"
-      },
-      accountTypes: {
-        "Usuppli/Axcess": "Usuppli/Axcess 内部",
-        "Existing Customer": "现有客户",
-        "New Customer": "新客户"
-      }
-    },
-    sample: {
-      title: "请求新样品",
-      subtitle: "生产样或确认样",
-      labels: {
-        id: "样品请求 ID (自动)",
-        type: "样品类型",
-        productModel: "产品型号",
-        factory: "工厂",
-        estSampleCost: "预计样品费 ($)",
-        estCourierCost: "预计快递费 ($)",
-        attachments: "附件",
-        instructions: "说明 / 备注"
-      },
-      placeholders: {
-        noProducts: "未找到产品",
-        noFactories: "未找到工厂",
-        uploadCta: "点击上传规格书、图纸或 PDF",
-        notesEx: "描述此样品的具体更改或细节..."
-      },
-      errors: {
-        productRequired: "请选择产品型号",
-        factoryRequired: "请选择工厂"
-      },
-      types: {
-        "Counter Sample": "确认样 (Counter)",
-        "Pre-Production": "产前样 (PP)",
-        "Top of Production": "大货样 (TOP)",
-        "Photo Sample": "拍摄样",
-        "Size Set": "跳码样 (Size Set)"
-      }
+      methods: { "Air": "空运", "Ocean": "海运 (Ocean)", "Sea": "海运 (Sea)", "Rail": "铁路", "Truck": "陆运/卡车" },
+      statuses: { "Booked": "已订舱", "In Transit": "运输中", "Customs": "清关中", "Delivered": "已送达", "Exception": "异常" },
+      accountTypes: { "Usuppli/Axcess": "Usuppli/Axcess 内部", "Existing Customer": "现有客户", "New Customer": "新客户" },
+      placeholders: { trackingEx: "例如 MSKU901283", managerName: "经理姓名", cityCountry: "城市, 国家", selectJob: "选择活跃订单...", selectSample: "选择样品请求..." },
+      errors: { trackingRequired: "追踪单号必填", managerRequired: "客户经理必填", originRequired: "始发地必填", destRequired: "目的地必填", etaRequired: "ETA 必填", linkJobRequired: "请关联一个订单", linkSampleRequired: "请关联一个样品请求" }
     },
     job: {
       title: "新生产订单",
       subtitle: "创建作业协议 v2.67",
-      headers: {
-        scope: "产品与客户",
-        logistics: "物流与执行",
-        shipping: "运输与财务"
-      },
+      headers: { scope: "产品与客户", logistics: "物流与执行", shipping: "运输与财务" },
       labels: {
         jobId: "内部订单 ID (自动)",
         jobName: "订单名称 / 参考",
         poNumber: "采购订单号 (PO)",
         productModel: "产品型号",
         quantity: "数量",
+        factory: "工厂",
         customer: "客户 (可选)",
         leadBuyer: "首席采购员",
         initialStage: "初始阶段",
@@ -672,108 +363,28 @@ export const zhHans: Translation = {
         paymentTerms: "付款条款",
         packInstr: "包装说明"
       },
-      placeholders: {
-        nameEx: "例如：夏季系列批次 A",
-        poEx: "PO-2026-...",
-        unassigned: "未分配库存",
-        buyerEx: "采购员姓名",
-        descEx: "关于此订单的内部备注...",
-        whEx: "仓库 / 港口",
-        payEx: "例如：30% 定金",
-        packEx: "纸箱标记、胶袋细节、贴纸要求..."
-      },
-      errors: {
-        nameRequired: "订单名称必填",
-        poRequired: "PO 号必填"
-      },
-      stages: {
-        "Inquiry": "询价",
-        "Costing": "核价",
-        "Sampling": "打样",
-        "Production": "生产"
-      },
-      priorities: {
-        "Low": "低",
-        "Medium": "中",
-        "High": "高",
-        "Urgent": "紧急"
-      }
+      priorities: { "Low": "低", "Medium": "中", "High": "高", "Urgent": "紧急" },
+      stages: { "Inquiry": "询价", "Costing": "核价", "Sampling": "打样", "Production": "生产" },
+      placeholders: { nameEx: "例如：夏季系列批次 A", poEx: "PO-2026-...", unassigned: "未分配库存", buyerEx: "采购员姓名", descEx: "关于此订单的内部备注...", whEx: "仓库 / 港口", payEx: "例如：30% 定金", packEx: "纸箱标记、胶袋细节、贴纸要求..." },
+      errors: { nameRequired: "订单名称必填", poRequired: "PO 号必填" }
     },
-    customer: {
-      title: "新客户入驻",
-      subtitle: "客户获取协议 v3.0",
-      modes: {
-        fast: "快速通道 (销售)",
-        advanced: "高级通道 (运营)"
-      },
-      headers: {
-        identityContact: "步骤 1：身份与联系方式",
-        bizLocation: "步骤 2：业务与位置",
-        corpIdentity: "企业身份",
-        contactPrefs: "联系方式与偏好",
-        globalLoc: "全球位置",
-        review: "审核与创建"
-      },
+    sample: {
+      title: "请求新样品",
+      subtitle: "生产样或确认样",
       labels: {
-        internalId: "内部 ID",
-        accountOwner: "客户经理",
-        companyName: "公司名称",
-        contactPerson: "联系人",
-        email: "电子邮箱",
-        contactNo: "联系电话",
-        bizType: "业务类型",
-        socialMedia: "社交媒体",
-        address: "地址",
-        street: "街道地址",
-        city: "城市",
-        state: "省/州",
-        industry: "所属行业",
-        source: "客户来源",
-        commPref: "沟通偏好",
-        country: "国家/地区",
-        zip: "邮编",
-        creatingFor: "正在创建活跃客户记录："
+        id: "样品请求 ID (自动)",
+        type: "样品类型",
+        productModel: "产品型号",
+        factory: "工厂",
+        estSampleCost: "预计样品费 ($)",
+        estCourierCost: "预计快递费 ($)",
+        attachments: "附件",
+        instructions: "说明 / 备注"
       },
-      placeholders: {
-        salesRep: "销售代表姓名",
-        ifBlank: "如为空，则同联系人",
-        selectType: "选择类型",
-        selectPlatform: "选择平台",
-        socialEx: "例如 @MyHandle",
-        selectIndustry: "选择行业",
-        selectSource: "选择来源",
-        typeCountry: "输入国家名称...",
-        unassigned: "未分配"
-      },
-      errors: {
-        contactRequired: "联系人必填",
-        emailRequired: "邮箱必填",
-        phoneRequired: "电话号码必填"
-      },
-      bizTypes: {
-        "Importer": "进口商",
-        "Influencer": "网红/KOL",
-        "University/School": "大学/学校",
-        "Corporation": "企业",
-        "Non-Profit / Church / ORG.": "非营利组织",
-        "Online / Amazon Seller": "电商/亚马逊卖家",
-        "Small Business": "小型企业"
-      },
-      industries: {
-        "Non-Profit": "非营利",
-        "Military": "军事/国防",
-        "Government": "政府",
-        "Retail": "零售",
-        "Manufacturing": "制造",
-        "Other": "其他"
-      },
-      sources: {
-        "Referral": "推荐",
-        "Trade Show": "展会",
-        "Other": "其他"
-      }
+      types: { "Counter Sample": "确认样 (Counter)", "Pre-Production": "产前样 (PP)", "Top of Production": "大货样 (TOP)", "Photo Sample": "拍摄样", "Size Set": "跳码样 (Size Set)" },
+      placeholders: { noProducts: "未找到产品", noFactories: "未找到工厂", uploadCta: "点击上传规格书、图纸或 PDF", notesEx: "描述此样品的具体更改或细节..." },
+      errors: { productRequired: "请选择产品型号", factoryRequired: "请选择工厂" }
     },
-    // --- NEW: SUPPLIER WIZARD ---
     supplier: {
       title: "添加供应商",
       name: "公司名称",
@@ -782,121 +393,74 @@ export const zhHans: Translation = {
       email: "电子邮件",
       type: "业务类型"
     },
-    // --- NEW: NEW PRODUCT WIZARD (Already present, ensuring consistency) ---
     newProduct: {
       title: "新产品向导",
       headers: {
-        expressIdentity: "快速识别",
-        expressIdentityDesc: "快速定义核心产品细节。",
-        sourcingStrategy: "采购策略",
-        sourcingStrategyDesc: "指派制造合作伙伴。",
-        basicSpecs: "基本规格",
-        basicSpecsDesc: "基本属性。",
-        roughCosting: "粗略成本估算",
-        roughCostingDesc: "预计单位经济效益（可选）。",
-        advConcept: "高级：概念",
-        advConceptDesc: "详细的产品定义。",
-        advEngineering: "高级：工程",
-        advBOM: "高级：物料清单 (BOM)",
-        advSourcing: "高级：采购",
-        advCost: "高级：成本明细",
-        advPackaging: "高级：包装",
-        reviewComplete: "审核完成",
-        reviewDesc: "所有高级规格已捕获。"
+        expressIdentity: "快速识别", expressIdentityDesc: "快速定义核心产品细节。", sourcingStrategy: "采购策略", sourcingStrategyDesc: "指派制造合作伙伴。",
+        basicSpecs: "基本规格", basicSpecsDesc: "基本属性。", roughCosting: "粗略成本估算", roughCostingDesc: "预计单位经济效益（可选）。",
+        advConcept: "高级：概念", advConceptDesc: "详细的产品定义。", advEngineering: "高级：工程", advBOM: "高级：物料清单 (BOM)", advSourcing: "高级：采购",
+        advCost: "高级：成本明细", advPackaging: "高级：包装", reviewComplete: "审核完成", reviewDesc: "所有高级规格已捕获。"
       },
       labels: {
-        productName: "产品名称",
-        brand: "品牌",
-        category: "类别",
-        primarySupplier: "主要供应商",
-        originCountry: "原产国",
-        moq: "最小起订量 (MOQ)",
-        leadTime: "交货周期",
-        skuCode: "SKU 代码",
-        hsCode: "海关编码 (HS Code)",
-        materialComp: "材质成分",
-        estFactoryCost: "预计工厂成本 ($)",
-        description: "描述",
-        techPack: "技术包",
-        externalUrl: "外部链接",
-        length: "长 (cm)",
-        width: "宽 (cm)",
-        height: "高 (cm)",
-        bomFile: "BOM 文件",
-        materialNotes: "材质备注",
-        supplier: "供应商",
-        origin: "原产地",
-        materialCost: "材料成本",
-        laborCost: "人工成本",
-        packaging: "包装",
-        logistics: "物流",
-        packagingType: "包装类型",
-        masterCartonQty: "主箱数量",
-        unitWeight: "单位重量 (kg)"
+        productName: "产品名称", brand: "品牌", category: "类别", primarySupplier: "供应商", originCountry: "原产国",
+        moq: "最小起订量 (MOQ)", leadTime: "交货周期", skuCode: "SKU 代码", hsCode: "海关编码 (HS Code)", materialComp: "材质成分", estFactoryCost: "预计工厂成本 ($)",
+        description: "描述", techPack: "技术包", externalUrl: "外部链接", length: "长 (cm)", width: "宽 (cm)", height: "高 (cm)",
+        bomFile: "BOM 文件", materialNotes: "材质备注", supplier: "供应商", origin: "原产地", materialCost: "材料成本",
+        laborCost: "人工成本", packaging: "包装", logistics: "物流", packagingType: "包装类型", masterCartonQty: "主箱数量", unitWeight: "单位重量 (kg)"
       },
       placeholders: {
-        nameEx: "例如：无线耳机",
-        selectOrType: "选择或输入...",
-        selectFactory: "选择工厂...",
-        autoGen: "AUTO-GEN",
-        hsEx: "0000.00.00",
-        materialEx: "例如：100% 棉",
-        retailSkip: "快速模式跳过零售价。",
-        attachTechPack: "添加技术包 (PDF)",
-        driveLink: "https://drive...",
-        attachBom: "添加 BOM (.XLS)",
-        matNotesEx: "1. 主面料：100% 棉，220gsm..."
+        nameEx: "例如：无线耳机", selectOrType: "选择或输入...", selectFactory: "选择工厂...", autoGen: "AUTO-GEN", hsEx: "0000.00.00", materialEx: "例如：100% 棉",
+        retailSkip: "快速模式跳过零售价。", attachTechPack: "添加技术包 (PDF)", driveLink: "https://drive...", attachBom: "添加 BOM (.XLS)", matNotesEx: "1. 主面料：100% 棉，220gsm..."
       },
-      errors: {
-        nameRequired: "产品名称为必填项"
-      },
+      errors: { nameRequired: "产品名称为必填项" },
       categories: {
-        "Consumer Electronics": "消费电子",
-        "Apparel & Clothing": "服装与服饰",
-        "Home & Garden": "家居与园艺",
-        "Health & Beauty Products": "健康与美容",
-        "Automotive Parts & Accessories": "汽配与附件",
-        "Shoes & Footwear": "鞋靴",
-        "Bags, Luggage & Cases": "箱包",
-        "Jewelry & Watches": "珠宝与手表",
-        "Toys & Games": "玩具与游戏",
-        "Sports & Outdoor Equipment": "运动与户外",
-        "Lights & Lighting": "照明灯具",
-        "Tools & Hardware": "五金工具",
-        "Pet Supplies": "宠物用品",
-        "Office & School Supplies": "办公与文具",
-        "Packaging & Printing": "包装与印刷",
-        "Electrical Equipment & Supplies": "电气设备",
-        "Security & Surveillance": "安防监控",
-        "Home Appliances": "家用电器",
-        "Furniture": "家具",
-        "Textiles & Fabrics": "纺织面料",
-        "Electronic Components": "电子元器件",
-        "Industrial Machinery": "工业机械",
-        "Construction & Building Materials": "建筑材料",
-        "Chemicals & Raw Materials": "化工原料",
-        "Food & Beverage Products": "食品饮料",
-        "Medical & Healthcare Supplies": "医疗保健",
-        "Gifts & Crafts": "礼品工艺品",
-        "Baby & Maternity Products": "母婴用品",
-        "Fashion Accessories": "时尚配饰",
-        "Renewable Energy Products": "新能源产品",
-        "Telecommunications Equipment": "通讯设备",
-        "Agriculture & Food Processing": "农业与食品加工",
-        "Instruments & Measurement Equipment": "仪器仪表",
-        "Wedding & Event Supplies": "婚庆用品",
-        "Cleaning & Hygiene Supplies": "清洁卫生",
-        "Musical Instruments & Equipment": "乐器",
-        "Cameras & Photography Equipment": "摄影器材",
-        "Vehicles & Transportation": "车辆运输",
-        "Material Handling Equipment": "物料搬运",
-        "Safety & Protection Equipment": "安全防护"
+        "Consumer Electronics": "消费电子", "Apparel & Clothing": "服装与服饰", "Home & Garden": "家居与园艺", "Health & Beauty Products": "健康与美容", "Automotive Parts & Accessories": "汽配与附件",
+        "Shoes & Footwear": "鞋靴", "Bags, Luggage & Cases": "箱包", "Jewelry & Watches": "珠宝与手表", "Toys & Games": "玩具与游戏", "Sports & Outdoor Equipment": "运动与户外",
+        "Lights & Lighting": "照明灯具", "Tools & Hardware": "五金工具", "Pet Supplies": "宠物用品", "Office & School Supplies": "办公与文具", "Packaging & Printing": "包装与印刷",
+        "Electrical Equipment & Supplies": "电气设备", "Security & Surveillance": "安防监控", "Home Appliances": "家用电器", "Furniture": "家具", "Textiles & Fabrics": "纺织面料",
+        "Electronic Components": "电子元器件", "Industrial Machinery": "工业机械", "Construction & Building Materials": "建筑材料", "Chemicals & Raw Materials": "化工原料", "Food & Beverage Products": "食品饮料",
+        "Medical & Healthcare Supplies": "医疗保健", "Gifts & Crafts": "礼品工艺品", "Baby & Maternity Products": "母婴用品", "Fashion Accessories": "时尚配饰", "Renewable Energy Products": "新能源产品",
+        "Telecommunications Equipment": "通讯设备", "Agriculture & Food Processing": "农业与食品加工", "Instruments & Measurement Equipment": "仪器仪表", "Wedding & Event Supplies": "婚庆用品", "Cleaning & Hygiene Supplies": "清洁卫生",
+        "Musical Instruments & Equipment": "乐器", "Cameras & Photography Equipment": "摄影器材", "Vehicles & Transportation": "车辆运输", "Material Handling Equipment": "物料搬运", "Safety & Protection Equipment": "安全防护"
       },
-      packagingOptions: {
-        "Polybag": "塑料袋",
-        "Retail Box": "零售彩盒",
-        "Custom": "定制包装"
-      }
+      packagingOptions: { "Polybag": "塑料袋", "Retail Box": "零售彩盒", "Custom": "定制包装" }
+    },
+    customer: {
+      title: "新客户入驻", subtitle: "客户获取协议 v3.0", modes: { fast: "快速通道 (销售)", advanced: "高级通道 (运营)" },
+      headers: { identityContact: "步骤 1：身份与联系方式", bizLocation: "步骤 2：业务与位置", corpIdentity: "企业身份", contactPrefs: "联系方式与偏好", globalLoc: "全球位置", review: "审核与创建" },
+      labels: { internalId: "内部 ID", accountOwner: "客户经理", companyName: "公司名称", contactPerson: "联系人", email: "电子邮箱", contactNo: "联系电话", bizType: "业务类型", socialMedia: "社交媒体", address: "地址", street: "街道地址", city: "城市", state: "省/州", industry: "所属行业", source: "客户来源", commPref: "沟通偏好", country: "国家/地区", zip: "邮编", creatingFor: "正在创建活跃客户记录：" },
+      placeholders: { salesRep: "销售代表姓名", ifBlank: "如为空，则同联系人", selectType: "选择类型", selectPlatform: "选择平台", socialEx: "例如 @MyHandle", selectIndustry: "选择行业", selectSource: "选择来源", typeCountry: "输入国家名称...", unassigned: "未分配" },
+      errors: { contactRequired: "联系人必填", emailRequired: "邮箱必填", phoneRequired: "电话号码必填" },
+      bizTypes: { "Importer": "进口商", "Influencer": "网红/KOL", "University/School": "大学/学校", "Corporation": "企业", "Non-Profit / Church / ORG.": "非营利组织", "Online / Amazon Seller": "电商/亚马逊卖家", "Small Business": "小型企业" },
+      industries: { "Non-Profit": "非营利", "Military": "军事/国防", "Government": "政府", "Retail": "零售", "Manufacturing": "制造", "Other": "其他" },
+      sources: { "Referral": "推荐", "Trade Show": "展会", "Other": "其他" }
     }
-  }
+  },
+  print: {
+    common: { billTo: "账单地址", shipTo: "收货地址", contact: "联系人", email: "电子邮箱", phone: "电话", date: "日期", page: "页码", authorizedSig: "授权签名", generatedBy: "生成者", terms: "条款与条件" },
+    order: { title: "采购订单", poNumber: "PO 单号", vendor: "供应商", deliveryDate: "交货日期", incoterms: "贸易术语", item: "项目", description: "描述", qty: "数量", unitPrice: "单价", total: "总计", subtotal: "小计", tax: "税额", shipping: "运费", grandTotal: "累计总额", notes: "备注 / 说明" },
+    sample: { title: "样品申请单", requestId: "申请 ID", factory: "工厂", courier: "快递", tracking: "追踪单号", estCost: "预计成本", details: "样品详情" },
+    shipment: { title: "货运清单", refId: "参考 ID", carrier: "承运商", method: "运输方式", origin: "始发地", destination: "目的地", eta: "预计到达", manifest: "清单详情" },
+    customer: { title: "客户档案", profile: "概况", internalId: "内部 ID", region: "区域", accountOwner: "客户经理", activeOrders: "活跃订单", totalValue: "总价值" }
+  },
+  widgets: {
+    clock: { title: "世界时钟", localTime: "当地时间", businessHours: "营业时间", open: "营业中", closed: "已关闭", timeZone: "时区" },
+    exchange: { title: "汇率", base: "基础货币", target: "目标货币", rate: "汇率" }
+  },
+  admin: {
+    title: "管理面板", subtitle: "全球配置与身份管理", accessDenied: "访问被拒绝", accessDeniedDesc: "机构协议限制此部分仅供管理账户使用。", deleteAccount: "删除账户？", deleteConfirm: "您确定要删除此用户吗？此操作不可逆。", timeSync: "全球时间同步", tabs: { system: "系统", users: "用户", backup: "备份", audit: "审计", preferences: "偏好设置" }, system: { dbStatus: "数据库状态", connected: "系统在线", version: "版本控制", matrix: "全球关税矩阵" }, users: { registerIdentity: "注册身份", title: "用户注册表" }, backup: { jsonTitle: "导出数据库", jsonDesc: "下载完整系统快照", generate: "生成快照", restoreDB: "恢复数据库", upload: "上传并恢复" }, audit: { exportCSV: "导出 CSV", logTitle: "安全机构日志" }
+  },
+  teamChat: {
+    title: "团队聊天", channels: "频道", directMessages: "私信", typing: "输入中...", online: "在线", offline: "离线", shareVia: "分享至", recording: "录音中...", cancel: "取消", typeMessage: "输入消息...", deleteMsg: "删除消息", teamGeneral: "综合团队", copied: "已复制"
+  },
+  crm: { title: "客户名录", subtitle: "管理客户关系和区域", search: "搜索客户...", addCustomer: "添加客户", accountActive: "账户活跃" },
+  hub: { title: "协作中心", subtitle: "全球留言板", newThread: "新话题", startNewThread: "开始新话题", topic: "话题", message: "消息", selectCustomer: "选择客户...", startConversation: "选择一个话题开始协作", initialMessage: "初始消息...", pinThread: "固定话题", unpinThread: "取消固定话题", clearHistory: "清除历史", participants: "参与者", linkType: "链接类型", selectItem: "选择项目..." },
+  logistics: { title: "物流塔", subtitle: "实时货运追踪", inboundAir: "空运", inboundOcean: "海运", customsHold: "海关扣留", activeUnits: "单位", nextArrival: "下次到达", loadSimulation: "加载模拟", sortBy: "按预计到达时间排序", addShipment: "添加运输", editShipment: "编辑运输", saveChanges: "保存更改" },
+  shopFloor: { title: "生产车间遥测", connected: "已连接", standby: "工位待机", activeStream: "活跃流", killConnection: "断开连接", syncLine: "同步产线状态", efficiencyMatrix: "实时效率矩阵", oee: "设备综合效率 (OEE)", target: "目标", envSensors: "环境传感器", alerts: "诊断警报", queueStatus: "生产队列状态", liveTracking: "实时工厂吞吐量追踪", searchJobs: "搜索活跃订单...", refresh: "刷新" },
+  factory: { title: "供应商与工厂组合", subtitle: "全球制造网络", explorer: "组合浏览器", partners: "活跃制造合作伙伴", search: "搜索...", addBtn: "添加供应商", viewAudit: "查看审计", supplierId: "供应商身份", location: "地点", status: "状态", actions: "操作", noResults: "未找到结果" },
+  catalog: { subtitle: "全球 SKU 目录", allCategories: "所有类别" },
+  dashboard: { title: "运营仪表板", subtitle: "全球供应链脉动", activeJobs: "活跃订单", globalSkus: "全球 SKU", inventoryVal: "库存价值", supplierHealth: "供应商健康度", recentActivity: "近期活动", viewAll: "查看全部", logisticsControl: "物流控制", openLogistics: "打开物流塔", refreshPulse: "刷新脉动", totalRevenue: "总收入", activeOrders: "活跃订单", pendingShipments: "待发货", productionEfficiency: "生产效率", revenueVsCost: "收入与成本" },
+  login: { subtitle: "企业级供应链管理器", email: "电子邮件地址", password: "密码", loginBtn: "安全登录", forgot: "忘记密码？", quickAccess: "或快速访问 (开发)", sendCode: "发送重置代码", backToLogin: "返回登录", verifyCode: "验证代码", resend: "重新发送代码", setPass: "设置新密码" },
+  hsLookup: { title: "精确 HS 查询", subtitle: "全球分类与合规", searchPlaceholder: "例如：不锈钢保温旅行杯", analyze: "分析中...", identify: "识别", code: "推荐 HS 编码", detectedRate: "检测税率", description: "描述", dutyClass: "关税分类", aiLogic: "AI 报关逻辑", applyTo: "应用到", locked: "精确费率已锁定" },
+  search: { placeholder: "搜索...", quickActions: "快速操作", noResults: "未找到结果。", commands: { newProduct: "新建产品", newOrder: "新建订单", goDashboard: "前往仪表盘", goSettings: "前往设置" } }
 };

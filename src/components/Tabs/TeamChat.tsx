@@ -29,33 +29,36 @@ const STYLES = {
   inputFocus: "focus:bg-white dark:focus:bg-slate-900 focus:border-[#003d5b] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#003d5b]/20",
 };
 
-interface ChatContentProps {
+interface TeamChatProps {
   currentUser: User;
   users: User[];
   lang: Language;
-  threads: ChatThread[];
-  messages: Record<string, ChatMessage[]>;
-  activeThreadId: string | null;
-  onSelectThread: (id: string) => void;
-  onSendMessage: (text: string, isAudio: boolean) => void;
-  onFileUpload: (file: File) => void;
-  onDeleteMessage: (msgId: string) => void;
-  onShowNotification: (msg: string) => void;
-  isPoppedOut: boolean;
+  threads?: ChatThread[];
+  messages?: Record<string, ChatMessage[]>;
+  activeThreadId?: string | null;
+  onSelectThread?: (id: string) => void;
+  onSendMessage?: (text: string, isAudio: boolean) => void;
+  onFileUpload?: (file: File) => void;
+  onDeleteMessage?: (msgId: string) => void;
+  onShowNotification?: (msg: string) => void;
+  isPoppedOut?: boolean;
   onPopOut?: () => void;
   onClose?: () => void;
   onMinimize?: () => void;
   dragHandleProps?: any; 
   notificationToast?: string | null;
+  isOpen?: boolean;
 }
 
-const ChatContent: React.FC<ChatContentProps> = ({ 
-  currentUser, users, lang, threads, messages, activeThreadId, 
-  onSelectThread, onSendMessage, onFileUpload, onDeleteMessage, onShowNotification,
-  isPoppedOut, onPopOut, onClose, onMinimize, dragHandleProps, notificationToast
+const TeamChat: React.FC<TeamChatProps> = ({ 
+  currentUser, users, lang, threads = [], messages = {}, activeThreadId = null, 
+  onSelectThread = () => {}, onSendMessage = () => {}, onFileUpload = () => {}, onDeleteMessage = () => {}, onShowNotification = () => {},
+  isPoppedOut = false, onPopOut, onClose, onMinimize, dragHandleProps, notificationToast
 }) => {
   // CRASH PROTECTION: Fallback if translation key is missing
-  const t = (translations[lang] || translations['en'])?.teamChat || translations['en'].teamChat;
+  const rootT = translations[lang] || translations['en'];
+  const t = rootT.teamChat || translations['en'].teamChat;
+  const commonT = rootT.common;
 
   const [inputText, setInputText] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -100,7 +103,7 @@ const ChatContent: React.FC<ChatContentProps> = ({
     else if (platform === 'email') window.open(`mailto:?subject=Chat Log&body=${encodeURIComponent(text)}`, '_blank');
     else if (platform === 'sms') window.open(`sms:?&body=${encodeURIComponent(text)}`, '_blank');
     else if (platform === 'wechat') {
-      navigator.clipboard.writeText(text).then(() => onShowNotification(t?.copied || "Copied"));
+      navigator.clipboard.writeText(text).then(() => onShowNotification(commonT?.copied || "Copied"));
     }
   };
 
@@ -181,7 +184,7 @@ const ChatContent: React.FC<ChatContentProps> = ({
         <div className="flex-1 flex flex-col bg-white dark:bg-slate-900 relative">
           {activeThreadId ? (
             <>
-              <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur z-10 relative">
+              <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900 z-10 relative">
                 <div className="flex items-center gap-3">
                   {activeThread?.type === 'group' ? <div className="w-9 h-9 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center"><GroupIcon className="w-5 h-5" /></div> : <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">{activeThread?.name.charAt(0)}</div>}
                   <div><h3 className="font-bold text-slate-800 dark:text-white text-sm">{activeThread?.name}</h3><p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{activeThread?.type === 'group' ? '3 members' : (activeThread?.isOnline ? t?.online : t?.offline)}</p></div>
@@ -200,7 +203,7 @@ const ChatContent: React.FC<ChatContentProps> = ({
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50 dark:bg-slate-950/20">
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50 dark:bg-slate-950/20 custom-scrollbar">
                  {currentMessages.map((msg, idx) => {
                    const isMe = msg.senderId === currentUser.id;
                    const sender = users.find(u => u.id === msg.senderId);
@@ -249,230 +252,10 @@ const ChatContent: React.FC<ChatContentProps> = ({
                    )}
                 </form>
             </div>
-          </>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-slate-300 dark:text-slate-700">
-               <div className="w-20 h-20 rounded-[2rem] bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-4"><SendIcon className="w-8 h-8 text-slate-200 dark:text-slate-700" /></div>
-               <h3 className="text-lg font-black text-slate-800 dark:text-slate-200">{t?.title || "Team Chat"}</h3>
-               <p className="text-xs font-bold mt-1 text-slate-400 dark:text-slate-500">Select a thread to start messaging</p>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
-  );
-};
-
-// --- MAIN CONTAINER ---
-interface TeamChatProps {
-  currentUser: User;
-  users: User[];
-  lang: Language;
-  isOpen?: boolean;
-  isMinimized?: boolean;
-  onMinimize?: () => void;
-  onClose?: () => void;
-  onUnreadChange?: (count: number) => void;
-  setGlobalMessages?: React.Dispatch<React.SetStateAction<Record<string, ChatMessage[]>>>;
-}
-
-const TeamChat: React.FC<TeamChatProps> = ({ currentUser, users, lang, isOpen, isMinimized, onMinimize, onClose, onUnreadChange, setGlobalMessages }) => {
-  const t = (translations[lang] || translations['en'])?.teamChat || translations['en'].teamChat;
-  const GROUP_ID = 'team-general';
-
-  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
-  const [isPoppedOut, setIsPoppedOut] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const externalWindow = useRef<Window | null>(null);
-
-  const [size, setSize] = useState({ w: 800, h: 600 });
-  const [position, setPosition] = useState({ x: window.innerWidth - 850, y: window.innerHeight - 650 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [isResizing, setIsResizing] = useState(false);
-
-  const [threads, setThreads] = useState<ChatThread[]>(() => {
-    const dms = users.filter(u => u.id !== currentUser.id).map((u, i) => ({
-      id: u.id, name: u.name, type: 'direct' as const, unreadCount: i===0?2:0, lastMessage: i===0?"Did you approve the sample?":"Thanks for the update.", lastMessageTime: new Date(Date.now()-10000000*(i+1)), isOnline: i<2
-    }));
-    return [{ id: GROUP_ID, name: t?.teamGeneral || "General Team", type: 'group', unreadCount: 5, lastMessage: "Please check the new logistics report.", lastMessageTime: new Date(Date.now()-300000), isOnline: true }, ...dms];
-  });
-  
-  const [messages, setMessages] = useState<Record<string, ChatMessage[]>>({
-    [users[0]?.id || '']: [
-      { id: '1', senderId: users[0]?.id || '', text: "Hey, looking at the Q3 production plan.", timestamp: new Date(Date.now()-86400000), isRead: true },
-      { id: '2', senderId: currentUser.id, text: "I've uploaded the new specs to the dashboard.", timestamp: new Date(Date.now()-80000000), isRead: true },
-      { id: '3', senderId: users[0]?.id || '', text: "Great. Did you approve the sample?", timestamp: new Date(Date.now()-100000), isRead: false },
-    ],
-    [GROUP_ID]: [{ id: 'g1', senderId: users[1]?.id, text: "Welcome everyone.", timestamp: new Date(Date.now()-999999), isRead: true }]
-  });
-
-  useEffect(() => {
-      (window as any).clearAllChatHistory = () => {
-          setMessages({});
-          setThreads(prev => prev.map(t => ({...t, lastMessage: '', unreadCount: 0})));
-      };
-  }, []);
-
-  useEffect(() => {
-      const totalUnread = threads.reduce((acc, t) => acc + t.unreadCount, 0);
-      if (onUnreadChange) onUnreadChange(totalUnread);
-  }, [threads, onUnreadChange]);
-
-  const showNotification = (msg: string) => {
-      setToastMessage(msg);
-      setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  const handleSendMessage = (text: string, isAudio: boolean) => {
-      if (!activeThreadId) return;
-      const msg: ChatMessage = {
-          id: Date.now().toString(),
-          senderId: currentUser.id,
-          text: isAudio ? "" : text,
-          timestamp: new Date(),
-          isRead: true,
-          attachment: isAudio ? { type: 'audio', url: '#', duration: '0:12', name: 'Audio' } : undefined
-      };
-      addMessage(msg);
-  };
-
-  const handleFileUpload = (file: File) => {
-      if (!activeThreadId) return;
-      const objectUrl = URL.createObjectURL(file);
-      const isImage = file.type.startsWith('image/');
-      const msg: ChatMessage = {
-          id: Date.now().toString(),
-          senderId: currentUser.id,
-          text: "", timestamp: new Date(), isRead: true,
-          attachment: { type: isImage ? 'image' : 'file', url: objectUrl, name: file.name, size: (file.size/1024/1024).toFixed(2)+' MB', mimeType: file.type }
-      };
-      addMessage(msg);
-  };
-
-  const handleDeleteMessage = (msgId: string) => {
-      if (!activeThreadId) return;
-      setMessages(prev => ({
-          ...prev,
-          [activeThreadId]: prev[activeThreadId].filter(m => m.id !== msgId)
-      }));
-  };
-
-  const addMessage = (msg: ChatMessage) => {
-      if(!activeThreadId) return;
-      setMessages(p => ({...p, [activeThreadId]: [...(p[activeThreadId]||[]), msg]}));
-      setThreads(p => p.map(t => t.id === activeThreadId ? {...t, lastMessage: msg.attachment?'[Attachment]':msg.text, lastMessageTime: new Date()} : t));
-      simulateReply(activeThreadId);
-  };
-
-  const simulateReply = (threadId: string) => {
-      setTimeout(() => setThreads(p => p.map(t => t.id===threadId?{...t, isTyping: true}:t)), 1500);
-      setTimeout(() => {
-          setThreads(p => p.map(t => t.id===threadId?{...t, isTyping: false}:t));
-          const reply: ChatMessage = { id: Date.now().toString(), senderId: threadId===GROUP_ID?users[1].id:threadId, text: "Got it!", timestamp: new Date(), isRead: false };
-          setMessages(p => ({...p, [threadId]: [...(p[threadId]||[]), reply]}));
-          setThreads(p => p.map(t => t.id === threadId ? { ...t, lastMessage: "Got it!", lastMessageTime: new Date(), unreadCount: activeThreadId !== threadId ? t.unreadCount + 1 : 0 } : t));
-      }, 3500);
-  };
-
-  const handleSelectThread = (id: string) => {
-      setActiveThreadId(id);
-      setThreads(prev => prev.map(t => t.id === id ? { ...t, unreadCount: 0 } : t));
-  };
-
-  const handlePopOut = () => {
-      const w = window.open('', 'TeamChat', 'width=800,height=600,left=100,top=100,popup=yes,toolbar=no,menubar=no,scrollbars=no,status=no,location=no'); 
-      if (w) {
-          externalWindow.current = w;
-          w.document.title = "Team Chat";
-          Array.from(document.styleSheets).forEach(styleSheet => {
-            try {
-              if (styleSheet.href) {
-                const link = w.document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = styleSheet.href;
-                w.document.head.appendChild(link);
-              } else if (styleSheet.cssRules) {
-                 const style = w.document.createElement('style');
-                 Array.from(styleSheet.cssRules).forEach(rule => style.appendChild(document.createTextNode(rule.cssText)));
-                 w.document.head.appendChild(style);
-              }
-            } catch (e) {}
-          });
-          const style = w.document.createElement('style');
-          style.textContent = `html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; } #root { height: 100%; } .dark body { background-color: #020617; }`;
-          w.document.head.appendChild(style);
-          const script = w.document.createElement('script');
-          script.src = "https://cdn.tailwindcss.com";
-          w.document.head.appendChild(script);
-          w.onbeforeunload = () => { setIsPoppedOut(false); externalWindow.current = null; };
-          setIsPoppedOut(true);
-      }
-  };
-
-  useEffect(() => {
-      if(!isOpen || isMinimized || isPoppedOut) return;
-      const onMove = (e: MouseEvent) => {
-          if(isDragging) setPosition({ x: e.clientX - dragOffset.x, y: e.clientY - dragOffset.y });
-          if(isResizing) setSize({ w: Math.max(600, e.clientX - position.x), h: Math.max(400, e.clientY - position.y) });
-      };
-      const onUp = () => { setIsDragging(false); setIsResizing(false); };
-      window.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseup', onUp);
-      return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, [isDragging, isResizing, dragOffset, position, isOpen, isMinimized, isPoppedOut]);
-
-  const handleHeaderDown = (e: React.MouseEvent) => {
-      if((e.target as HTMLElement).closest('button')) return;
-      setIsDragging(true);
-      setDragOffset({ x: e.clientX - position.x, y: e.clientY - position.y });
-  };
-
-  if (!isOpen) return null;
-
-  if (isMinimized && !isPoppedOut) {
-      const totalUnread = threads.reduce((acc,t) => acc+t.unreadCount, 0);
-      return (
-          <button onClick={onMinimize} className="fixed bottom-6 right-6 z-50 bg-slate-900 dark:bg-slate-800 text-white rounded-full p-4 shadow-2xl flex items-center gap-3 hover:scale-105 transition-all">
-               <div className="relative">
-                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                   {totalUnread > 0 && <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-slate-900"></span>}
-               </div>
-               <span className="font-bold pr-2">{t?.title || "Team Chat"}</span>
-          </button>
-      )
-  }
-
-  if (isPoppedOut && externalWindow.current) {
-      return createPortal(
-          <div className="h-full w-full bg-slate-50 dark:bg-slate-950 flex flex-col p-4">
-               <ChatContent 
-                   currentUser={currentUser} users={users} lang={lang} 
-                   threads={threads} messages={messages} activeThreadId={activeThreadId}
-                   onSelectThread={handleSelectThread} onSendMessage={handleSendMessage} onFileUpload={handleFileUpload} onDeleteMessage={handleDeleteMessage}
-                   onShowNotification={showNotification}
-                   isPoppedOut={true} notificationToast={toastMessage}
-               />
-          </div>,
-          externalWindow.current.document.body
-      );
-  }
-
-  return (
-      <div style={{ left: position.x, top: position.y, width: size.w, height: size.h }} className="fixed z-50 rounded-[2rem] shadow-2xl overflow-hidden">
-          <ChatContent 
-               currentUser={currentUser} users={users} lang={lang} 
-               threads={threads} messages={messages} activeThreadId={activeThreadId}
-               onSelectThread={handleSelectThread} onSendMessage={handleSendMessage} onFileUpload={handleFileUpload} onDeleteMessage={handleDeleteMessage}
-               onShowNotification={showNotification}
-               isPoppedOut={false} onPopOut={handlePopOut} onClose={onClose} onMinimize={onMinimize}
-               dragHandleProps={{ onMouseDown: handleHeaderDown }}
-               notificationToast={toastMessage}
-           />
-          <div onMouseDown={(e)=>{e.stopPropagation(); setIsResizing(true);}} className="absolute bottom-2 right-2 cursor-se-resize text-slate-400 p-2 hover:text-slate-600 z-50">
-              <ResizeGripIcon className="w-5 h-5" />
-          </div>
-      </div>
   );
 };
 

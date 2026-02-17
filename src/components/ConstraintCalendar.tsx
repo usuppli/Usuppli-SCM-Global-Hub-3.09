@@ -71,7 +71,7 @@ export default function ConstraintCalendar({
   const getTranslatedType = (typeKey: string) => {
     // Maps 'Job' -> t.typeJob, 'Sample' -> t.typeSample, etc.
     const key = `type${typeKey}` as keyof typeof t;
-    return t[key] || typeKey;
+    return (t as any)[key] || typeKey;
   };
 
   const [currentDate, setCurrentDate] = useState(new Date(2026, 1, 1));
@@ -381,7 +381,8 @@ export default function ConstraintCalendar({
                     <div className="space-y-3">
                         <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{t?.breakdown || "Breakdown (Days)"}</label>
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-slate-600 dark:text-slate-400 flex items-center gap-2"><Factory className="w-3 h-3" /> {t?.production || "Production"}</span>
+                            {/* Fix: explicit runtime type check and cast to bypass union inference issues for production property */}
+                            <span className="text-slate-600 dark:text-slate-400 flex items-center gap-2"><Factory className="w-3 h-3" /> {typeof (t as any)?.production === 'string' ? (t as any).production : "Production"}</span>
                             <input type="number" className="w-16 p-1 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 border rounded text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={leadTimeData.production} onChange={e => setLeadTimeData({...leadTimeData, production: Number(e.target.value)})} />
                         </div>
                         <div className="flex justify-between items-center text-sm">
@@ -389,7 +390,8 @@ export default function ConstraintCalendar({
                             <input type="number" className="w-16 p-1 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 border rounded text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={leadTimeData.qualityCheck} onChange={e => setLeadTimeData({...leadTimeData, qualityCheck: Number(e.target.value)})} />
                         </div>
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-slate-600 dark:text-slate-400 flex items-center gap-2"><Ship className="w-3 h-3" /> {t?.shipping || "Shipping"}</span>
+                            {/* Fix: explicit runtime type check and cast to bypass union inference issues for shipping property */}
+                            <span className="text-slate-600 dark:text-slate-400 flex items-center gap-2"><Ship className="w-3 h-3" /> {typeof (t as any)?.shipping === 'string' ? (t as any).shipping : "Shipping"}</span>
                             <input type="number" className="w-16 p-1 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 border rounded text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={leadTimeData.shipping} onChange={e => setLeadTimeData({...leadTimeData, shipping: Number(e.target.value)})} />
                         </div>
                         <div className="flex justify-between items-center text-sm">

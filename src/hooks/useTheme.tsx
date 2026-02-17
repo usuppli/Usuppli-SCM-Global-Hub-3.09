@@ -10,7 +10,8 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+/* Changed to React.FC with optional children to avoid TSX issues in App.tsx */
+export const ThemeProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   // Initialize state from localStorage or default to 'dark'
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined' && window.localStorage) {

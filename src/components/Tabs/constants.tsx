@@ -71,7 +71,6 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Stanley Ice Flow 2.0',
     brand: 'Stanley',
     category: 'Cups',
-    // Added missing 'sku' property
     sku: 'ICE-FLOW-2.0',
     image: 'https://uk.stanley1913.com/cdn/shop/files/Web_PNG_Square-2025-10-07_TheIceFlow_FlipStraw2.0Tumbler30OZ-BlueSky-Front.png?v=1767114959&width=1515',
     hsCode: '6109.10.00',
@@ -82,14 +81,19 @@ export const MOCK_PRODUCTS: Product[] = [
     dimensions: { lengthCm: 25, widthCm: 20, heightCm: 2, weightKg: 0.18 },
     costVariables: { materials: 8.50, labor: 4.20, packaging: 0.80, overhead: 1.50, logistics: 2.10, inspection: 0.50, production: 0, exportInternal: 0, exportExternal: 0, shipping: 0, design: 0 },
     skus: [{ code: 'LULU-PRT-BLK-M', size: 'M', prices: { USA: 68.00 } }, { code: 'LULU-PRT-BLK-L', size: 'L', prices: { USA: 45.00 } }],
-    cadLink: 'https://specs.usuppli.com/lulu/LM3GGHS-3D.obj'
+    cadLink: 'https://specs.usuppli.com/lulu/LM3GGHS-3D.obj',
+    /* Added missing required properties */
+    price: 35.00,
+    cost: 8.50,
+    stock: 5000,
+    supplier: 'Stanley Mfg',
+    lastUpdated: '2025-02-15T10:00:00Z'
   },
   {
     id: 'PROD-TOC-002',
     name: 'Classic Racerback Bra',
     brand: 'Toccara',
     category: 'Apparel',
-    // Added missing 'sku' property
     sku: 'RACERBACK-BRA',
     image: 'https://www.iamtoccara.com/cdn/shop/products/B0000082.jpg?v=1606785700',
     hsCode: '6212.10.00',
@@ -100,7 +104,13 @@ export const MOCK_PRODUCTS: Product[] = [
     dimensions: { lengthCm: 15, widthCm: 15, heightCm: 3, weightKg: 0.12 },
     costVariables: { materials: 12.00, labor: 6.50, packaging: 1.20, overhead: 2.00, logistics: 1.50, inspection: 0.75, production: 0, exportInternal: 0, exportExternal: 0, shipping: 0, design: 0 },
     skus: [{ code: 'TOC-CRB-NAV-S', size: 'S', prices: { USA: 45.00 } }, { code: 'TOC-CRB-NAV-M', size: 'M', prices: { USA: 45.00 } }],
-    cadLink: 'https://specs.usuppli.com/toccara/B0000082-TECH.pdf'
+    cadLink: 'https://specs.usuppli.com/toccara/B0000082-TECH.pdf',
+    /* Added missing required properties */
+    price: 45.00,
+    cost: 12.00,
+    stock: 1200,
+    supplier: 'Vietnam Textiles Co',
+    lastUpdated: '2025-02-14T09:00:00Z'
   }
 ];
 
@@ -231,7 +241,10 @@ export const MOCK_JOBS: Job[] = [
     shippingMethod: 'Sea',
     destinationAddress: 'Distribution Center, NJ',
     description: 'Main summer stock replenishment.',
-    paymentTerms: '30% Deposit, 70% BL'
+    paymentTerms: '30% Deposit, 70% BL',
+    /* Added missing required properties */
+    value: 125000,
+    progress: 65
   },
   {
     id: 'JOB-2024-002',
@@ -256,13 +269,48 @@ export const MOCK_JOBS: Job[] = [
     shippingMethod: 'Air',
     destinationAddress: 'Berlin Hub',
     description: 'Initial test order for eco line.',
-    paymentTerms: '100% LC'
+    paymentTerms: '100% LC',
+    /* Added missing required properties */
+    value: 24000,
+    progress: 10
   }
 ];
 
 export const MOCK_CUSTOMERS: Customer[] = [
-  { id: 'CUST-001', customerNo: 'C-2023-001', companyName: 'Urban Outfitters', contactPerson: 'Sarah Jenkins', email: 'buying@urban.com', region: 'North America', status: 'Active', totalOrders: 15, totalSpend: 250000, tier: 'VIP', businessType: 'Wholesale' },
-  { id: 'CUST-002', customerNo: 'C-2023-089', companyName: 'Zalando SE', contactPerson: 'Markus Weber', email: 'procurement@zalando.de', region: 'Europe', status: 'Active', totalOrders: 42, totalSpend: 1200000, tier: 'VIP', businessType: 'E-commerce' }
+  { 
+    id: 'CUST-001', 
+    customerNo: 'C-2023-001', 
+    companyName: 'Urban Outfitters', 
+    contactPerson: 'Sarah Jenkins', 
+    email: 'buying@urban.com', 
+    region: 'North America', 
+    status: 'Active', 
+    totalOrders: 15, 
+    totalSpend: 250000, 
+    tier: 'VIP', 
+    businessType: 'Wholesale',
+    /* Added missing required properties */
+    phone: '+1 212 555 0199',
+    totalValue: 250000,
+    country: 'USA'
+  },
+  { 
+    id: 'CUST-002', 
+    customerNo: 'C-2023-089', 
+    companyName: 'Zalando SE', 
+    contactPerson: 'Markus Weber', 
+    email: 'procurement@zalando.de', 
+    region: 'Europe', 
+    status: 'Active', 
+    totalOrders: 42, 
+    totalSpend: 1200000, 
+    tier: 'VIP', 
+    businessType: 'E-commerce',
+    /* Added missing required properties */
+    phone: '+49 30 12345678',
+    totalValue: 1200000,
+    country: 'Germany'
+  }
 ];
 
 export const MOCK_SAMPLES: SampleRequest[] = [];

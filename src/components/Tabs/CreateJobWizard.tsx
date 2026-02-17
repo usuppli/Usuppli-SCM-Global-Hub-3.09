@@ -136,6 +136,8 @@ const CreateJobWizard: React.FC<Props> = ({ products = [], customers = [], facto
       packagingInstructions: formData.packagingInstructions,
       
       completionPercent: 0,
+      /* Added missing required property progress */
+      progress: 0,
       value: 0 
     };
 
