@@ -1,3 +1,4 @@
+
 export interface TariffContextValue {
   rates: Record<string, number>;
   updateRate: (country: string, newRate: string | number) => void;

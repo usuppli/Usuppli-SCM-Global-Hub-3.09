@@ -414,7 +414,7 @@ export interface DashboardTranslations {
   refreshPulse: string;
   totalRevenue: string;
   activeOrders: string;
-  pendingShipments: string
+  pendingShipments: string;
   productionEfficiency: string;
   revenueVsCost: string;
 }
