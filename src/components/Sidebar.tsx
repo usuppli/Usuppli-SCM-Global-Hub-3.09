@@ -15,19 +15,11 @@ import {
   LogOut, 
   Plus, 
   ChevronLeft,
-  EyeOff
+  EyeOff,
+  Search
 } from 'lucide-react';
 import { ThemeToggle } from '../ThemeToggle'; 
 import { Logo } from './Logo'; 
-
-// --- ICONS (Legacy Aesthetic) ---
-const SearchTriggerIcon = ({ className }: { className: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-);
-
-const HideIcon = ({ className }: { className: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-);
 
 interface SidebarProps {
   user: User;
@@ -49,14 +41,15 @@ interface SidebarProps {
 }
 
 const NavGroupLabel: React.FC<{ label: string; isExpanded: boolean }> = ({ label, isExpanded }) => (
-  <div className={`px-6 mt-4 mb-1 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 h-0 mt-0 mb-0 overflow-hidden'}`}>
-      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">{label}</p>
+  <div className={`px-6 mt-6 mb-2 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 h-0 mt-0 mb-0 overflow-hidden'}`}>
+      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 whitespace-nowrap">{label}</p>
   </div>
 );
 
 const Sidebar: React.FC<SidebarProps> = ({ 
   user, activeTab, setActiveTab, currentLang, setCurrentLang, isReadOnly, onOpenProductWizard, onLogout,
   unreadCount, onOpenCommandPalette, isPinned, setIsPinned, onHide,
+  chatOpen, onToggleChat,
   systemVersion = '3.10'
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -66,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navT = t?.nav || translations['en'].nav; 
   const commonT = t?.common || translations['en'].common;
 
-  // Navigation Items
+  // Navigation Items (v3.09 protocol)
   const navItems = [
     { group: navT?.analytics, id: 'DASHBOARD', label: navT?.dashboard, icon: LayoutDashboard },
     { group: navT?.sourcing, id: 'PRODUCT_CATALOG', label: navT?.productCatalog, icon: Package, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
@@ -97,61 +90,89 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* HEADER */}
-      <div className="h-16 flex items-center px-6 shrink-0 border-b border-slate-800 overflow-hidden">
+      <div className="h-20 flex items-center px-6 shrink-0 border-b border-slate-800/50">
           <Logo className="h-8 w-auto text-white shrink-0" variant="mark" />
           {isExpanded && (
-              <div className="ml-3 flex flex-col leading-none">
-                  <span className="font-black text-lg tracking-tight text-white uppercase">USUPPLI</span>
-                  <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-0.5">Global SCM</span>
+              <div className="ml-3 flex flex-col leading-none animate-in fade-in slide-in-from-left-2">
+                  <span className="font-black text-xl tracking-tighter text-white uppercase">USUPPLI</span>
+                  <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.25em] mt-0.5">Global SCM</span>
               </div>
           )}
       </div>
 
-      {/* ACTION BLOCK (57% Width Hybrid Layout) */}
-      <div className="px-3 py-4 flex items-center justify-center gap-2 shrink-0">
-         {!isReadOnly && (
+      {/* ACTION BLOCK - v3.09 RE-ORDERED */}
+      <div className="px-4 py-6 flex flex-col gap-5 shrink-0">
+         
+         {/* 1. LANGUAGE SELECTOR (Restored v3.09 Placement: ABOVE buttons) */}
+         <div className={`flex items-center justify-center gap-6 transition-all duration-500 ${!isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 py-1 border-b border-slate-800/30 mb-1'}`}>
             <button 
-                onClick={onOpenProductWizard}
-                className={`flex items-center justify-center gap-2 py-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 transition-all ${
-                    isExpanded 
-                    ? 'w-[57%] shadow-lg' 
-                    : 'w-10 h-10 p-0'
-                }`}
-            >
-                <Plus className="w-3.5 h-3.5 shrink-0" />
-                {isExpanded && <span className="font-bold text-xs whitespace-nowrap overflow-hidden">{navT?.newProduct || "New Product"}</span>}
-            </button>
-         )}
-         {isExpanded && <ThemeToggle />}
+                onClick={() => setCurrentLang('en')} 
+                className={`text-[10px] font-black tracking-widest transition-all duration-200 ${currentLang === 'en' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-blue-400'}`}
+            >EN</button>
+            <button 
+                onClick={() => setCurrentLang('zh-Hans')} 
+                className={`text-[10px] font-black tracking-widest transition-all duration-200 ${currentLang === 'zh-Hans' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-blue-400'}`}
+            >简</button>
+            <button 
+                onClick={() => setCurrentLang('zh-Hant')} 
+                className={`text-[10px] font-black tracking-widest transition-all duration-200 ${currentLang === 'zh-Hant' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-blue-400'}`}
+            >繁</button>
+         </div>
+
+         {/* 2. BUTTON ROW */}
+         <div className="flex items-center justify-center gap-3">
+            {!isReadOnly && (
+                <button 
+                    onClick={onOpenProductWizard}
+                    className={`flex items-center justify-center gap-2 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg active:scale-95 ${
+                        isExpanded 
+                        ? 'w-[60%]' 
+                        : 'w-10 h-10 p-0'
+                    }`}
+                >
+                    <Plus className="w-4 h-4 shrink-0" />
+                    {isExpanded && <span className="font-bold text-xs whitespace-nowrap overflow-hidden">{navT?.newProduct || "New Product"}</span>}
+                </button>
+            )}
+            {isExpanded && <ThemeToggle />}
+         </div>
       </div>
 
       {/* NAVIGATION LINKS */}
-      <nav className="flex-1 px-3 space-y-0.5 overflow-y-auto no-scrollbar custom-scrollbar">
+      <nav className="flex-1 px-3 space-y-1 overflow-y-auto no-scrollbar custom-scrollbar">
         {navItems.map((item) => {
             if (item.restrictedTo && !item.restrictedTo.includes(user.role)) return null;
-            const isActive = activeTab === item.id;
+            
+            // Bug Fix: Active state for Team Chat floating overlay
+            const isActive = item.id === 'TEAM_CHAT' ? !!chatOpen : activeTab === item.id;
 
             return (
                 <React.Fragment key={item.id}>
                     {item.group && <NavGroupLabel label={item.group} isExpanded={isExpanded} />}
                     <button 
-                        onClick={() => setActiveTab(item.id as TabType)}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${
+                        onClick={() => {
+                            if (item.id === 'TEAM_CHAT' && onToggleChat) {
+                                onToggleChat();
+                            } else {
+                                setActiveTab(item.id as TabType);
+                            }
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative ${
                             isActive 
-                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md' 
+                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl' 
                             : 'text-slate-400 hover:text-white hover:bg-slate-800' 
                         } ${!isExpanded ? 'justify-center' : ''}`}
                         title={!isExpanded ? item.label : ''}
                     >
-                        <div className={`shrink-0 transition-transform duration-300 ${!isExpanded ? 'mx-auto scale-110' : ''}`}>
-                            <item.icon className="w-5 h-5" />
+                        <div className={`shrink-0 transition-transform duration-300 ${!isExpanded ? 'mx-auto scale-110' : ''} ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`}>
+                            <item.icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
                         </div>
-                        <span className={`text-sm font-medium whitespace-nowrap transition-all duration-300 overflow-hidden ${isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+                        <span className={`text-sm font-bold whitespace-nowrap transition-all duration-300 overflow-hidden ${isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
                             {item.label}
                         </span>
                         
                         {item.id === 'TEAM_CHAT' && unreadCount && unreadCount > 0 && (
-                            <span className={`bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-lg ${!isExpanded ? 'absolute top-1 right-1' : ''}`}>
+                            <span className={`bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-lg ${!isExpanded ? 'absolute top-1 right-1' : 'ml-auto'}`}>
                                 {unreadCount > 99 ? '99+' : unreadCount}
                             </span>
                         )}
@@ -159,46 +180,56 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </React.Fragment>
             );
         })}
+
+        {/* COMMAND PALETTE (v3.09 Position: Bottom of list) */}
+        <div className="mt-8 pt-4 border-t border-slate-800/30">
+           <button 
+             onClick={onOpenCommandPalette}
+             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-slate-500 hover:text-white hover:bg-slate-800 ${!isExpanded ? 'justify-center' : ''}`}
+             title={commonT?.search}
+           >
+             <div className={`shrink-0 ${!isExpanded ? 'mx-auto' : ''}`}>
+               <Search className="w-5 h-5" />
+             </div>
+             <span className={`text-[11px] font-black uppercase tracking-widest whitespace-nowrap transition-all duration-300 overflow-hidden ${isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+                {commonT?.search || "Search"}
+             </span>
+             {isExpanded && <span className="ml-auto text-[9px] font-bold opacity-30 px-1.5 py-0.5 border border-slate-700 rounded-md">⌘K</span>}
+           </button>
+        </div>
       </nav>
 
       {/* FOOTER */}
       <div className="bg-[#0f172a] border-t border-slate-800 shrink-0">
-          {/* LANGUAGE SELECTOR */}
-          <div className={`px-6 py-4 flex items-center justify-center transition-all duration-500 ${!isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'gap-5'}`}>
-            <button onClick={() => setCurrentLang('en')} className={`text-[10px] font-bold transition-all ${currentLang === 'en' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>EN</button>
-            <button onClick={() => setCurrentLang('zh-Hans')} className={`text-[10px] font-bold transition-all ${currentLang === 'zh-Hans' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>简</button>
-            <button onClick={() => setCurrentLang('zh-Hant')} className={`text-[10px] font-bold transition-all ${currentLang === 'zh-Hant' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>繁</button>
-          </div>
-
-          <div className="p-4 pt-0 flex flex-col gap-3">
+          <div className="p-4 flex flex-col gap-3">
             <div className="flex items-center gap-3">
-                <div className={`w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-blue-400 border border-slate-700 shadow-lg shrink-0 ${!isExpanded ? 'mx-auto' : ''}`}>
+                <div className={`w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-sm font-black text-blue-400 border border-slate-700 shadow-inner shrink-0 ${!isExpanded ? 'mx-auto' : ''}`}>
                     {user.name.charAt(0)}
                 </div>
                 
                 <div className={`flex-1 min-w-0 transition-all duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 w-0 h-0 overflow-hidden'}`}>
-                    <p className="font-bold text-xs text-white truncate">{user.name}</p>
-                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-tight truncate">{user.role.replace('_', ' ')}</p>
+                    <p className="font-black text-xs text-white truncate uppercase tracking-tight">{user.name}</p>
+                    <p className="text-[9px] text-slate-500 uppercase font-black tracking-[0.1em] truncate">{user.role.replace('_', ' ')}</p>
                 </div>
                 
                 {isExpanded && (
-                    <button onClick={onLogout} title="Logout" className="text-slate-500 hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-red-400/10">
+                    <button onClick={onLogout} title="Logout" className="text-slate-500 hover:text-red-400 transition-all p-2 rounded-xl hover:bg-red-400/10">
                         <LogOut className="w-4 h-4" />
                     </button>
                 )}
             </div>
 
             {isExpanded && (
-                <div className="mt-4 flex justify-between items-center px-1 pb-2">
-                    <span className="text-[8px] font-mono text-slate-600 opacity-50">v{systemVersion}</span>
-                    <button onClick={onHide} className="text-slate-600 hover:text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 transition-colors" title="Hide Sidebar">
-                        <HideIcon className="w-3.5 h-3.5" /> Hide
+                <div className="mt-2 flex justify-between items-center px-1 pb-2">
+                    <span className="text-[8px] font-mono font-bold text-slate-600 opacity-40 uppercase">V{systemVersion}</span>
+                    <button onClick={onHide} className="text-slate-600 hover:text-slate-400 text-[9px] font-black uppercase tracking-[0.15em] flex items-center gap-1.5 transition-colors" title="Hide Sidebar">
+                        <EyeOff className="w-3.5 h-3.5" /> HIDE
                     </button>
                 </div>
             )}
             {!isExpanded && (
-              <button onClick={onHide} className="w-full flex justify-center text-slate-600 hover:text-slate-400 py-2">
-                <HideIcon className="w-5 h-5" />
+              <button onClick={onHide} className="w-full flex justify-center text-slate-600 hover:text-slate-400 py-3 transition-colors">
+                <EyeOff className="w-5 h-5" />
               </button>
             )}
           </div>

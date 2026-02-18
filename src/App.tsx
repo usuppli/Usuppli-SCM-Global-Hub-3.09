@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { translations } from './translations'; 
 import './print.css'; 
@@ -35,6 +34,7 @@ import { GlobalConfigProvider, useGlobalConfig } from './context/GlobalConfigCon
 import { MOCK_PRODUCTS, MOCK_FACTORIES, MOCK_JOBS, MOCK_USERS, MOCK_SHIPMENTS, MOCK_CUSTOMERS, MOCK_SAMPLES } from './components/Tabs/constants';
 import { User, TabType, Product, Factory, Job, Shipment, Customer, SampleRequest, Language, UserRole, AuditLogEntry } from './types';
 
+// --- MAIN CONTENT WRAPPER ---
 const AppContent = () => {
   const config = useGlobalConfig();
 
@@ -90,8 +90,6 @@ const AppContent = () => {
   const [jobs, setJobs] = useState<Job[]>(() => loadData('usuppli_jobs', MOCK_JOBS));
   const [samples, setSamples] = useState<SampleRequest[]>(() => loadData('usuppli_samples', MOCK_SAMPLES));
   const [users, setUsers] = useState<User[]>(() => loadData('usuppli_users', MOCK_USERS));
-  
-  // NEW: Audit Log State
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(() => loadData('usuppli_audit_logs', []));
 
   useEffect(() => {
@@ -134,20 +132,9 @@ const AppContent = () => {
 
   const handleLogout = () => {
     logEvent('LOGOUT', 'Auth', 'User Logged Out');
-    setActiveTab('DASHBOARD');
-    setSelectedProductId(null);
-
-    const theme = localStorage.getItem('usuppli-theme');
-    const start = localStorage.getItem('usuppli-start-page');
-    const language = localStorage.getItem('usuppli-language');
-
-    localStorage.clear();
-
-    if (theme) localStorage.setItem('usuppli-theme', theme);
-    if (start) localStorage.setItem('usuppli-start-page', start);
-    if (language) localStorage.setItem('usuppli-language', language);
-
+    localStorage.removeItem('usuppli_user_data');
     setUser(null);
+    setActiveTab('DASHBOARD');
   };
 
   const handleOpenWorkspace = (id: string) => {
@@ -164,46 +151,41 @@ const AppContent = () => {
     switch (current) {
       case 'DASHBOARD': 
         return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: any) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
-      
       case 'PRODUCT_CATALOG': 
         return <ProductCatalog {...commonProps} products={products} onAddProduct={() => setActiveWizard('product')} onUpdateProduct={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Updated product: ${u.name}`);}} onOpenWorkspace={handleOpenWorkspace} userRole={user?.role as UserRole} />;
-      
       case 'PRODUCT_WORKSPACE': 
         return <ProductWorkspace {...commonProps} products={products} customers={customers} factories={factories} onSave={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Modified workspace for: ${u.name}`);}} onAddProduct={(n) => { setProducts(p => [n, ...p]); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`);}} onSaveSample={(s) => setSamples(prev => [...prev, s])} initialSelectedId={selectedProductId} onSelectProduct={setSelectedProductId} userRole={user?.role as UserRole} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} />;
-      
       case 'FACTORY_MASTER': 
         return <FactoryMaster {...commonProps} factories={factories} products={products} onSaveFactory={(f) => {setFactories(prev => prev.some(x => x.id === f.id) ? prev.map(x => x.id === f.id ? f : x) : [...prev, f]); logEvent('UPDATE', 'Factory Master', `Updated factory: ${f.name}`);}} onDeleteFactory={(id) => setFactories(p => p.filter(x => x.id !== id))} onOpenWizard={() => setActiveWizard('supplier')} />;
-      
       case 'ORDER_MANAGER': 
         return <Jobs {...commonProps} products={products} customers={customers} factories={factories} jobs={jobs} samples={samples} onSaveJobsList={setJobs} onRequestNewJob={() => setActiveWizard('job')} onRequestNewSample={() => setActiveWizard('sample')} onSaveSample={(s) => setSamples(prev => prev.map(x => x.id === s.id ? s : x))} />;
-      
       case 'LOGISTICS_TOWER': 
         return <LogisticsTower {...commonProps} shipments={shipments} jobs={jobs} onUpdateShipment={(s) => setShipments(p => p.map(x => x.id === s.id ? s : x))} onCreateShipment={(s) => setShipments(p => [...p, s])} onOpenWizard={() => setActiveWizard('shipment')} />;
-      
       case 'CRM': 
         return <CustomerDirectory {...commonProps} customers={customers} users={users} jobs={jobs} shipments={shipments} onAddCustomer={(c) => {setCustomers(p => [...p, c]); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`);}} onUpdateCustomer={(u) => setCustomers(p => p.map(x => x.id === u.id ? u : x))} onDeleteCustomer={(id) => setCustomers(p => p.filter(x => x.id !== id))} onOpenCustomerWizard={() => setActiveWizard('customer')} samples={samples} />;
-      
       case 'ADMIN': 
         return <AdminPanel {...commonProps} setLang={handleLanguageChange} products={products} setProducts={setProducts} users={users} setUsers={setUsers} jobs={jobs} currentUser={user} setSelectedProductId={setSelectedProductId} systemVersion={config?.systemVersion} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} onUpdateVersion={config?.updateVersion} onUpdateTariff={config?.updateTariff} onToggleTariffLock={config?.toggleTariffLock} auditLogs={auditLogs} />;
-      
       case 'EXCHANGE': 
         return <ExchangeRateView />;
-      
-      case 'TEAM_CHAT': 
-        return <TeamChat currentUser={user!} users={users} lang={lang} isOpen={true} onClose={() => setActiveTab('DASHBOARD')} />;
-      
       case 'AI_STRATEGIST': 
-        return <SCMAIStrategist onClose={() => setActiveTab('DASHBOARD')} />;
-      
+        return <SCMAIStrategist lang={lang} onClose={() => setActiveTab('DASHBOARD')} />;
       default: 
         return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: any) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
     }
   };
 
-  if (!user) return <LoginForm onLogin={handleLogin} lang={lang} />;
+  // Render Login Screen if user not authenticated
+  if (!user) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-[#0f172a] overflow-hidden">
+        <LoginForm onLogin={handleLogin} lang={lang} />
+      </div>
+    );
+  }
 
+  // Render Main App Shell
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 overflow-hidden relative">
+    <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 overflow-hidden relative">
       {!isSidebarHidden && (
         <Sidebar 
           user={user} activeTab={activeTab} setActiveTab={setActiveTab} 
@@ -217,10 +199,21 @@ const AppContent = () => {
       )}
 
       <main className={`flex-1 h-full overflow-y-auto custom-scrollbar transition-all duration-500 ${isSidebarHidden ? 'w-full' : ''}`}>
-        <div className="p-4 md:p-8 pb-24 max-w-[1600px] mx-auto">
+        <div className="p-4 md:p-8 pb-24 max-w-[1600px] mx-auto min-h-screen">
           {renderActiveTab()}
         </div>
       </main>
+
+      {/* FLOATING TEAM CHAT OVERLAY (RESTORED v3.09 PLACEMENT) */}
+      {chatOpen && (
+        <TeamChat 
+          currentUser={user} 
+          users={users} 
+          lang={lang} 
+          isOpen={chatOpen} 
+          onClose={() => setChatOpen(false)} 
+        />
+      )}
 
       {/* COMMAND PALETTE & WIZARDS */}
       <CommandPalette 
@@ -231,18 +224,15 @@ const AppContent = () => {
         onCreateJob={() => { setActiveWizard('job'); setCommandPaletteOpen(false); }}
       />
 
+      {/* Wizards Overlays */}
       {activeWizard === 'product' && <NewProductWizard factories={factories} customers={customers} onComplete={(n) => { setProducts(p => [n, ...p]); setActiveWizard(null); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`); }} onCancel={() => setActiveWizard(null)} />}
-      
       {activeWizard === 'supplier' && <NewSupplierWizard lang={lang} onComplete={(f) => { setFactories(p => [...p, f]); setActiveWizard(null); logEvent('CREATE', 'Factory Master', `Added factory: ${f.name}`); }} onCancel={() => setActiveWizard(null)} />}
       
       {['job', 'sample', 'customer', 'shipment'].includes(activeWizard || '') && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
           {activeWizard === 'job' && <CreateJobWizard products={products} customers={customers} factories={factories} lang={lang} onComplete={(j) => { setJobs(p => [j, ...p]); setActiveWizard(null); setActiveTab('ORDER_MANAGER'); logEvent('CREATE', 'Order Manager', `Created job: ${j.orderNumber}`); }} onCancel={() => setActiveWizard(null)} />}
-          
           {activeWizard === 'sample' && <NewSampleWizard products={products} customers={customers} factories={factories} lang={lang} onComplete={(s) => { setSamples(p => [s, ...p]); setActiveWizard(null); }} onCancel={() => setActiveWizard(null)} />}
-          
           {activeWizard === 'customer' && <AddCustomerWizard isOpen={true} onClose={() => setActiveWizard(null)} onSave={(c) => { setCustomers(p => [...p, c]); setActiveWizard(null); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`); }} />}
-          
           {activeWizard === 'shipment' && <CreateShipmentWizard jobs={jobs} samples={samples} onComplete={(s) => { setShipments(p => [...p, s]); setActiveWizard(null); }} onClose={() => setActiveWizard(null)} />}
         </div>
       )}
@@ -250,6 +240,7 @@ const AppContent = () => {
   );
 };
 
+// --- APP WRAPPER WITH PROVIDERS ---
 const App = () => (
   <GlobalConfigProvider>
     <ThemeProvider>

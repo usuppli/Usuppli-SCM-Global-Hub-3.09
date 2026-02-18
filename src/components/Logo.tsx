@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  className?: string;       // Allows you to set size (e.g., "h-10") and color
+  className?: string;       // Typically "h-10 w-auto"
   variant?: 'full' | 'mark'; // 'full' = Icon + Text, 'mark' = Icon only
 }
 
@@ -12,13 +12,11 @@ export const Logo: React.FC<Props> = ({
   return (
     <svg 
       className={className} 
-      // 1. ViewBox Logic: Wider for full logo, cropped for mark
+      // ViewBox Logic: Wider for full logo, cropped for mark
       viewBox={variant === 'full' ? "0 0 380 87.4" : "0 0 108.1 87.4"} 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
-      // 2. CRITICAL FIX: Forces the SVG to fit within the "h-10" class provided by parent
       preserveAspectRatio="xMinYMid meet"
-      style={{ maxHeight: '100%', maxWidth: '100%' }} 
     >
       {/* Icon Mark (The 'U' Shape) */}
       <path 

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Product, Language, Factory, Job, TabType } from '../../types';
 import { translations } from '../../translations';
@@ -44,8 +43,8 @@ interface Props {
 }
 
 const Dashboard: React.FC<Props> = ({ products, jobs, lang, onSelectProduct, onViewCatalog, onMasterSave, onViewLogistics }) => {
-  const t = translations[lang] || translations['en'];
-  const d = t.dashboard;
+  const rootT = translations[lang] || translations['en'];
+  const d = rootT?.dashboard || translations['en'].dashboard;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const activeJobs = jobs.filter(j => j.status !== 'Delivered' && j.status !== 'Inquiry').length;
@@ -72,11 +71,12 @@ const Dashboard: React.FC<Props> = ({ products, jobs, lang, onSelectProduct, onV
     <div className="space-y-8 animate-in fade-in duration-500 min-h-screen p-2">
       {/* GLOBAL CLOCK BAR */}
       <div className="relative w-full flex justify-center items-center mb-4">
-         {/* UPDATED: Changed dark:bg-slate-800 to dark:bg-slate-900 and dark:border-slate-700 to dark:border-slate-800 */}
          <div className="flex justify-center w-full bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-200 dark:border-slate-800">
             <GraphicalWorldClock />
          </div>
-         <div className="absolute top-4 right-6 z-10 hidden md:block"><Logo className="h-10 w-auto text-slate-700 dark:text-slate-300" variant="mark" /></div>
+         <div className="absolute top-4 right-6 z-10 hidden md:flex h-10 items-center justify-end overflow-hidden">
+            <Logo className="h-8 w-auto text-slate-700 dark:text-slate-300" variant="mark" />
+         </div>
       </div>
 
       <div className="flex justify-between items-end px-2">

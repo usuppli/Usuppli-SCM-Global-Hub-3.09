@@ -1,84 +1,66 @@
-
-import React, { useState, useRef, useEffect } from 'react';
-// import { } from 'react-dom';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { User, ChatMessage, ChatThread, Language } from '../../types';
 import { translations } from '../../translations';
+import { 
+  Send, 
+  Search, 
+  Paperclip, 
+  Minus, 
+  X, 
+  Users, 
+  Mic, 
+  Square, 
+  FileText, 
+  MessageSquare,
+  Mail,
+  Smartphone,
+  Copy,
+  Pin
+} from 'lucide-react';
 
-// --- ICONS ---
-const SendIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>);
-const SearchIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>);
-const AttachmentIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>);
-const MoreIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" /></svg>);
-const MinimizeIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" /></svg>);
-const XIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>);
-const PopOutIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>);
-const GroupIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>);
-const MicIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>);
-const StopIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" /></svg>);
-const DocumentIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>);
-const PlayIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>);
-const _ResizeGripIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-12.728 12.728M18.364 11.293l-7.071 7.071M18.364 16.95l-1.414 1.414" /></svg>);
-const TrashIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>);
-const WhatsAppIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.994 9.994 0 004.779 1.218h.004c5.505 0 9.988-4.478 9.99-9.984 0-2.669-1.037-5.176-2.922-7.062A9.935 9.935 0 0012.012 2z" /></svg>);
-const WeChatIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M8.5,3C5.5,3,3,5.2,3,8c0,1.5,0.7,2.9,1.9,3.8L4.5,14l2.5-1.3c0.5,0.1,1,0.2,1.5,0.2c0-0.3,0-0.6,0-1 c0-3.3,2.9-6,6.5-6c0.6,0,1.2,0.1,1.8,0.2C15.9,4.2,12.5,3,8.5,3z M15,7c-3,0-5.5,2.2-5.5,5s2.5,5,5.5,5c0.5,0,1-0.1,1.4-0.2L19,18l-0.4-2.3 c1.1-0.9,1.9-2.2,1.9-3.7C20.5,9.2,18,7,15,7z" /></svg>);
-const EmailIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>);
-const SMSIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>);
+// --- v3.09 PROTOCOL MOCK DATA ---
+const INITIAL_THREADS: ChatThread[] = [
+  { id: 'chan-gen', name: 'Global Logistics', type: 'group', unreadCount: 2, lastMessage: 'Shipment SHP-001 has cleared customs.' },
+  { id: 'chan-prod', name: 'Production Floor', type: 'group', unreadCount: 0, lastMessage: 'Line A maintenance complete.' },
+  { id: 'dm-sarah', name: 'Sarah Jenkins', type: 'direct', unreadCount: 1, lastMessage: 'Can we review the Q3 tariffs?', isOnline: true },
+  { id: 'dm-mike', name: 'Mike Ross', type: 'direct', unreadCount: 0, lastMessage: 'PO for Stanley is signed.', isOnline: false }
+];
 
-const STYLES = {
-  inputBase: "w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-100 placeholder:text-slate-400 outline-none transition-all duration-200",
-  inputFocus: "focus:bg-white dark:focus:bg-slate-900 focus:border-[#003d5b] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#003d5b]/20",
+const INITIAL_MESSAGES: Record<string, ChatMessage[]> = {
+  'chan-gen': [
+    { id: 'm1', senderId: 'u2', text: 'Morning team. SHP-001 is on schedule.', timestamp: new Date(Date.now() - 3600000), isRead: true },
+    { id: 'm2', senderId: 'u1', text: 'Great. Let me know when the BL is ready.', timestamp: new Date(Date.now() - 1800000), isRead: true }
+  ]
 };
 
-interface TeamChatProps {
+interface Props {
   currentUser: User;
   users: User[];
   lang: Language;
-  threads?: ChatThread[];
-  messages?: Record<string, ChatMessage[]>;
-  activeThreadId?: string | null;
-  onSelectThread?: (id: string) => void;
-  onSendMessage?: (text: string, isAudio: boolean) => void;
-  onFileUpload?: (file: File) => void;
-  onDeleteMessage?: (msgId: string) => void;
-  onShowNotification?: (msg: string) => void;
-  isPoppedOut?: boolean;
-  onPopOut?: () => void;
-  onClose?: () => void;
-  onMinimize?: () => void;
-  dragHandleProps?: any; 
-  notificationToast?: string | null;
-  isOpen?: boolean;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const TeamChat: React.FC<TeamChatProps> = ({ 
-  currentUser, users, lang, threads = [], messages = {}, activeThreadId = null, 
-  // FIX: Updated default values for destructured function props to match required signatures.
-  onSelectThread = (_id: string) => {}, 
-  onSendMessage = (_text: string, _isAudio: boolean) => {}, 
-  onFileUpload = (_file: File) => {}, 
-  onDeleteMessage = (_msgId: string) => {}, 
-  onShowNotification = (_msg: string) => {},
-  isPoppedOut = false, onPopOut, onClose, onMinimize, dragHandleProps, notificationToast
-}) => {
-  // CRASH PROTECTION: Fallback if translation key is missing
-  const rootT = translations[lang] || translations['en'];
-  const t = rootT.teamChat || translations['en'].teamChat;
-  const commonT = rootT.common;
+const TeamChat: React.FC<Props> = ({ currentUser, users, lang, isOpen, onClose }) => {
+  const t = (translations[lang] || translations['en']).teamChat;
+  const commonT = (translations[lang] || translations['en']).common;
 
+  // --- STATE ---
+  const [threads, setThreads] = useState<ChatThread[]>(INITIAL_THREADS);
+  const [messages, setMessages] = useState<Record<string, ChatMessage[]>>(INITIAL_MESSAGES);
+  const [activeThreadId, setActiveThreadId] = useState<string>('chan-gen');
   const [inputText, setInputText] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isMinimized, setIsMinimized] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  
+  const [notification, setNotification] = useState<string | null>(null);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // --- LOGIC ---
   const activeThread = threads.find(t => t.id === activeThreadId);
-  const currentMessages = activeThreadId ? (messages[activeThreadId] || []) : [];
-  
-  const filteredThreads = threads.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  const groupThreads = filteredThreads.filter(t => t.type === 'group');
-  const directThreads = filteredThreads.filter(t => t.type === 'direct');
+  const currentMessages = messages[activeThreadId] || [];
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -86,183 +68,268 @@ const TeamChat: React.FC<TeamChatProps> = ({
 
   const handleSend = (e?: React.FormEvent) => {
     e?.preventDefault();
-    if ((!inputText.trim() && !isRecording)) return;
-    onSendMessage(inputText, isRecording);
+    if (!inputText.trim()) return;
+
+    const newMessage: ChatMessage = {
+      id: `m-${Date.now()}`,
+      senderId: currentUser.id,
+      text: inputText,
+      timestamp: new Date(),
+      isRead: false
+    };
+
+    setMessages(prev => ({
+      ...prev,
+      [activeThreadId]: [...(prev[activeThreadId] || []), newMessage]
+    }));
     setInputText('');
-    setIsRecording(false);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      onFileUpload(e.target.files[0]);
-      e.target.value = ''; 
-    }
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const attachmentMsg: ChatMessage = {
+      id: `m-${Date.now()}`,
+      senderId: currentUser.id,
+      text: `Sent a file: ${file.name}`,
+      timestamp: new Date(),
+      isRead: false,
+      attachment: {
+        type: file.type.startsWith('image/') ? 'image' : 'file',
+        url: URL.createObjectURL(file),
+        name: file.name,
+        size: `${(file.size / 1024).toFixed(1)} KB`
+      }
+    };
+
+    setMessages(prev => ({
+      ...prev,
+      [activeThreadId]: [...(prev[activeThreadId] || []), attachmentMsg]
+    }));
+    setNotification(`File Sync: ${file.name}`);
+    setTimeout(() => setNotification(null), 3000);
   };
 
-  const handleShare = (platform: 'whatsapp' | 'email' | 'sms' | 'wechat') => {
-    if (!currentMessages.length) return;
-    const lastMsg = currentMessages[currentMessages.length - 1];
-    const text = `[Team Chat] ${currentUser.name} shared: "${lastMsg.text || '[Attachment]'}"`;
-    setMenuOpen(false);
-    if (platform === 'whatsapp') window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    else if (platform === 'email') window.open(`mailto:?subject=Chat Log&body=${encodeURIComponent(text)}`, '_blank');
-    else if (platform === 'sms') window.open(`sms:?&body=${encodeURIComponent(text)}`, '_blank');
-    else if (platform === 'wechat') {
-      navigator.clipboard.writeText(text).then(() => onShowNotification(commonT?.copied || "Copied"));
-    }
-  };
+  const filteredThreads = threads.filter(thr => 
+    thr.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
+  if (!isOpen) return null;
+
+  // --- v3.09 MINIMIZED "ACTION ORB" ---
+  if (isMinimized) {
+    return (
+      <div className="fixed bottom-6 right-6 z-[100] animate-in slide-in-from-bottom-10 duration-300">
+        <button 
+          onClick={() => setIsMinimized(false)}
+          className="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-full shadow-2xl flex items-center gap-3 border border-white/20 transition-all hover:scale-110 active:scale-95 group ring-4 ring-blue-600/10"
+        >
+          <div className="relative">
+            <MessageSquare className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-blue-600 animate-pulse"></span>
+          </div>
+          <span className="font-black text-[10px] uppercase tracking-widest pr-2 max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap">
+            {activeThread?.name || 'Team Chat'}
+          </span>
+        </button>
+      </div>
+    );
+  }
+
+  // --- v3.09 DUAL-PANE WINDOW ---
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-slate-900 overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-2xl relative">
+    <div className="fixed bottom-6 right-6 w-[850px] h-[650px] bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-[0_35px_80px_rgba(0,0,0,0.4)] border border-slate-200 dark:border-slate-800 flex overflow-hidden z-[100] animate-in zoom-in-95 duration-300 ring-1 ring-black/5">
       
-      {notificationToast && (
-        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-slate-800 dark:bg-slate-700 text-white px-4 py-2 rounded-xl shadow-lg z-50 text-xs font-bold animate-in fade-in slide-in-from-top-4 flex items-center gap-2">
-          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-          {notificationToast}
+      {/* SIDEBAR: THREAD TILES */}
+      <div className="w-72 border-r border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex flex-col">
+        <div className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+             <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+             <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Usuppli Hub</h3>
+          </div>
+          <div className="relative">
+            <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+            <input 
+              type="text"
+              placeholder={commonT.search}
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:ring-4 focus:ring-blue-500/10 outline-none transition-all shadow-inner"
+            />
+          </div>
         </div>
-      )}
 
-      <div 
-        {...dragHandleProps}
-        className={`bg-slate-900 dark:bg-slate-950 text-white p-4 flex justify-between items-center select-none ${!isPoppedOut ? 'cursor-grab active:cursor-grabbing' : ''}`}
-      >
-        <div className="flex items-center gap-3">
-          <div className="p-1.5 bg-white/10 rounded-lg"><GroupIcon className="w-5 h-5" /></div>
-          <h3 className="font-bold text-sm">{t?.title || "Team Chat"}</h3>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          {!isPoppedOut && (
-            <button onClick={onPopOut} className="p-2 hover:bg-white/10 rounded-lg transition-colors"><PopOutIcon className="w-4 h-4" /></button>
-          )}
-          {!isPoppedOut && (
-             <button onClick={onMinimize} className="p-2 hover:bg-white/10 rounded-lg transition-colors"><MinimizeIcon className="w-4 h-4" /></button>
-          )}
-          {!isPoppedOut && (
-            <button onClick={onClose} className="p-2 hover:bg-red-500/80 rounded-lg transition-colors"><XIcon className="w-4 h-4" /></button>
-          )}
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-3 space-y-2 pb-6">
+          {filteredThreads.map(thr => (
+            <button
+              key={thr.id}
+              onClick={() => {
+                setActiveThreadId(thr.id);
+                setThreads(prev => prev.map(t => t.id === thr.id ? { ...t, unreadCount: 0 } : t));
+              }}
+              className={`w-full flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 text-left relative group ${
+                activeThreadId === thr.id 
+                  ? 'bg-white dark:bg-slate-800 shadow-lg ring-1 ring-slate-200 dark:ring-slate-700' 
+                  : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/30'
+              }`}
+            >
+              <div className="relative shrink-0">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm shadow-sm ${
+                  thr.type === 'group' 
+                  ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/40' 
+                  : 'bg-slate-200 text-slate-600 dark:bg-slate-800'
+                }`}>
+                  {thr.type === 'group' ? <Users className="w-6 h-6" /> : thr.name.charAt(0)}
+                </div>
+                {thr.isOnline && (
+                  <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-3 border-white dark:border-slate-900 rounded-full"></div>
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex justify-between items-center mb-0.5">
+                  <span className={`text-xs font-black truncate uppercase tracking-tight ${activeThreadId === thr.id ? 'text-blue-600 dark:text-blue-400' : 'text-slate-700 dark:text-slate-300'}`}>{thr.name}</span>
+                  {thr.unreadCount > 0 && (
+                    <span className="bg-red-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg">{thr.unreadCount}</span>
+                  )}
+                </div>
+                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold truncate tracking-tight">{thr.lastMessage}</p>
+              </div>
+              {activeThreadId === thr.id && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 rounded-r-full"></div>
+              )}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="flex-1 flex min-h-0">
-        <div className="w-72 bg-slate-50 dark:bg-slate-950 border-r border-slate-100 dark:border-slate-800 flex flex-col">
-          <div className="p-4">
+      {/* CHAT AREA */}
+      <div className="flex-1 flex flex-col bg-white dark:bg-slate-900 relative">
+        
+        {/* HEADER */}
+        <header className="h-20 px-8 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center shrink-0">
+          <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
-                <SearchIcon className="w-3.5 h-3.5" />
-              </div>
-              <input 
-                type="text" 
-                placeholder={t?.channels} // Use safe fallback
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`${STYLES.inputBase} ${STYLES.inputFocus} pl-9 pr-3 text-xs`}
-              />
-            </div>
-          </div>
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-6">
-            <div>
-              <h4 className="px-3 mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t?.channels || "Channels"}</h4>
-              <div className="space-y-1">
-                {groupThreads.map(thread => (
-                  <button key={thread.id} onClick={() => onSelectThread(thread.id)} className={`w-full text-left px-3 py-2 rounded-xl flex items-center gap-3 transition-colors ${activeThreadId === thread.id ? 'bg-white dark:bg-slate-800 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'}`}>
-                    <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center"><GroupIcon className="w-4 h-4" /></div>
-                    <div className="flex-1 min-w-0"><div className="flex justify-between items-center"><span className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">{thread.name}</span>{thread.unreadCount > 0 && <span className="bg-indigo-500 text-white text-[9px] font-bold px-1.5 rounded-full">{thread.unreadCount}</span>}</div></div>
-                  </button>
-                ))}
-              </div>
+                <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black ${activeThread?.type === 'group' ? 'bg-blue-600 text-white' : 'bg-slate-800 text-white'}`}>
+                    {activeThread?.type === 'group' ? <Users className="w-5 h-5" /> : activeThread?.name.charAt(0)}
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-900 animate-pulse"></div>
             </div>
             <div>
-               <h4 className="px-3 mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t?.directMessages || "Direct Messages"}</h4>
-               <div className="space-y-1">
-                 {directThreads.map(thread => (
-                   <button key={thread.id} onClick={() => onSelectThread(thread.id)} className={`w-full text-left px-3 py-2 rounded-xl flex items-center gap-3 transition-colors ${activeThreadId === thread.id ? 'bg-white dark:bg-slate-800 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'}`}>
-                     <div className="relative"><div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center text-[10px] font-bold">{thread.name.charAt(0)}</div>{thread.isOnline && <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-50 dark:border-slate-900 rounded-full"></div>}</div>
-                     <div className="flex-1 min-w-0"><div className="flex justify-between items-center mb-0.5"><span className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">{thread.name}</span>{thread.unreadCount > 0 && <span className="bg-blue-500 text-white text-[9px] font-bold px-1.5 rounded-full">{thread.unreadCount}</span>}</div><p className="text-[10px] text-slate-400 dark:text-slate-500 truncate">{thread.isTyping ? <span className="text-emerald-500">{t?.typing || "Typing..."}</span> : thread.lastMessage}</p></div>
-                   </button>
-                 ))}
-               </div>
+              <h4 className="text-base font-black text-slate-900 dark:text-white leading-none uppercase tracking-tight">{activeThread?.name}</h4>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.15em] mt-1.5 flex items-center gap-1.5">
+                {activeThread?.type === 'group' ? 'Node Channel Alpha' : 'Peer-to-Peer Sync'}
+                <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                Active Now
+              </p>
             </div>
           </div>
+          <div className="flex items-center gap-2">
+            <button onClick={() => setIsMinimized(true)} className="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-slate-400 hover:text-slate-600 transition-all"><Minus className="w-5 h-5" /></button>
+            <button onClick={onClose} className="p-2.5 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-xl text-slate-400 hover:text-red-500 transition-all"><X className="w-5 h-5" /></button>
+          </div>
+        </header>
+
+        {/* NOTIFICATION TOAST */}
+        {notification && (
+          <div className="absolute top-24 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl animate-in slide-in-from-top-4 border border-white/10 flex items-center gap-2">
+            <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+            {notification}
+          </div>
+        )}
+
+        {/* MESSAGES VIEWPORT */}
+        <div className="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar bg-slate-50/20 dark:bg-slate-950/20">
+          {currentMessages.map(msg => {
+            const isMe = msg.senderId === currentUser.id;
+            return (
+              <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2`}>
+                <div className={`max-w-[75%] group ${isMe ? 'items-end' : 'items-start'} flex flex-col`}>
+                  <div className={`p-5 text-sm font-bold shadow-sm transition-all hover:shadow-xl leading-relaxed ${
+                    isMe 
+                      ? 'bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-[2rem] rounded-tr-sm' 
+                      : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-100 dark:border-slate-700 rounded-[2rem] rounded-tl-sm'
+                  }`}>
+                    {msg.attachment ? (
+                      <div className="space-y-4">
+                        {msg.attachment.type === 'image' ? (
+                          <div className="rounded-2xl overflow-hidden border border-white/20 shadow-lg">
+                            <img src={msg.attachment.url} className="w-full h-auto object-cover max-h-64" alt="attachment" />
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-4 p-4 bg-black/10 dark:bg-black/20 rounded-2xl border border-white/10">
+                            <div className="p-3 bg-white/20 rounded-xl"><FileText className="w-6 h-6" /></div>
+                            <div className="min-w-0 flex-1">
+                              <p className="font-black text-xs truncate uppercase tracking-wider">{msg.attachment.name}</p>
+                              <p className="text-[9px] font-bold opacity-60 uppercase">{msg.attachment.size}</p>
+                            </div>
+                          </div>
+                        )}
+                        <p className="px-1">{msg.text.split(': ')[1]}</p>
+                      </div>
+                    ) : msg.text}
+                  </div>
+                  <div className={`mt-2 px-2 flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-400`}>
+                    {!isMe && <span className="text-blue-500">{activeThread?.name.split(' ')[0]}</span>}
+                    <span>{msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div ref={messagesEndRef} />
         </div>
 
-        <div className="flex-1 flex flex-col bg-white dark:bg-slate-900 relative">
-          {activeThreadId ? (
-            <>
-              <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900 z-10 relative">
-                <div className="flex items-center gap-3">
-                  {activeThread?.type === 'group' ? <div className="w-9 h-9 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center"><GroupIcon className="w-5 h-5" /></div> : <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">{activeThread?.name.charAt(0)}</div>}
-                  <div><h3 className="font-bold text-slate-800 dark:text-white text-sm">{activeThread?.name}</h3><p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{activeThread?.type === 'group' ? '3 members' : (activeThread?.isOnline ? t?.online : t?.offline)}</p></div>
-                </div>
-                <div className="relative">
-                  <button onClick={() => setMenuOpen(!menuOpen)} className="text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 p-2 rounded-lg transition-colors"><MoreIcon className="w-5 h-5" /></button>
-                  {menuOpen && (
-                    <div className="absolute right-0 top-12 bg-white dark:bg-slate-800 shadow-2xl rounded-2xl border border-slate-100 dark:border-slate-700 p-2 w-48 z-50">
-                      <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 border-b border-slate-50 dark:border-slate-700 mb-1">{t?.shareVia || "Share Via"}</p>
-                      <button onClick={() => handleShare('wechat')} className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-200"><div className="text-emerald-500"><WeChatIcon className="w-4 h-4" /></div> WeChat</button>
-                      <button onClick={() => handleShare('whatsapp')} className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-200"><div className="text-green-500"><WhatsAppIcon className="w-4 h-4" /></div> WhatsApp</button>
-                      <button onClick={() => handleShare('email')} className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-200"><div className="text-blue-500"><EmailIcon className="w-4 h-4" /></div> Email</button>
-                      <button onClick={() => handleShare('sms')} className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-200"><div className="text-slate-500"><SMSIcon className="w-4 h-4" /></div> SMS</button>
-                    </div>
-                  )}
-                </div>
-              </div>
+        {/* INPUT COMMAND CENTER */}
+        <div className="p-8 border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shrink-0">
+          <form onSubmit={handleSend} className="flex gap-4 bg-slate-100 dark:bg-slate-800 p-2.5 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 focus-within:ring-8 focus-within:ring-blue-600/5 transition-all items-center shadow-inner">
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              onChange={handleFileUpload} 
+            />
+            <button 
+              type="button" 
+              onClick={() => fileInputRef.current?.click()}
+              className="p-3.5 text-slate-400 hover:text-blue-600 hover:bg-white dark:hover:bg-slate-700 rounded-full transition-all shadow-sm"
+              title="Attach Protocol"
+            >
+              <Paperclip className="w-5 h-5" />
+            </button>
+            
+            <input 
+              type="text"
+              value={inputText}
+              onChange={e => setInputText(e.target.value)}
+              placeholder={t.typeMessage}
+              className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-black text-slate-800 dark:text-white placeholder:text-slate-400 outline-none px-2"
+            />
 
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50 dark:bg-slate-950/20 custom-scrollbar">
-                 {currentMessages.map((msg, _idx) => {
-                   const isMe = msg.senderId === currentUser.id;
-                   const sender = users.find(u => u.id === msg.senderId);
-                   return (
-                     <div key={msg.id} className={`flex gap-3 ${isMe ? 'justify-end' : 'justify-start'} group`}>
-                       {!isMe && <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white bg-slate-400 dark:bg-slate-600">{sender ? sender.name.charAt(0) : '?'}</div>}
-                       <div className={`max-w-[75%] flex flex-col ${isMe ? 'items-end' : 'items-start'} relative`}>
-                          <div className={`px-4 py-2.5 text-xs font-medium shadow-sm overflow-hidden ${isMe ? 'bg-slate-900 dark:bg-blue-600 text-white rounded-2xl rounded-tr-sm' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-2xl rounded-tl-sm border border-slate-100 dark:border-slate-700'}`}>
-                             {msg.attachment ? (
-                               <div className="flex flex-col gap-2">
-                                 {msg.attachment.type === 'image' && <img src={msg.attachment.url} alt="attachment" className="rounded-lg max-h-48 object-cover border border-white/10" />}
-                                 {msg.attachment.type === 'file' && <div className="flex items-center gap-3 bg-black/5 dark:bg-black/20 p-2 rounded-lg min-w-[200px]"><div className="bg-white dark:bg-slate-700 p-2 rounded text-slate-500 dark:text-slate-300"><DocumentIcon className="w-5 h-5" /></div><div className="flex-1 min-w-0"><p className="font-bold truncate text-[11px]">{msg.attachment.name}</p><p className="text-[9px] opacity-60">{msg.attachment.size}</p></div></div>}
-                                 {msg.attachment.type === 'audio' && <div className="flex items-center gap-3 bg-black/5 dark:bg-black/20 p-2 rounded-lg min-w-[160px]"><div className="bg-white dark:bg-slate-700 p-2 rounded-full text-slate-900 dark:text-white"><PlayIcon className="w-4 h-4" /></div><div className="flex-1 h-1 bg-slate-300 dark:bg-slate-600 rounded-full overflow-hidden"><div className="h-full w-1/3 bg-slate-900 dark:bg-blue-500"></div></div><span className="text-[10px] font-bold">{msg.attachment.duration}</span></div>}
-                               </div>
-                             ) : msg.text}
-                          </div>
-                          <div className="flex items-center gap-2 mt-1">
-                             <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 px-1 opacity-0 group-hover:opacity-100 transition-opacity">{msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                             <button onClick={() => onDeleteMessage(msg.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-300 dark:text-slate-600 hover:text-red-500 p-0.5" title={t?.deleteMsg}><TrashIcon className="w-3 h-3" /></button>
-                          </div>
-                       </div>
-                     </div>
-                   );
-                 })}
-                 {activeThread?.isTyping && <div className="flex gap-3 justify-start animate-in fade-in slide-in-from-bottom-2"><div className="w-7 h-7 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-[9px] font-bold text-white">...</div><div className="bg-white dark:bg-slate-800 px-3 py-2.5 rounded-2xl rounded-tl-sm border border-slate-100 dark:border-slate-700 shadow-sm flex items-center gap-1"><div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce"></div><div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-75"></div><div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-150"></div></div></div>}
-                 <div ref={messagesEndRef} />
-            </div>
+            {inputText.trim() ? (
+              <button 
+                type="submit"
+                className="p-3.5 bg-blue-600 text-white rounded-full shadow-2xl hover:bg-blue-500 transition-all hover:scale-105 active:scale-95 flex items-center justify-center"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            ) : (
+              <button 
+                type="button"
+                onClick={() => setIsRecording(!isRecording)}
+                className={`p-3.5 rounded-full transition-all shadow-sm ${isRecording ? 'bg-red-500 text-white animate-pulse' : 'text-slate-400 hover:text-blue-600 hover:bg-white dark:hover:bg-slate-700'}`}
+              >
+                {isRecording ? <Square className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+              </button>
+            )}
+          </form>
 
-            <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
-                <form onSubmit={handleSend} className="flex gap-2 bg-slate-50 dark:bg-slate-800 p-1.5 rounded-[1.2rem] border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#003d5b]/10 dark:focus-within:ring-blue-500/20 transition-all items-center">
-                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} accept="image/*,.pdf,.docx,.doc,.txt" />
-                   <button type="button" onClick={() => fileInputRef.current?.click()} className="p-2.5 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors"><AttachmentIcon className="w-4 h-4" /></button>
-                   
-                   {isRecording ? (
-                      <div className="flex-1 flex items-center gap-3 px-3 py-1 bg-red-50 dark:bg-red-900/20 rounded-xl text-red-600 dark:text-red-400 animate-pulse">
-                         <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce"></div><span className="text-xs font-bold">{t?.recording || "Recording..."}</span><div className="flex-1"></div><button type="button" onClick={() => setIsRecording(false)} className="text-[10px] font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">{t?.cancel || "Cancel"}</button>
-                      </div>
-                   ) : (
-                      <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder={t?.typeMessage || "Type a message..."} className="flex-1 bg-transparent border-none focus:ring-0 text-xs font-medium text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none" />
-                   )}
-
-                   {(inputText.trim() || isRecording) ? (
-                      <button type="submit" className={`p-2.5 text-white rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg ${isRecording ? 'bg-red-500' : 'bg-[#003d5b] dark:bg-blue-600'}`}>{isRecording ? <StopIcon className="w-4 h-4" /> : <SendIcon className="w-4 h-4" />}</button>
-                   ) : (
-                      <button type="button" onClick={() => setIsRecording(true)} className="p-2.5 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors"><MicIcon className="w-5 h-5" /></button>
-                   )}
-                </form>
-            </div>
-            </>
-          ) : (
-            <div className="flex-1 flex items-center justify-center text-slate-400 dark:text-slate-600 text-sm font-medium">
-              Select a conversation to start chatting
-            </div>
-          )}
+          {/* v3.09 PROTOCOL ACTIONS */}
+          <div className="flex justify-center gap-8 mt-6">
+            <button onClick={() => { navigator.clipboard.writeText(currentMessages.map(m => m.text).join('\n')); setNotification('Audit Log Copied'); }} className="text-[10px] font-black text-slate-400 hover:text-blue-600 flex items-center gap-2 uppercase tracking-[0.2em] transition-colors"><Copy className="w-3.5 h-3.5" /> Copy Log</button>
+            <button className="text-[10px] font-black text-slate-400 hover:text-blue-600 flex items-center gap-2 uppercase tracking-[0.2em] transition-colors"><Mail className="w-3.5 h-3.5" /> Dispatch Mail</button>
+            <button className="text-[10px] font-black text-slate-400 hover:text-blue-600 flex items-center gap-2 uppercase tracking-[0.2em] transition-colors"><Pin className="w-3.5 h-3.5" /> Mark Action</button>
+          </div>
         </div>
       </div>
     </div>
