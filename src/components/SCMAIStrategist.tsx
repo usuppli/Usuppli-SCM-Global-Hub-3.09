@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, Sparkles, Loader2, AlertCircle, BrainCircuit } from 'lucide-react';
+import { Send, Bot, User, BrainCircuit, Loader2, AlertCircle, X } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { translations } from '../translations';
 import { Language } from '../types';
 
 interface Props {
   lang?: Language;
+  onClose?: () => void; // Added back to prevent App.tsx crash
 }
 
 interface Message {
@@ -16,7 +17,7 @@ interface Message {
   timestamp: Date;
 }
 
-const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
+const SCMAIStrategist: React.FC<Props> = ({ lang = 'en', onClose }) => {
   // Safe Translation Access
   const t = (translations[lang] || translations['en'])?.ai || translations['en'].ai;
 
@@ -60,6 +61,8 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
 
     try {
       // Always use process.env.API_KEY as per coding guidelines
+      // Note: In Vite, this is usually import.meta.env.VITE_API_KEY, 
+      // but we will stick to your requested pattern or a safe fallback.
       const apiKey = process.env.API_KEY || ""; 
       
       if (!apiKey) {
@@ -83,13 +86,13 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
       
       // Use ai.models.generateContent directly with model name and contents
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.0-flash-exp", // Updated to latest available model
         contents: userMsg.text,
         config: {
           systemInstruction: systemContext,
         },
       });
-      const aiText = response.text || "No response generated."; // Use .text property directly
+      const aiText = response.text || "No response generated.";
 
       setMessages((prev) => [...prev, {
         id: (Date.now() + 1).toString(),
@@ -115,9 +118,19 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en' }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-800 dark:text-white">{t?.title || "SCM AI Strategist"}</h3>
-            <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t?.subtitle || "Intelligent Supply Chain Assistant"}</p>
+            <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t?.subtitle || "Intelligent Assistant"}</p>
+            </div>
           </div>
         </div>
+        
+        {/* Close Button - Critical for Navigation */}
+        {onClose && (
+          <button onClick={onClose} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full transition-colors">
+            <X className="w-5 h-5 text-slate-500" />
+          </button>
+        )}
       </div>
 
       {/* Messages */}

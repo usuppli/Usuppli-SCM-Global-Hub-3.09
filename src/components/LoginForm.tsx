@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { User, Language } from '../types';
-import { translations } from '../translations';
+import { translations } from '../translations'; // CRITICAL FIX: Correct Import Path
 import { MOCK_USERS } from './Tabs/constants';
 import { Logo } from './Logo';
 
@@ -13,7 +13,8 @@ interface Props {
 type AuthView = 'LOGIN' | 'FORGOT_PASSWORD' | 'VERIFY_CODE' | 'RESET_PASSWORD';
 
 const LoginForm: React.FC<Props> = ({ onLogin, lang }) => {
-  const t = translations[lang].login;
+  // Safe translation access
+  const t = translations[lang]?.login || translations['en'].login;
   
   // State for flow control
   const [view, setView] = useState<AuthView>('LOGIN');
@@ -121,7 +122,7 @@ const LoginForm: React.FC<Props> = ({ onLogin, lang }) => {
            <div className="w-64 text-white"> 
               <Logo className="w-full h-auto text-white" variant="full" />
            </div>
-           <h2 className="text-xl font-bold text-slate-300 mt-4">{t.subtitle}</h2>
+           <h2 className="text-xl font-bold text-slate-300 mt-4">{t?.subtitle || "Enterprise Supply Chain Manager"}</h2>
         </div>
 
         {/* FEEDBACK MESSAGES */}

@@ -252,11 +252,13 @@ const OrderManager: React.FC<Props> = ({ jobs = [], lang, onUpdateJob, onDeleteJ
                   <div onClick={() => handleEditClick(selectedJob)} className="md:col-span-3 bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-800 cursor-pointer hover:shadow-md transition-all">
                      <div className="flex justify-between items-center mb-6">
                         <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Production Timeline</h4>
-                        ${getProgressColor(selectedJob.completionPercent ?? 0)}`}>{selectedJob.completionPercent ?? 0}% Complete
+                        {/* Fix: Restored broken JSX for completion percent badge */}
+                        <div className={`text-xs font-bold px-3 py-1 rounded-full ${getProgressColor(selectedJob.completionPercent ?? 0)}`}>{selectedJob.completionPercent ?? 0}% Complete</div>
                      </div>
                      <div className="relative">
                         <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-100 dark:bg-slate-800 -translate-y-1/2 rounded-full z-0"></div>
-                        ${getProgressColor(selectedJob.completionPercent ?? 0)}`} style={{ width: `${selectedJob.completionPercent ?? 0}%` }}
+                        {/* Fix: Restored broken JSX for progress bar */}
+                        <div className={`absolute top-1/2 left-0 h-1 rounded-full z-0 transition-all duration-500 ${getProgressColor(selectedJob.completionPercent ?? 0)}`} style={{ width: `${selectedJob.completionPercent ?? 0}%` }}></div>
                         <div className="relative z-10 flex justify-between">
                            {['Inquiry', 'Sampling', 'Material Prep', 'Production', 'QC', 'In Transit', 'Delivered'].map((stage, index) => {
                               const isCompleted = index <= ['Inquiry', 'Sampling', 'Material Prep', 'Production', 'QC', 'In Transit', 'Delivered'].findIndex(s => s === selectedJob.status) || ((selectedJob.completionPercent ?? 0) > (index * 15)) 
@@ -279,7 +281,8 @@ const OrderManager: React.FC<Props> = ({ jobs = [], lang, onUpdateJob, onDeleteJ
                          <div className="p-2 bg-white/20 rounded-xl"><TrendingIcon className="w-6 h-6" /></div>
                          <div>
                             <p className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">Total Value</p>
-                            <p className="text-xl font-bold">${((selectedJob.quantity ?? 0) * 25).toLocaleString()}</p
+                            {/* Fix: Added missing closing bracket for p tag */}
+                            <p className="text-xl font-bold">${((selectedJob.quantity ?? 0) * 25).toLocaleString()}</p>
                          </div>
                       </div>
                   </div>

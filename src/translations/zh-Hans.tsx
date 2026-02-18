@@ -258,7 +258,7 @@ export const zhHans: Translation = {
       subtitle: "市场分析与追踪",
       trackNew: "追踪竞争对手",
       pricePos: "价格定位",
-      marketShare: "市场份客",
+      marketShare: "市场份额",
       pricePosition: "价格定位",
       headers: {
         brand: "品牌",
@@ -462,5 +462,15 @@ export const zhHans: Translation = {
   dashboard: { title: "运营仪表板", subtitle: "全球供应链脉动", activeJobs: "活跃订单", globalSkus: "全球 SKU", inventoryVal: "库存价值", supplierHealth: "供应商健康度", recentActivity: "近期活动", viewAll: "查看全部", logisticsControl: "物流控制", openLogistics: "打开物流塔", refreshPulse: "刷新脉动", totalRevenue: "总收入", activeOrders: "活跃订单", pendingShipments: "待发货", productionEfficiency: "生产效率", revenueVsCost: "收入与成本" },
   login: { subtitle: "企业级供应链管理器", email: "电子邮件地址", password: "密码", loginBtn: "安全登录", forgot: "忘记密码？", quickAccess: "或快速访问 (开发)", sendCode: "发送重置代码", backToLogin: "返回登录", verifyCode: "验证代码", resend: "重新发送代码", setPass: "设置新密码" },
   hsLookup: { title: "精确 HS 查询", subtitle: "全球分类与合规", searchPlaceholder: "例如：不锈钢保温旅行杯", analyze: "分析中...", identify: "识别", code: "推荐 HS 编码", detectedRate: "检测税率", description: "描述", dutyClass: "关税分类", aiLogic: "AI 报关逻辑", applyTo: "应用到", locked: "精确费率已锁定" },
-  search: { placeholder: "搜索...", quickActions: "快速操作", noResults: "未找到结果。", commands: { newProduct: "新建产品", newOrder: "新建订单", goDashboard: "前往仪表盘", goSettings: "前往设置" } }
+  search: {
+    placeholder: "搜索...",
+    quickActions: "快速操作",
+    noResults: "未找到结果。",
+    commands: {
+      newProduct: "新建产品",
+      newOrder: "新建订单",
+      goDashboard: "前往仪表盘",
+      goSettings: "前往设置"
+    }
+  }
 };

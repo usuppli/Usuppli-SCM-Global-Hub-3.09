@@ -1,8 +1,6 @@
-
-
 import React, { useState, useEffect, useMemo } from 'react';
-import { Product, Language } from '../types';
-import { translations } from '../translations';
+import { Product, Language } from '../../types';
+import { translations } from '../../translations';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 import { Target, Plus, TrendingUp, Minus, X, Save, Zap, Loader2, BarChart3, AlertCircle, Trash2 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
@@ -37,8 +35,9 @@ const DEFAULT_COMPETITORS = [
 ];
 
 const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, onSave, isReadOnly }) => {
-  const t = (translations[lang] || translations['en'])?.competitor || translations['en'].competitor;
-  const commonT = (translations[lang] || translations['en'])?.common || translations['en'].common;
+  const rootT = translations[lang] || translations['en'];
+  const t = rootT.workspace?.competitors || translations['en'].workspace.competitors;
+  const commonT = rootT.common || translations['en'].common;
 
   // --- UI STATE ---
   const [activeView, setActiveView] = useState<'visual' | 'ai'>('visual');
@@ -336,7 +335,7 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
-                                    {groupedData[tierKey as keyof typeof groupedData].map((item, _i) => <EditableRow key={item.id} item={item} />)}
+                                    {groupedData[tierKey as keyof typeof groupedData].map((item, i) => <EditableRow key={item.id} item={item} />)}
                                     {groupedData[tierKey as keyof typeof groupedData].length === 0 && (
                                         <tr><td colSpan={4} className="py-2 text-xs italic text-slate-400">No competitors in this tier.</td></tr>
                                     )}

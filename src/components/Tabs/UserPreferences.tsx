@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme'; 
 import { Language } from '../../types';
-import { translations } from '../../translations'; 
+import { translations } from '../../translations'; // Correct relative import
 import { 
   User, 
   Moon, 

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useGlobalConfig } from '../../context/GlobalConfigContext';
 
@@ -8,7 +7,8 @@ const SparklesIcon = ({ className }: { className: string }) => (
 
 const WorkspaceHeader: React.FC = () => {
     // Consume global version string dynamically
-    const { systemVersion } = useGlobalConfig();
+    const config = useGlobalConfig();
+    const systemVersion = config?.systemVersion || "v3.10";
 
     return (
         <div className="flex flex-col md:flex-row justify-between items-center bg-gradient-to-r from-slate-900 to-slate-800 p-4 rounded-2xl shadow-lg mb-6 text-white border border-slate-700/50">

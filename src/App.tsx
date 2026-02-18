@@ -40,8 +40,10 @@ const AppContent = () => {
 
   // --- 1. AUTH & PREFERENCES STATE ---
   const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem('usuppli_user_data');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('usuppli_user_data');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
   });
 
   const [lang, setLang] = useState<Language>(() => 
@@ -160,18 +162,41 @@ const AppContent = () => {
     const commonProps = { lang, isReadOnly: user?.role === 'viewer' };
 
     switch (current) {
-      case 'DASHBOARD': return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: Product) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
-      case 'PRODUCT_CATALOG': return <ProductCatalog {...commonProps} products={products} onAddProduct={() => setActiveWizard('product')} onUpdateProduct={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Updated product: ${u.name}`);}} onOpenWorkspace={handleOpenWorkspace} userRole={user?.role as UserRole} />;
-      case 'PRODUCT_WORKSPACE': return <ProductWorkspace {...commonProps} products={products} customers={customers} factories={factories} onSave={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Modified workspace for: ${u.name}`);}} onAddProduct={(n) => { setProducts(p => [n, ...p]); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`);}} onSaveSample={(s) => setSamples(prev => [...prev, s])} initialSelectedId={selectedProductId} onSelectProduct={setSelectedProductId} userRole={user?.role as UserRole} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} />;
-      case 'FACTORY_MASTER': return <FactoryMaster {...commonProps} factories={factories} products={products} onSaveFactory={(f) => {setFactories(prev => prev.some(x => x.id === f.id) ? prev.map(x => x.id === f.id ? f : x) : [...prev, f]); logEvent('UPDATE', 'Factory Master', `Updated factory: ${f.name}`);}} onDeleteFactory={(id) => setFactories(p => p.filter(x => x.id !== id))} onOpenWizard={() => setActiveWizard('supplier')} />;
-      case 'ORDER_MANAGER': return <Jobs {...commonProps} products={products} customers={customers} factories={factories} jobs={jobs} samples={samples} onSaveJobsList={setJobs} onRequestNewJob={() => setActiveWizard('job')} onRequestNewSample={() => setActiveWizard('sample')} onSaveSample={(s) => setSamples(prev => prev.map(x => x.id === s.id ? s : x))} />;
-      case 'LOGISTICS_TOWER': return <LogisticsTower {...commonProps} shipments={shipments} jobs={jobs} onUpdateShipment={(s) => setShipments(p => p.map(x => x.id === s.id ? s : x))} onCreateShipment={(s) => setShipments(p => [...p, s])} onOpenWizard={() => setActiveWizard('shipment')} />;
-      case 'CRM': return <CustomerDirectory {...commonProps} customers={customers} users={users} jobs={jobs} shipments={shipments} onAddCustomer={(c) => {setCustomers(p => [...p, c]); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`);}} onUpdateCustomer={(u) => setCustomers(p => p.map(x => x.id === u.id ? u : x))} onDeleteCustomer={(id) => setCustomers(p => p.filter(x => x.id !== id))} onOpenCustomerWizard={() => setActiveWizard('customer')} samples={samples} />;
-      case 'ADMIN': return <AdminPanel {...commonProps} setLang={handleLanguageChange} products={products} setProducts={setProducts} users={users} setUsers={setUsers} jobs={jobs} currentUser={user} setSelectedProductId={setSelectedProductId} systemVersion={config?.systemVersion} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} onUpdateVersion={config?.updateVersion} onUpdateTariff={config?.updateTariff} onToggleTariffLock={config?.toggleTariffLock} auditLogs={auditLogs} />;
-      case 'EXCHANGE': return <ExchangeRateView />;
-      case 'TEAM_CHAT': return <TeamChat currentUser={user!} users={users} lang={lang} isOpen={true} onClose={() => setActiveTab('DASHBOARD')} />;
-      case 'AI_STRATEGIST': return <SCMAIStrategist />;
-      default: return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: Product) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
+      case 'DASHBOARD': 
+        return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: any) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
+      
+      case 'PRODUCT_CATALOG': 
+        return <ProductCatalog {...commonProps} products={products} onAddProduct={() => setActiveWizard('product')} onUpdateProduct={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Updated product: ${u.name}`);}} onOpenWorkspace={handleOpenWorkspace} userRole={user?.role as UserRole} />;
+      
+      case 'PRODUCT_WORKSPACE': 
+        return <ProductWorkspace {...commonProps} products={products} customers={customers} factories={factories} onSave={(u) => {setProducts(p => p.map(x => x.id === u.id ? u : x)); logEvent('UPDATE', 'Product Catalog', `Modified workspace for: ${u.name}`);}} onAddProduct={(n) => { setProducts(p => [n, ...p]); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`);}} onSaveSample={(s) => setSamples(prev => [...prev, s])} initialSelectedId={selectedProductId} onSelectProduct={setSelectedProductId} userRole={user?.role as UserRole} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} />;
+      
+      case 'FACTORY_MASTER': 
+        return <FactoryMaster {...commonProps} factories={factories} products={products} onSaveFactory={(f) => {setFactories(prev => prev.some(x => x.id === f.id) ? prev.map(x => x.id === f.id ? f : x) : [...prev, f]); logEvent('UPDATE', 'Factory Master', `Updated factory: ${f.name}`);}} onDeleteFactory={(id) => setFactories(p => p.filter(x => x.id !== id))} onOpenWizard={() => setActiveWizard('supplier')} />;
+      
+      case 'ORDER_MANAGER': 
+        return <Jobs {...commonProps} products={products} customers={customers} factories={factories} jobs={jobs} samples={samples} onSaveJobsList={setJobs} onRequestNewJob={() => setActiveWizard('job')} onRequestNewSample={() => setActiveWizard('sample')} onSaveSample={(s) => setSamples(prev => prev.map(x => x.id === s.id ? s : x))} />;
+      
+      case 'LOGISTICS_TOWER': 
+        return <LogisticsTower {...commonProps} shipments={shipments} jobs={jobs} onUpdateShipment={(s) => setShipments(p => p.map(x => x.id === s.id ? s : x))} onCreateShipment={(s) => setShipments(p => [...p, s])} onOpenWizard={() => setActiveWizard('shipment')} />;
+      
+      case 'CRM': 
+        return <CustomerDirectory {...commonProps} customers={customers} users={users} jobs={jobs} shipments={shipments} onAddCustomer={(c) => {setCustomers(p => [...p, c]); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`);}} onUpdateCustomer={(u) => setCustomers(p => p.map(x => x.id === u.id ? u : x))} onDeleteCustomer={(id) => setCustomers(p => p.filter(x => x.id !== id))} onOpenCustomerWizard={() => setActiveWizard('customer')} samples={samples} />;
+      
+      case 'ADMIN': 
+        return <AdminPanel {...commonProps} setLang={handleLanguageChange} products={products} setProducts={setProducts} users={users} setUsers={setUsers} jobs={jobs} currentUser={user} setSelectedProductId={setSelectedProductId} systemVersion={config?.systemVersion} globalTariffs={config?.tariffs} lockedTariffs={config?.lockedTariffs} onUpdateVersion={config?.updateVersion} onUpdateTariff={config?.updateTariff} onToggleTariffLock={config?.toggleTariffLock} auditLogs={auditLogs} />;
+      
+      case 'EXCHANGE': 
+        return <ExchangeRateView />;
+      
+      case 'TEAM_CHAT': 
+        return <TeamChat currentUser={user!} users={users} lang={lang} isOpen={true} onClose={() => setActiveTab('DASHBOARD')} />;
+      
+      case 'AI_STRATEGIST': 
+        return <SCMAIStrategist onClose={() => setActiveTab('DASHBOARD')} />;
+      
+      default: 
+        return <Dashboard {...commonProps} activeTab={activeTab} products={products} factories={factories} jobs={jobs} onSelectProduct={handleOpenWorkspace} onViewCatalog={() => setActiveTab('PRODUCT_CATALOG')} onViewLogistics={() => setActiveTab('LOGISTICS_TOWER')} onSave={(u: any) => setProducts(prev => prev.map(p => p.id === u.id ? u : p))} onMasterSave={() => {}} />;
     }
   };
 
@@ -207,12 +232,17 @@ const AppContent = () => {
       />
 
       {activeWizard === 'product' && <NewProductWizard factories={factories} customers={customers} onComplete={(n) => { setProducts(p => [n, ...p]); setActiveWizard(null); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`); }} onCancel={() => setActiveWizard(null)} />}
+      
       {activeWizard === 'supplier' && <NewSupplierWizard lang={lang} onComplete={(f) => { setFactories(p => [...p, f]); setActiveWizard(null); logEvent('CREATE', 'Factory Master', `Added factory: ${f.name}`); }} onCancel={() => setActiveWizard(null)} />}
+      
       {['job', 'sample', 'customer', 'shipment'].includes(activeWizard || '') && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
           {activeWizard === 'job' && <CreateJobWizard products={products} customers={customers} factories={factories} lang={lang} onComplete={(j) => { setJobs(p => [j, ...p]); setActiveWizard(null); setActiveTab('ORDER_MANAGER'); logEvent('CREATE', 'Order Manager', `Created job: ${j.orderNumber}`); }} onCancel={() => setActiveWizard(null)} />}
+          
           {activeWizard === 'sample' && <NewSampleWizard products={products} customers={customers} factories={factories} lang={lang} onComplete={(s) => { setSamples(p => [s, ...p]); setActiveWizard(null); }} onCancel={() => setActiveWizard(null)} />}
+          
           {activeWizard === 'customer' && <AddCustomerWizard isOpen={true} onClose={() => setActiveWizard(null)} onSave={(c) => { setCustomers(p => [...p, c]); setActiveWizard(null); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`); }} />}
+          
           {activeWizard === 'shipment' && <CreateShipmentWizard jobs={jobs} samples={samples} onComplete={(s) => { setShipments(p => [...p, s]); setActiveWizard(null); }} onClose={() => setActiveWizard(null)} />}
         </div>
       )}

@@ -1,4 +1,3 @@
-
 // src/types.tsx
 
 // ==========================================
@@ -885,7 +884,6 @@ export interface Translation {
   crm: CrmTranslations;
   calendar: CalendarTranslations;
   hub: HubTranslations;
-  // Fix: Reference correct interface name LogisticsTranslations instead of LogisticsTower
   logistics: LogisticsTranslations; 
   shopFloor: ShopFloorTranslations;
   orderManager: OrderManagerTranslations;
