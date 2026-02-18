@@ -59,14 +59,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navT = t?.nav || translations['en'].nav; 
   const commonT = t?.common || translations['en'].common;
 
-  // Navigation Items (v3.09 protocol)
+  // Navigation Items (Corrected v3.09 protocol)
   const navItems = [
     { group: navT?.analytics, id: 'DASHBOARD', label: navT?.dashboard, icon: LayoutDashboard },
     { group: navT?.sourcing, id: 'PRODUCT_CATALOG', label: navT?.productCatalog, icon: Package, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
     { group: null, id: 'PRODUCT_WORKSPACE', label: navT?.productWorkspace || 'Workspace', icon: Layers, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] }, 
     { group: null, id: 'FACTORY_MASTER', label: navT?.factoryMaster, icon: Factory, restrictedTo: ['admin', 'super_admin', 'editor'] },
     { group: navT?.executionGroup, id: 'ORDER_MANAGER', label: navT?.production, icon: ClipboardList },
-    { group: null, id: 'PRODUCTION_FLOOR', label: navT?.shopFloor, icon: Wrench },
+    { group: null, id: 'PRODUCTION_FLOOR', label: navT?.shopFloor || "Shop Floor", icon: Wrench },
     { group: null, id: 'LOGISTICS_TOWER', label: navT?.logistics, icon: Truck },
     { group: null, id: 'CRM', label: navT?.crm, icon: Users, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
     { group: navT?.system, id: 'TEAM_CHAT', label: navT?.teamChat, icon: MessageSquare },
@@ -143,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {navItems.map((item) => {
             if (item.restrictedTo && !item.restrictedTo.includes(user.role)) return null;
             
-            // Bug Fix: Active state for Team Chat floating overlay
+            // Bug Fix: Sync active state for Team Chat floating overlay
             const isActive = item.id === 'TEAM_CHAT' ? !!chatOpen : activeTab === item.id;
 
             return (

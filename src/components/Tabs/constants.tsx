@@ -324,4 +324,14 @@ export const MOCK_USERS: User[] = [
   { id: 'u2', name: 'Sourcing Mgr', email: 'buyer@usuppli.com', role: 'editor', department: 'Procurement' },
   { id: 'u3', name: 'Logistics', email: 'logistics@usuppli.com', role: 'viewer', department: 'Supply Chain' },
   { id: 'u4', name: 'Demo User', email: 'demo@usuppli.com', role: 'admin', department: 'IT' }
+  // Inside your MOCK_USERS array:
+{
+  id: 'u5',
+  name: 'Jane Doe',
+  email: 'jane@usuppli.com',
+  role: 'admin',
+  department: 'Sourcing',
+  defaultStartPage: 'PRODUCT_WORKSPACE', // <--- She will land here on Login
+  // ... other fields
+},
 ];

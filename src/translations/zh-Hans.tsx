@@ -1,3 +1,4 @@
+
 import { Translation } from '../types';
 
 export const zhHans: Translation = {
@@ -62,6 +63,23 @@ export const zhHans: Translation = {
     calendar: "日历",
     hub: "中心",
     exchange: "汇率"
+  },
+  shopFloor: {
+    title: "车间遥测指挥中心",
+    connected: "已连接",
+    standby: "站点待机",
+    activeStream: "活跃流",
+    killConnection: "断开连接",
+    syncLine: "同步产线状态",
+    efficiencyMatrix: "实时效率矩阵",
+    oee: "设备综合效率 (OEE)",
+    target: "目标",
+    envSensors: "环境传感器",
+    alerts: "诊断警报",
+    queueStatus: "生产队列状态",
+    liveTracking: "实时工厂吞吐量追踪",
+    searchJobs: "搜索活跃作业...",
+    refresh: "刷新"
   },
   preferences: {
     title: "个性化与安全中心",
@@ -444,7 +462,7 @@ export const zhHans: Translation = {
     customer: { title: "客户档案", profile: "概况", internalId: "内部 ID", region: "区域", accountOwner: "客户经理", activeOrders: "活跃订单", totalValue: "总价值" }
   },
   widgets: {
-    clock: { title: "世界时钟", localTime: "当地时间", businessHours: "营业时间", open: "营业中", closed: "已关闭", timeZone: "时区" },
+    clock: { title: "世界时钟", localTime: "当地时间", businessHours: "营业时间", open: "营业中", closed: "关闭", timeZone: "时区" },
     exchange: { title: "汇率", base: "基础货币", target: "目标货币", rate: "汇率" }
   },
   admin: {
@@ -456,7 +474,6 @@ export const zhHans: Translation = {
   crm: { title: "客户名录", subtitle: "管理客户关系和区域", search: "搜索客户...", addCustomer: "添加客户", accountActive: "账户活跃" },
   hub: { title: "协作中心", subtitle: "全球留言板", newThread: "新话题", startNewThread: "开始新话题", topic: "话题", message: "消息", selectCustomer: "选择客户...", startConversation: "选择一个话题开始协作", initialMessage: "初始消息...", pinThread: "固定话题", unpinThread: "取消固定话题", clearHistory: "清除历史", participants: "参与者", linkType: "链接类型", selectItem: "选择项目..." },
   logistics: { title: "物流塔", subtitle: "实时货运追踪", inboundAir: "空运", inboundOcean: "海运", customsHold: "海关扣留", activeUnits: "单位", nextArrival: "下次到达", loadSimulation: "加载模拟", sortBy: "按预计到达时间排序", addShipment: "添加运输", editShipment: "编辑运输", saveChanges: "保存更改" },
-  shopFloor: { title: "生产车间遥测", connected: "已连接", standby: "工位待机", activeStream: "活跃流", killConnection: "断开连接", syncLine: "同步产线状态", efficiencyMatrix: "实时效率矩阵", oee: "设备综合效率 (OEE)", target: "目标", envSensors: "环境传感器", alerts: "诊断警报", queueStatus: "生产队列状态", liveTracking: "实时工厂吞吐量追踪", searchJobs: "搜索活跃订单...", refresh: "刷新" },
   factory: { title: "供应商与工厂组合", subtitle: "全球制造网络", explorer: "组合浏览器", partners: "活跃制造合作伙伴", search: "搜索...", addBtn: "添加供应商", viewAudit: "查看审计", supplierId: "供应商身份", location: "地点", status: "状态", actions: "操作", noResults: "未找到结果" },
   catalog: { subtitle: "全球 SKU 目录", allCategories: "所有类别" },
   dashboard: { title: "运营仪表板", subtitle: "全球供应链脉动", activeJobs: "活跃订单", globalSkus: "全球 SKU", inventoryVal: "库存价值", supplierHealth: "供应商健康度", recentActivity: "近期活动", viewAll: "查看全部", logisticsControl: "物流控制", openLogistics: "打开物流塔", refreshPulse: "刷新脉动", totalRevenue: "总收入", activeOrders: "活跃订单", pendingShipments: "待发货", productionEfficiency: "生产效率", revenueVsCost: "收入与成本" },

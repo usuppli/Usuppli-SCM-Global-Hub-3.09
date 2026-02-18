@@ -1,3 +1,4 @@
+
 // src/types.tsx
 
 // ==========================================
@@ -15,6 +16,7 @@ export interface User {
   department?: string;
   password?: string;
   lastActive?: string;
+  defaultStartPage?: TabType;
 }
 
 export type TabType = 

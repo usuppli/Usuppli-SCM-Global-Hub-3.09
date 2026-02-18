@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { translations } from './translations'; 
 import './print.css'; 
 
 // Components
@@ -19,6 +18,7 @@ import Jobs from './components/Tabs/Jobs';
 import LogisticsTower from './components/Tabs/LogisticsTower';
 import CustomerDirectory from './components/Tabs/CustomerDirectory';
 import AdminPanel from './components/Tabs/AdminPanel';
+import ProductionFloor from './components/Tabs/ProductionFloor';
 
 // Wizards
 import NewProductWizard from './components/Tabs/NewProductWizard';
@@ -30,7 +30,8 @@ import CreateShipmentWizard from './components/Tabs/CreateShipmentWizard';
 
 // Context & Types
 import { ThemeProvider } from './hooks/useTheme';
-import { GlobalConfigProvider, useGlobalConfig } from './context/GlobalConfigContext';
+// Note: Ensure this file exists in src/context/, or remove this import if not using global config yet
+import { GlobalConfigProvider, useGlobalConfig } from './context/GlobalConfigContext'; 
 import { MOCK_PRODUCTS, MOCK_FACTORIES, MOCK_JOBS, MOCK_USERS, MOCK_SHIPMENTS, MOCK_CUSTOMERS, MOCK_SAMPLES } from './components/Tabs/constants';
 import { User, TabType, Product, Factory, Job, Shipment, Customer, SampleRequest, Language, UserRole, AuditLogEntry } from './types';
 
@@ -58,7 +59,8 @@ const AppContent = () => {
       'orders': 'ORDER_MANAGER',
       'logistics': 'LOGISTICS_TOWER',
       'suppliers': 'FACTORY_MASTER',
-      'customers': 'CRM'
+      'customers': 'CRM',
+      'floor': 'PRODUCTION_FLOOR'
     };
     return (key && mapping[key]) ? mapping[key] : 'DASHBOARD';
   };
@@ -108,9 +110,11 @@ const AppContent = () => {
     const newLog: AuditLogEntry = {
       id: `LOG-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       timestamp: new Date().toISOString(),
-      user: actor?.name || user?.name || 'System',
+      userId: actor?.id || user?.id || 'sys',
+      userName: actor?.name || user?.name || 'System',
+      userRole: (actor?.role || user?.role || 'viewer') as string,
       action,
-      module,
+      entity: 'System', // Default fallback, can be refined
       details
     };
     setAuditLogs(prev => [newLog, ...prev]);
@@ -131,7 +135,7 @@ const AppContent = () => {
   };
 
   const handleLogout = () => {
-    logEvent('LOGOUT', 'Auth', 'User Logged Out');
+    logEvent('LOGIN', 'Auth', 'User Logged Out');
     localStorage.removeItem('usuppli_user_data');
     setUser(null);
     setActiveTab('DASHBOARD');
@@ -159,6 +163,8 @@ const AppContent = () => {
         return <FactoryMaster {...commonProps} factories={factories} products={products} onSaveFactory={(f) => {setFactories(prev => prev.some(x => x.id === f.id) ? prev.map(x => x.id === f.id ? f : x) : [...prev, f]); logEvent('UPDATE', 'Factory Master', `Updated factory: ${f.name}`);}} onDeleteFactory={(id) => setFactories(p => p.filter(x => x.id !== id))} onOpenWizard={() => setActiveWizard('supplier')} />;
       case 'ORDER_MANAGER': 
         return <Jobs {...commonProps} products={products} customers={customers} factories={factories} jobs={jobs} samples={samples} onSaveJobsList={setJobs} onRequestNewJob={() => setActiveWizard('job')} onRequestNewSample={() => setActiveWizard('sample')} onSaveSample={(s) => setSamples(prev => prev.map(x => x.id === s.id ? s : x))} />;
+      case 'PRODUCTION_FLOOR':
+        return <ProductionFloor {...commonProps} jobs={jobs} />;
       case 'LOGISTICS_TOWER': 
         return <LogisticsTower {...commonProps} shipments={shipments} jobs={jobs} onUpdateShipment={(s) => setShipments(p => p.map(x => x.id === s.id ? s : x))} onCreateShipment={(s) => setShipments(p => [...p, s])} onOpenWizard={() => setActiveWizard('shipment')} />;
       case 'CRM': 
@@ -194,7 +200,6 @@ const AppContent = () => {
           onOpenProductWizard={() => setActiveWizard('product')} onLogout={handleLogout}
           onToggleChat={() => setChatOpen(!chatOpen)} onOpenCommandPalette={() => setCommandPaletteOpen(true)}
           isPinned={isSidebarPinned} setIsPinned={setIsSidebarPinned} onHide={() => setIsSidebarHidden(true)}
-          systemVersion={config?.systemVersion}
         />
       )}
 
@@ -204,7 +209,7 @@ const AppContent = () => {
         </div>
       </main>
 
-      {/* FLOATING TEAM CHAT OVERLAY (RESTORED v3.09 PLACEMENT) */}
+      {/* FLOATING TEAM CHAT OVERLAY */}
       {chatOpen && (
         <TeamChat 
           currentUser={user} 
@@ -225,14 +230,16 @@ const AppContent = () => {
       />
 
       {/* Wizards Overlays */}
+      {/* Product & Supplier use Drawer mode (internal overlay) */}
       {activeWizard === 'product' && <NewProductWizard factories={factories} customers={customers} onComplete={(n) => { setProducts(p => [n, ...p]); setActiveWizard(null); handleOpenWorkspace(n.id); logEvent('CREATE', 'Product Catalog', `Created new product: ${n.name}`); }} onCancel={() => setActiveWizard(null)} />}
       {activeWizard === 'supplier' && <NewSupplierWizard lang={lang} onComplete={(f) => { setFactories(p => [...p, f]); setActiveWizard(null); logEvent('CREATE', 'Factory Master', `Added factory: ${f.name}`); }} onCancel={() => setActiveWizard(null)} />}
       
+      {/* Other Wizards use Modal mode (external overlay) */}
       {['job', 'sample', 'customer', 'shipment'].includes(activeWizard || '') && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
           {activeWizard === 'job' && <CreateJobWizard products={products} customers={customers} factories={factories} lang={lang} onComplete={(j) => { setJobs(p => [j, ...p]); setActiveWizard(null); setActiveTab('ORDER_MANAGER'); logEvent('CREATE', 'Order Manager', `Created job: ${j.orderNumber}`); }} onCancel={() => setActiveWizard(null)} />}
           {activeWizard === 'sample' && <NewSampleWizard products={products} customers={customers} factories={factories} lang={lang} onComplete={(s) => { setSamples(p => [s, ...p]); setActiveWizard(null); }} onCancel={() => setActiveWizard(null)} />}
-          {activeWizard === 'customer' && <AddCustomerWizard isOpen={true} onClose={() => setActiveWizard(null)} onSave={(c) => { setCustomers(p => [...p, c]); setActiveWizard(null); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`); }} />}
+          {activeWizard === 'customer' && <AddCustomerWizard lang={lang} users={users} onComplete={(c) => { setCustomers(p => [...p, c]); setActiveWizard(null); logEvent('CREATE', 'CRM', `Added customer: ${c.companyName}`); }} onCancel={() => setActiveWizard(null)} />}
           {activeWizard === 'shipment' && <CreateShipmentWizard jobs={jobs} samples={samples} onComplete={(s) => { setShipments(p => [...p, s]); setActiveWizard(null); }} onClose={() => setActiveWizard(null)} />}
         </div>
       )}
@@ -242,6 +249,7 @@ const AppContent = () => {
 
 // --- APP WRAPPER WITH PROVIDERS ---
 const App = () => (
+  // Ensure GlobalConfigProvider exists, or wrap with standard fragments <> if not ready
   <GlobalConfigProvider>
     <ThemeProvider>
       <AppContent />

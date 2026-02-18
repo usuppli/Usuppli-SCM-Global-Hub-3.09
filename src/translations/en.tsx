@@ -64,6 +64,23 @@ export const en: Translation = {
     hub: "Hub",
     exchange: "Exchange"
   },
+  shopFloor: {
+    title: "Shop Floor Telemetry",
+    connected: "Connected",
+    standby: "Station Standby",
+    activeStream: "Active Stream",
+    killConnection: "Kill Connection",
+    syncLine: "Sync Line Status",
+    efficiencyMatrix: "Live Efficiency Matrix",
+    oee: "OEE",
+    target: "TARGET",
+    envSensors: "Environmental Sensors",
+    alerts: "Diagnostic Alerts",
+    queueStatus: "Production Queue Status",
+    liveTracking: "Live factory throughput tracking",
+    searchJobs: "Search Active Jobs...",
+    refresh: "Refresh"
+  },
   preferences: {
     title: "Personalization & Security Hub",
     security: "Security",
@@ -812,23 +829,6 @@ export const en: Translation = {
     addShipment: "Add Shipment",
     editShipment: "Edit Shipment",
     saveChanges: "Save Changes"
-  },
-  shopFloor: {
-    title: "Shop Floor Telemetry",
-    connected: "Connected",
-    standby: "Station Standby",
-    activeStream: "Active Stream",
-    killConnection: "Kill Connection",
-    syncLine: "Sync Line Status",
-    efficiencyMatrix: "Live Efficiency Matrix",
-    oee: "OEE",
-    target: "TARGET",
-    envSensors: "Environmental Sensors",
-    alerts: "Diagnostic Alerts",
-    queueStatus: "Production Queue Status",
-    liveTracking: "Live factory throughput tracking",
-    searchJobs: "Search Active Jobs...",
-    refresh: "Refresh"
   },
   factory: {
     title: "Supplier & Factory Portfolio",
