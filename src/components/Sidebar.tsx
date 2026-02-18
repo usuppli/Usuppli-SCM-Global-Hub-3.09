@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navT = t?.nav || translations['en'].nav; 
   const commonT = t?.common || translations['en'].common;
 
-  // Navigation Items (Strictly excluding AI Strategist)
+  // Navigation Items
   const navItems = [
     { group: navT?.analytics, id: 'DASHBOARD', label: navT?.dashboard, icon: LayoutDashboard },
     { group: navT?.sourcing, id: 'PRODUCT_CATALOG', label: navT?.productCatalog, icon: Package, restrictedTo: ['admin', 'super_admin', 'editor', 'viewer'] },
@@ -96,7 +96,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
 
-      {/* HEADER (h-16 flex items-center px-6) */}
+      {/* HEADER */}
       <div className="h-16 flex items-center px-6 shrink-0 border-b border-slate-800 overflow-hidden">
           <Logo className="h-8 w-auto text-white shrink-0" variant="mark" />
           {isExpanded && (
@@ -107,19 +107,12 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
       </div>
 
-      {/* LANGUAGE SELECTOR (Top, centered buttons) */}
-      <div className={`px-6 py-3 flex items-center justify-center transition-all duration-500 ${!isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'gap-5 border-b border-slate-800/30'}`}>
-        <button onClick={() => setCurrentLang('en')} className={`text-[10px] font-bold transition-all ${currentLang === 'en' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>EN</button>
-        <button onClick={() => setCurrentLang('zh-Hans')} className={`text-[10px] font-bold transition-all ${currentLang === 'zh-Hans' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>简</button>
-        <button onClick={() => setCurrentLang('zh-Hant')} className={`text-[10px] font-bold transition-all ${currentLang === 'zh-Hant' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>繁</button>
-      </div>
-
-      {/* ACTION BLOCK (57% Width Hybrid Layout - Matches Dashboard "Refresh Pulse" sizing) */}
+      {/* ACTION BLOCK (57% Width Hybrid Layout) */}
       <div className="px-3 py-4 flex items-center justify-center gap-2 shrink-0">
          {!isReadOnly && (
             <button 
                 onClick={onOpenProductWizard}
-                className={`flex items-center justify-center gap-2 py-2 rounded-2xl bg-blue-600 text-white hover:bg-blue-500 transition-all ${
+                className={`flex items-center justify-center gap-2 py-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 transition-all ${
                     isExpanded 
                     ? 'w-[57%] shadow-lg' 
                     : 'w-10 h-10 p-0'
@@ -132,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({
          {isExpanded && <ThemeToggle />}
       </div>
 
-      {/* NAVIGATION LINKS (V3.05 styling: text-sm font-medium, py-2, rounded-lg, flat blue active, slate-800 hover) */}
+      {/* NAVIGATION LINKS */}
       <nav className="flex-1 px-3 space-y-0.5 overflow-y-auto no-scrollbar custom-scrollbar">
         {navItems.map((item) => {
             if (item.restrictedTo && !item.restrictedTo.includes(user.role)) return null;
@@ -145,7 +138,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         onClick={() => setActiveTab(item.id as TabType)}
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${
                             isActive 
-                            ? 'bg-blue-600 text-white shadow-sm' 
+                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md' 
                             : 'text-slate-400 hover:text-white hover:bg-slate-800' 
                         } ${!isExpanded ? 'justify-center' : ''}`}
                         title={!isExpanded ? item.label : ''}
@@ -170,23 +163,14 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* FOOTER */}
       <div className="bg-[#0f172a] border-t border-slate-800 shrink-0">
-          {/* SEARCH TRIGGER (Bottom Command Button) */}
-          {onOpenCommandPalette && isExpanded && (
-              <div className="px-3 pt-4 pb-1">
-                <button 
-                    onClick={onOpenCommandPalette}
-                    className="w-full flex items-center justify-between bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white px-3 py-2 rounded-lg transition-all border border-slate-700 shadow-inner group"
-                >
-                    <div className="flex items-center gap-2">
-                        <SearchTriggerIcon className="w-4 h-4 text-slate-400 group-hover:text-white" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">{commonT?.command || "Search"}</span>
-                    </div>
-                    <span className="text-[9px] font-bold opacity-30 px-1 rounded group-hover:opacity-100">⌘K</span>
-                </button>
-            </div>
-          )}
+          {/* LANGUAGE SELECTOR */}
+          <div className={`px-6 py-4 flex items-center justify-center transition-all duration-500 ${!isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'gap-5'}`}>
+            <button onClick={() => setCurrentLang('en')} className={`text-[10px] font-bold transition-all ${currentLang === 'en' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>EN</button>
+            <button onClick={() => setCurrentLang('zh-Hans')} className={`text-[10px] font-bold transition-all ${currentLang === 'zh-Hans' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>简</button>
+            <button onClick={() => setCurrentLang('zh-Hant')} className={`text-[10px] font-bold transition-all ${currentLang === 'zh-Hant' ? 'text-white underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'}`}>繁</button>
+          </div>
 
-          <div className="p-4 pt-2 flex flex-col gap-3">
+          <div className="p-4 pt-0 flex flex-col gap-3">
             <div className="flex items-center gap-3">
                 <div className={`w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-blue-400 border border-slate-700 shadow-lg shrink-0 ${!isExpanded ? 'mx-auto' : ''}`}>
                     {user.name.charAt(0)}
@@ -204,19 +188,18 @@ const Sidebar: React.FC<SidebarProps> = ({
                 )}
             </div>
 
-            {!isExpanded && (
-                 <button onClick={onHide} className="w-full mt-4 flex justify-center text-slate-600 hover:text-slate-400">
-                    <HideIcon className="w-5 h-5" />
-                 </button>
-            )}
-            
             {isExpanded && (
-                <div className="mt-8 flex justify-between items-center px-1 pb-2">
+                <div className="mt-4 flex justify-between items-center px-1 pb-2">
                     <span className="text-[8px] font-mono text-slate-600 opacity-50">v{systemVersion}</span>
                     <button onClick={onHide} className="text-slate-600 hover:text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 transition-colors" title="Hide Sidebar">
                         <HideIcon className="w-3.5 h-3.5" /> Hide
                     </button>
                 </div>
+            )}
+            {!isExpanded && (
+              <button onClick={onHide} className="w-full flex justify-center text-slate-600 hover:text-slate-400 py-2">
+                <HideIcon className="w-5 h-5" />
+              </button>
             )}
           </div>
       </div>

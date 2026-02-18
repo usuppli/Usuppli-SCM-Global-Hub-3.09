@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      // Correct standard alias
-      "@": path.resolve(__dirname, "./src"),
+      // Correct standard alias using relative path resolution
+      "@": path.resolve("./src"),
       
       // CRITICAL FIX: Redirects the bad path to the correct one
-      "@/src": path.resolve(__dirname, "./src"),
+      "@/src": path.resolve("./src"),
     },
   },
   server: {

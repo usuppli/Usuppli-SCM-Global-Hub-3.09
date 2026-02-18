@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Usuppli Supply Chain Production Manager</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>Usuppli Supply Chain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script type="importmap">
     {
       "imports": {
@@ -23,25 +21,41 @@
       }
     }
     </script>
-
     <style>
-      /* Fix oversized images/SVGs */
-      img, svg, video, canvas, audio, iframe, embed, object {
-        display: block;
-        vertical-align: middle;
-        max-width: 100%;
-        height: auto;
+      /* Safe Reset */
+      html, body, #root { 
+        height: 100%; 
+        margin: 0; 
+        padding: 0; 
       }
-      /* Ensure root takes full height */
-      html, body, #root {
-        height: 100%;
-        margin: 0;
-        padding: 0;
+      body { 
+        background-color: #0f172a; 
+        color: white; 
+        font-family: 'Inter', sans-serif;
+      }
+      /* Prevent media from exploding, but allow flex containers to control size */
+      img, svg, video, canvas { 
+        display: block; 
+        max-width: 100%; 
+      }
+      /* Custom scrollbar for better aesthetics */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.2);
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(148, 163, 184, 0.4);
       }
     </style>
   </head>
-  
-  <body class="bg-slate-900 text-white font-sans antialiased">
+  <body>
     <div id="root"></div>
     <script type="module" src="./src/index.tsx"></script>
   </body>

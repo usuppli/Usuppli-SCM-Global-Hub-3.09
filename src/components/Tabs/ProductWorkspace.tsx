@@ -6,7 +6,7 @@ import { translations } from '../../translations';
 import ProductionSpecs from './ProductionSpecs';
 import CostCalculator from './CostCalculator';
 import TariffRates from './TariffRates';
-import CompetitorAnalysis from './CompetitorAnalysis';
+import CompetitorAnalysis from '../CompetitorAnalysis';
 import LaunchTimeline from './LaunchTimeline';
 import AIStrategy from './AIStrategy';
 import ExchangeRateView from './ExchangeRateView';
@@ -38,7 +38,7 @@ const ProductWorkspace: React.FC<Props> = ({
   products = [], 
   customers = [],
   factories = [],
-  lang = 'en', 
+  lang, 
   onSave, 
   onAddProduct,
   onSaveSample,
@@ -246,20 +246,21 @@ const ProductWorkspace: React.FC<Props> = ({
               
               <div className="flex items-center gap-2 pr-2">
                   <button onClick={() => setShowPrintWizard(true)} className="p-2 text-slate-400 hover:text-[#003d5b] dark:hover:text-blue-400 hover:bg-slate-50 rounded-xl transition-all"><Printer className="w-4 h-4" /></button>
-                  <button onClick={handleExportCSV} className="p-2 text-slate-400 hover:text-[#003d5b] dark:hover:text-blue-400 hover:bg-slate-50 rounded-xl transition-all"><Download className="w-4 h-4" /></button>
+                  <button onClick={handleExportCSV} className="p-2 text-slate-400 hover:text-[#003d5b] dark:hover:text-blue-400 hover:bg-slate-50 rounded-xl transition-all"><Download className="h-4 w-4" /></button>
               </div>
           </div>
           
           <div className="flex-1 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm p-8 min-h-[600px]">
-              {activeTab === 'specs' && <ProductionSpecs product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
-              {canSeeFinancials && activeTab === 'costing' && <CostCalculator product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
-              {canSeeFinancials && activeTab === 'tariffs' && <TariffRates product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} globalTariffs={globalTariffs} lockedTariffs={lockedTariffs} />}
-              {activeTab === 'hs_lookup' && <HSLookup product={selectedProduct} lang={lang} onSave={onSave} onUpdateGlobalTariff={onUpdateGlobalTariff} />}
-              {activeTab === 'scm_ai' && <SCMAIStrategist lang={lang} />}
-              {activeTab === 'competitor_analysis' && <CompetitorAnalysis product={selectedProduct} lang={lang} onAddCompetitor={handleAddCompetitor} onSave={onSave} isReadOnly={effectiveReadOnly} />}
+              {/* FIX: Explicitly casting 'lang' to 'Language' type when passing to sub-components to prevent 'string' assignability errors. */}
+              {activeTab === 'specs' && <ProductionSpecs product={selectedProduct} lang={lang as Language} onSave={onSave} isReadOnly={effectiveReadOnly} />}
+              {canSeeFinancials && activeTab === 'costing' && <CostCalculator product={selectedProduct} lang={lang as Language} onSave={onSave} isReadOnly={effectiveReadOnly} />}
+              {canSeeFinancials && activeTab === 'tariffs' && <TariffRates product={selectedProduct} lang={lang as Language} onSave={onSave} isReadOnly={effectiveReadOnly} globalTariffs={globalTariffs} lockedTariffs={lockedTariffs} />}
+              {activeTab === 'hs_lookup' && <HSLookup product={selectedProduct} lang={lang as Language} onSave={onSave} onUpdateGlobalTariff={onUpdateGlobalTariff} />}
+              {activeTab === 'scm_ai' && <SCMAIStrategist lang={lang as Language} />}
+              {activeTab === 'competitor_analysis' && <CompetitorAnalysis product={selectedProduct} lang={lang as Language} onAddCompetitor={handleAddCompetitor} onSave={onSave} isReadOnly={effectiveReadOnly} />}
               {activeTab === 'exchange' && <ExchangeRateView />}
-              {activeTab === 'timeline' && <LaunchTimeline product={selectedProduct} lang={lang} onSave={onSave} isReadOnly={effectiveReadOnly} />}
-              {activeTab === 'ai' && <AIStrategy lang={lang} />}
+              {activeTab === 'timeline' && <LaunchTimeline product={selectedProduct} lang={lang as Language} onSave={onSave} isReadOnly={effectiveReadOnly} />}
+              {activeTab === 'ai' && <AIStrategy lang={lang as Language} />}
           </div>
         </div>
 

@@ -52,7 +52,12 @@ interface TeamChatProps {
 
 const TeamChat: React.FC<TeamChatProps> = ({ 
   currentUser, users, lang, threads = [], messages = {}, activeThreadId = null, 
-  onSelectThread = () => {}, onSendMessage = () => {}, onFileUpload = () => {}, onDeleteMessage = () => {}, onShowNotification = () => {},
+  // FIX: Updated default values for destructured function props to match required signatures.
+  onSelectThread = (_id: string) => {}, 
+  onSendMessage = (_text: string, _isAudio: boolean) => {}, 
+  onFileUpload = (_file: File) => {}, 
+  onDeleteMessage = (_msgId: string) => {}, 
+  onShowNotification = (_msg: string) => {},
   isPoppedOut = false, onPopOut, onClose, onMinimize, dragHandleProps, notificationToast
 }) => {
   // CRASH PROTECTION: Fallback if translation key is missing

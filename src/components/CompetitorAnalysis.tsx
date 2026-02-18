@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
-import { Product, Language } from '../../types';
-import { translations } from '../../translations';
+import { Product, Language } from '../types';
+import { translations } from '../translations';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 import { Target, Plus, TrendingUp, TrendingDown, Minus, ExternalLink, X, Save, Zap, Loader2, BarChart3, AlertCircle, Trash2 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
@@ -328,10 +327,10 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
                             <table className="w-full text-left text-sm">
                                 <thead>
                                     <tr className="text-slate-400 dark:text-slate-600 text-[9px] uppercase font-bold tracking-widest">
-                                        <th className="pb-3 px-2 w-1/4">{t?.headers?.brand || "Brand"}</th>
-                                        <th className="pb-3 px-2 w-1/4">{t?.headers?.price || "Price"}</th>
-                                        <th className="pb-3 px-2 w-1/4">{t?.headers?.origin || "Origin"}</th>
-                                        <th className="pb-3 px-2">{t?.headers?.strength || "Strength"}</th>
+                                        <th className="pb-3 px-2 w-1/4">Brand</th>
+                                        <th className="pb-3 px-2 w-1/4">Price</th>
+                                        <th className="pb-3 px-2 w-1/4">Origin</th>
+                                        <th className="pb-3 px-2">Strength</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -412,10 +411,10 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
                     <button onClick={() => setIsModalOpen(false)}><X className="w-5 h-5 text-slate-400" /></button>
                 </div>
                 <div className="space-y-4">
-                    <ModalInput label={t?.headers?.brand || "Brand"} placeholder="e.g. Zara" value={newComp.brand} onChange={(e: any) => setNewComp({...newComp, brand: e.target.value})} />
+                    <ModalInput label="Brand" placeholder="e.g. Zara" value={newComp.brand} onChange={(e: any) => setNewComp({...newComp, brand: e.target.value})} />
                     <div className="grid grid-cols-2 gap-4">
-                        <ModalInput label={t?.headers?.price || "Price ($)"} type="number" placeholder="0.00" value={newComp.price} onChange={(e: any) => setNewComp({...newComp, price: e.target.value})} />
-                        <ModalInput label={t?.marketShare || "Share (%)"} type="number" placeholder="10" value={newComp.marketShare} onChange={(e: any) => setNewComp({...newComp, marketShare: e.target.value})} />
+                        <ModalInput label="Price ($)" type="number" placeholder="0.00" value={newComp.price} onChange={(e: any) => setNewComp({...newComp, price: e.target.value})} />
+                        <ModalInput label="Share (%)" type="number" placeholder="10" value={newComp.marketShare} onChange={(e: any) => setNewComp({...newComp, marketShare: e.target.value})} />
                     </div>
                     <div className="space-y-1">
                         <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tier</label>
@@ -425,8 +424,8 @@ const CompetitorAnalysis: React.FC<Props> = ({ product, lang, onAddCompetitor, o
                             <option value="value">Value (Budget)</option>
                         </select>
                     </div>
-                    <ModalInput label={t?.headers?.origin || "Origin"} placeholder="e.g. Vietnam" value={newComp.origin} onChange={(e: any) => setNewComp({...newComp, origin: e.target.value})} />
-                    <ModalInput label={t?.headers?.strength || "Strength"} placeholder="e.g. Speed" value={newComp.strength} onChange={(e: any) => setNewComp({...newComp, strength: e.target.value})} />
+                    <ModalInput label="Origin" placeholder="e.g. Vietnam" value={newComp.origin} onChange={(e: any) => setNewComp({...newComp, origin: e.target.value})} />
+                    <ModalInput label="Strength" placeholder="e.g. Speed" value={newComp.strength} onChange={(e: any) => setNewComp({...newComp, strength: e.target.value})} />
                 </div>
                 <div className="flex justify-end gap-2 pt-2">
                     <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-slate-500 font-bold">{commonT?.cancel || "Cancel"}</button>

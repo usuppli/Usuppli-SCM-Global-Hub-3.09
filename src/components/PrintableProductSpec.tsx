@@ -122,8 +122,8 @@ export const PrintableProductSpec: React.FC<Props> = ({ product }) => {
               {Object.entries(product.costVariables || {}).filter(([_, val]) => !!val).map(([key, val]) => (
                   <tr key={key} className="border-b border-slate-100">
                       <td className="p-3 capitalize text-xs font-bold text-slate-600">{key.replace(/([A-Z])/g, ' $1')}</td>
-                      {/* Added type cast to val as number to resolve toFixed error */}
-                      <td className="p-3 text-right font-mono font-bold text-xs">${Number(val as number).toFixed(2)}</td>
+                      {/* FIX: Use Number() wrapper and cast val to any to satisfy toFixed call on potential undefined/unknown types from Object.entries */}
+                      <td className="p-3 text-right font-mono font-bold text-xs">${Number(val as any).toFixed(2)}</td>
                   </tr>
               ))}
               <tr className="bg-[#003d5b] text-white">

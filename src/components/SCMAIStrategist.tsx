@@ -60,12 +60,8 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en', onClose }) => {
     setError(null);
 
     try {
-      // ---------------------------------------------------------
-      // CRITICAL FIX: Use import.meta.env for Vite / Browser
-      // ---------------------------------------------------------
-      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY || ""; 
-      
-      if (!apiKey) {
+      // Fix: Use process.env.API_KEY as per guidelines. Assume it is pre-configured and accessible.
+      if (!process.env.API_KEY) {
         // Fallback Simulation if no API key is present
         setTimeout(() => {
             const simResponse = "I am currently running in simulation mode because no API Key was detected. In a production environment, I would analyze your query: " + userMsg.text;
@@ -80,8 +76,8 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en', onClose }) => {
         return;
       }
 
-      // Initialize GoogleGenAI with named parameter
-      const ai = new GoogleGenAI({ apiKey });
+      // Initialize GoogleGenAI with named parameter using process.env.API_KEY directly
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const systemContext = "You are an expert Supply Chain Strategist. Keep answers professional, concise, and actionable.";
       
       // Use ai.models.generateContent directly with model name and contents
