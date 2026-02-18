@@ -89,11 +89,11 @@ export const PrintableProductSpec: React.FC<Props> = ({ product }) => {
                         <h4 className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                             <Scale className="w-3 h-3" /> Unit weight
                         </h4>
-                        <p className="font-black text-blue-900">{product.dimensions.weightKg} kg</p>
+                        <p className="font-black text-blue-900">{product.dimensions?.weightKg ?? 0} kg</p>
                     </div>
                     <div>
                         <h4 className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1">Dimensions</h4>
-                        <p className="font-black text-blue-900 text-xs">{product.dimensions.lengthCm}x{product.dimensions.widthCm}x{product.dimensions.heightCm} cm</p>
+                        <p className="font-black text-blue-900 text-xs">{product.dimensions?.lengthCm ?? 0}x{product.dimensions?.widthCm ?? 0}x{product.dimensions?.heightCm ?? 0} cm</p>
                     </div>
                 </div>
                 

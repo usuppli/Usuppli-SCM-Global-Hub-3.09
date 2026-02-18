@@ -89,10 +89,10 @@ export const printProductSpec = (product: Product) => {
               <div class="detail-item"><label>HS Code</label><p>${product.hsCode || 'PENDING'}</p></div>
               <div class="detail-item"><label>Material</label><p>${product.material || 'N/A'}</p></div>
               <div class="detail-item"><label>Lead Time</label><p>${product.leadTime || 'N/A'}</p></div>
-              <div class="detail-item"><label>Length</label><p>${product.dimensions.lengthCm} cm</p></div>
-              <div class="detail-item"><label>Width</label><p>${product.dimensions.widthCm} cm</p></div>
-              <div class="detail-item"><label>Height</label><p>${product.dimensions.heightCm} cm</p></div>
-              <div class="detail-item"><label>Unit Weight</label><p>${product.dimensions.weightKg} kg</p></div>
+              <div class="detail-item"><label>Length</label><p>${product.dimensions?.lengthCm ?? 0} cm</p>
+              <div class="detail-item"><label>Width</label><p>${product.dimensions?.widthCm ?? 0} cm</p>
+              <div class="detail-item"><label>Height</label><p>${product.dimensions?.heightCm ?? 0} cm</p>
+              <div class="detail-item"><label>Unit Weight</label><p>${product.dimensions?.weightKg ?? 0} kg</p>
             </div>
             <div class="notes-section">
               <label>Construction Notes</label>

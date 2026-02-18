@@ -224,13 +224,13 @@ const ProductSpecs: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) =>
               <h4 className="font-bold text-sky-700 dark:text-sky-400 uppercase text-xs tracking-widest mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">{s.logistics}</h4>
               <div className="grid grid-cols-2 gap-4">
                   <Input label={s.hsCode} disabled={!isEditing} className="font-mono" value={formData.hsCode || ''} onChange={(e:any) => handleChange('hsCode', e.target.value)} />
-                  <Input label="Weight (KG)" disabled={!isEditing} type="number" step="0.01" value={formData.dimensions.weightKg} onChange={(e:any) => handleDimChange('weightKg', e.target.value)} />
+                  <Input label="Weight (KG)" disabled={!isEditing} type="number" step="0.01" value={formData.dimensions?.weightKg ?? 0} onChange={(e:any) => handleDimChange('weightKg', e.target.value)} />
                   <div className="col-span-2">
                       <label className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase mb-2 block">{s.dims} (L x W x H CM)</label>
                       <div className="flex gap-2">
                           <input type="number" disabled={!isEditing} className={`w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-center font-mono text-sm dark:text-slate-200 ${cleanNumberInputClass}`} value={formData.dimensions.lengthCm} onChange={(e) => handleDimChange('lengthCm', e.target.value)} />
-                          <input type="number" disabled={!isEditing} className={`w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-center font-mono text-sm dark:text-slate-200 ${cleanNumberInputClass}`} value={formData.dimensions.widthCm} onChange={(e) => handleDimChange('widthCm', e.target.value)} />
-                          <input type="number" disabled={!isEditing} className={`w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-center font-mono text-sm dark:text-slate-200 ${cleanNumberInputClass}`} value={formData.dimensions.heightCm} onChange={(e) => handleDimChange('heightCm', e.target.value)} />
+                          <input type="number" disabled={!isEditing} className={`w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-center font-mono text-sm dark:text-slate-200 ${cleanNumberInputClass}`} value={formData.dimensions?.widthCm ?? 0} onChange={(e) => handleDimChange('widthCm', e.target.value)} />
+                          <input type="number" disabled={!isEditing} className={`w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-center font-mono text-sm dark:text-slate-200 ${cleanNumberInputClass}`} value={formData.dimensions?.heightCm ?? 0} onChange={(e) => handleDimChange('heightCm', e.target.value)} />
                       </div>
                   </div>
               </div>

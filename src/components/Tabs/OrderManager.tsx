@@ -252,18 +252,18 @@ const OrderManager: React.FC<Props> = ({ jobs = [], lang, onUpdateJob, onDeleteJ
                   <div onClick={() => handleEditClick(selectedJob)} className="md:col-span-3 bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-800 cursor-pointer hover:shadow-md transition-all">
                      <div className="flex justify-between items-center mb-6">
                         <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Production Timeline</h4>
-                        <span className={`text-xs font-bold px-3 py-1 rounded-full text-white ${getProgressColor(selectedJob.completionPercent)}`}>{selectedJob.completionPercent}% Complete</span>
+                        ${getProgressColor(selectedJob.completionPercent ?? 0)}`}>{selectedJob.completionPercent ?? 0}% Complete
                      </div>
                      <div className="relative">
                         <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-100 dark:bg-slate-800 -translate-y-1/2 rounded-full z-0"></div>
-                        <div className={`absolute top-1/2 left-0 h-1 -translate-y-1/2 rounded-full z-0 transition-all duration-1000 ${getProgressColor(selectedJob.completionPercent)}`} style={{ width: `${selectedJob.completionPercent}%` }}></div>
+                        ${getProgressColor(selectedJob.completionPercent ?? 0)}`} style={{ width: `${selectedJob.completionPercent ?? 0}%` }}
                         <div className="relative z-10 flex justify-between">
                            {['Inquiry', 'Sampling', 'Material Prep', 'Production', 'QC', 'In Transit', 'Delivered'].map((stage, index) => {
-                              const isCompleted = index <= ['Inquiry', 'Sampling', 'Material Prep', 'Production', 'QC', 'In Transit', 'Delivered'].findIndex(s => s === selectedJob.status) || (selectedJob.completionPercent > (index * 15)); 
+                              const isCompleted = index <= ['Inquiry', 'Sampling', 'Material Prep', 'Production', 'QC', 'In Transit', 'Delivered'].findIndex(s => s === selectedJob.status) || ((selectedJob.completionPercent ?? 0) > (index * 15)) 
                               const isCurrent = stage === selectedJob.status;
                               return (
                                  <div key={stage} className="flex flex-col items-center gap-3 group">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all ${isCompleted ? `border-transparent text-white ${getProgressColor(selectedJob.completionPercent)}` : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600'}`}>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all ${isCompleted ? `border-transparent text-white ${getProgressColor(selectedJob.completionPercent ?? 0)}` : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600'}`}>
                                        {isCompleted ? <CheckCircleIcon className="w-4 h-4" /> : <span className="text-[10px] font-bold">{index + 1}</span>}
                                     </div>
                                     <span className={`text-[9px] font-bold uppercase tracking-wide transition-colors ${isCurrent ? 'text-[#003d5b] dark:text-blue-400' : 'text-slate-300 dark:text-slate-600'}`}>{stage}</span>
@@ -279,7 +279,7 @@ const OrderManager: React.FC<Props> = ({ jobs = [], lang, onUpdateJob, onDeleteJ
                          <div className="p-2 bg-white/20 rounded-xl"><TrendingIcon className="w-6 h-6" /></div>
                          <div>
                             <p className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">Total Value</p>
-                            <p className="text-xl font-bold">${(selectedJob.quantity * 25).toLocaleString()}</p>
+                            <p className="text-xl font-bold">${((selectedJob.quantity ?? 0) * 25).toLocaleString()}</p
                          </div>
                       </div>
                   </div>
@@ -289,7 +289,8 @@ const OrderManager: React.FC<Props> = ({ jobs = [], lang, onUpdateJob, onDeleteJ
                          <div className="p-2 bg-white/20 rounded-xl"><BoxIcon className="w-6 h-6" /></div>
                          <div>
                             <p className="text-[10px] font-bold text-indigo-100 uppercase tracking-wider">Order Volume</p>
-                            <p className="text-xl font-bold">{selectedJob.quantity.toLocaleString()}</p>
+                            <p className="text-xl font-bold">{(selectedJob.quantity ?? 0).toLocaleString()}</p>
+
                          </div>
                       </div>
                   </div>

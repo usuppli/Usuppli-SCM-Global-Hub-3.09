@@ -231,7 +231,7 @@ const CostCalculator: React.FC<Props> = ({ product, lang, onSave, isReadOnly }) 
                   {!isEditingLogistics && !isReadOnly && (
                      <div className="absolute top-4 right-4 text-[10px] font-bold text-sky-500 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-wider pointer-events-none">{common.clickToEdit}</div>
                   )}
-                  {isEditingLogistics && <EditControls onCancel={() => { setIsEditingLogistics(false); setDims(product.dimensions); }} onSave={saveLogistics} />}
+                  {isEditingLogistics && <EditControls onCancel={() => { setIsEditingLogistics(false); setDims(product.dimensions ?? { lengthCm: 0, widthCm: 0, heightCm: 0, weightKg: 0 }); }} onSave={saveLogistics} />}
                   <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-4 uppercase tracking-wider flex items-center gap-2"><ScaleIcon className="w-4 h-4" /> {t.logistics}</h4>
                   <div className="grid grid-cols-2 gap-4 mb-4">
                       <div>

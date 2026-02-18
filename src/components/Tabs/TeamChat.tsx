@@ -1,6 +1,7 @@
 
+
 import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+// import { } from 'react-dom';
 import { User, ChatMessage, ChatThread, Language } from '../../types';
 import { translations } from '../../translations';
 
@@ -17,7 +18,7 @@ const MicIcon = ({ className }: { className: string }) => (<svg className={class
 const StopIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" /></svg>);
 const DocumentIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>);
 const PlayIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>);
-const ResizeGripIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-12.728 12.728M18.364 11.293l-7.071 7.071M18.364 16.95l-1.414 1.414" /></svg>);
+const _ResizeGripIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-12.728 12.728M18.364 11.293l-7.071 7.071M18.364 16.95l-1.414 1.414" /></svg>);
 const TrashIcon = ({ className }: { className: string }) => (<svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>);
 const WhatsAppIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.994 9.994 0 004.779 1.218h.004c5.505 0 9.988-4.478 9.99-9.984 0-2.669-1.037-5.176-2.922-7.062A9.935 9.935 0 0012.012 2z" /></svg>);
 const WeChatIcon = ({ className }: { className: string }) => (<svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M8.5,3C5.5,3,3,5.2,3,8c0,1.5,0.7,2.9,1.9,3.8L4.5,14l2.5-1.3c0.5,0.1,1,0.2,1.5,0.2c0-0.3,0-0.6,0-1 c0-3.3,2.9-6,6.5-6c0.6,0,1.2,0.1,1.8,0.2C15.9,4.2,12.5,3,8.5,3z M15,7c-3,0-5.5,2.2-5.5,5s2.5,5,5.5,5c0.5,0,1-0.1,1.4-0.2L19,18l-0.4-2.3 c1.1-0.9,1.9-2.2,1.9-3.7C20.5,9.2,18,7,15,7z" /></svg>);
@@ -204,7 +205,7 @@ const TeamChat: React.FC<TeamChatProps> = ({
               </div>
 
               <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50 dark:bg-slate-950/20 custom-scrollbar">
-                 {currentMessages.map((msg, idx) => {
+                 {currentMessages.map((msg, _idx) => {
                    const isMe = msg.senderId === currentUser.id;
                    const sender = users.find(u => u.id === msg.senderId);
                    return (
@@ -252,7 +253,12 @@ const TeamChat: React.FC<TeamChatProps> = ({
                    )}
                 </form>
             </div>
-          </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-slate-400 dark:text-slate-600 text-sm font-medium">
+              Select a conversation to start chatting
+            </div>
+          )}
         </div>
       </div>
     </div>

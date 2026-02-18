@@ -1,4 +1,5 @@
 
+
 import { Translation } from '../types';
 
 export const en: Translation = {
@@ -195,6 +196,13 @@ export const en: Translation = {
       internalId: "Internal ID",
       skuMatrix: "SKU Matrix",
       addVariant: "Add New Variant",
+      dna: "Technical DNA",
+      fabrication: "Fabrication",
+      logistics: "Logistics & Compliance",
+      hsCode: "HS Code",
+      dims: "Dimensions",
+      material: "Material",
+      construction: "Construction",
       table: {
         sku: "SKU Code",
         variant: "Variant / Size",
@@ -253,6 +261,7 @@ export const en: Translation = {
       trackNew: "Track Competitor",
       pricePos: "Price Positioning",
       marketShare: "Market Share",
+      pricePosition: "Price Positioning",
       table: {
         brand: "Brand",
         price: "Price",
@@ -282,7 +291,7 @@ export const en: Translation = {
   wizards: {
     common: {
       step: "Step {step} / {total}",
-      next: "Next",
+      nextStep: "Next",
       back: "Back",
       save: "Save",
       cancel: "Cancel",
@@ -369,6 +378,7 @@ export const en: Translation = {
         poNumber: "PO Number",
         productModel: "Product",
         quantity: "Quantity",
+        factory: "Factory",
         customer: "Customer",
         leadBuyer: "Lead Buyer",
         initialStage: "Initial Stage",
@@ -763,7 +773,8 @@ export const en: Translation = {
     cancel: "Cancel",
     typeMessage: "Type a message...",
     deleteMsg: "Delete Message",
-    teamGeneral: "General Team"
+    teamGeneral: "General Team",
+    copied: "Copied"
   },
   crm: {
     title: "Customer Directory",
@@ -817,7 +828,8 @@ export const en: Translation = {
     alerts: "Diagnostic Alerts",
     queueStatus: "Production Queue Status",
     liveTracking: "Live factory throughput tracking",
-    searchJobs: "Search Active Jobs..."
+    searchJobs: "Search Active Jobs...",
+    refresh: "Refresh"
   },
   factory: {
     title: "Supplier & Factory Portfolio",

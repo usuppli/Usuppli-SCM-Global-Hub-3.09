@@ -1,4 +1,5 @@
 
+
 import React, { useState, useRef, useMemo } from 'react';
 import { Product, Language, User, UserRole, Job, AuditLogEntry } from '../../types';
 import { translations } from '../../translations';
@@ -17,10 +18,7 @@ import {
   Unlock as UnlockIcon, 
   Settings as SettingsIcon,
   Search,
-  FileText,
-  CheckCircle2,
-  LayoutTemplate,
-  ChevronDown
+  FileText
 } from 'lucide-react';
 
 const STYLES = {
@@ -100,17 +98,17 @@ const AdminPanel: React.FC<Props> = ({
 
   const [activeTab, setActiveTab] = useState<'system' | 'users' | 'backup' | 'audit' | 'preferences'>('system');
   const [newUser, setNewUser] = useState({ name: '', email: '', role: 'viewer', password: '' });
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, _setShowPassword] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
   
   const [isEditingVersion, setIsEditingVersion] = useState(false);
   const [tempVersion, setTempVersion] = useState(systemVersion || 'v3.05');
   
-  const [editingTariff, setEditingTariff] = useState<string | null>(null);
-  const [tempTariff, setTempTariff] = useState<string>('');
+  const [_editingTariff, setEditingTariff] = useState<string | null>(null);
+  const [_tempTariff, setTempTariff] = useState<string>('');
 
   const [auditSearch, setAuditSearch] = useState('');
-  const [auditFilter, setAuditFilter] = useState<'ALL' | 'AUTH' | 'SYSTEM' | 'PRODUCT'>('ALL');
+  const [auditFilter, _setAuditFilter] = useState<'ALL' | 'AUTH' | 'SYSTEM' | 'PRODUCT'>('ALL');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -268,7 +266,7 @@ const AdminPanel: React.FC<Props> = ({
              onClick={() => setActiveTab(tab as any)} 
              className={`px-6 py-3 border-b-2 font-black text-xs uppercase tracking-widest transition-all ${activeTab === tab ? 'border-[#003d5b] text-[#003d5b] dark:border-blue-500 dark:text-blue-400' : 'border-transparent text-slate-400'}`}
            >
-             {t?.tabs?.[tab] || tab}
+             {t?.tabs?.[tab as keyof typeof t.tabs] || tab}
            </button>
          ))}
          <button onClick={() => setActiveTab('preferences')} className={`px-6 py-3 border-b-2 font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 ${activeTab === 'preferences' ? 'border-[#003d5b] text-[#003d5b] dark:border-blue-500 dark:text-blue-400' : 'border-transparent text-slate-400'}`}>

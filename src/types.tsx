@@ -1,3 +1,4 @@
+
 // src/types.tsx
 
 // ==========================================
@@ -411,9 +412,9 @@ export interface DashboardTranslations {
   logisticsControl: string;
   openLogistics: string;
   refreshPulse: string;
-  totalRevenue: number;
-  activeOrders: number;
-  pendingShipments: number;
+  totalRevenue: string;
+  activeOrders: string;
+  pendingShipments: string
   productionEfficiency: string;
   revenueVsCost: string;
 }

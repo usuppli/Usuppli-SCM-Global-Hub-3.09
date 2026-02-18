@@ -111,9 +111,9 @@ export const printSampleRequest = (sample: SampleRequest, factory?: Factory, pro
             <tr>
               <td>Sample Development for ${product?.name || sample.productName || 'Product'}</td>
               <td>${sample.type}</td>
-              <td class="text-right">$${sample.cost.toFixed(2)}</td>
-              <td class="text-right">$${sample.courierCost.toFixed(2)}</td>
-              <td class="text-right">$${(sample.cost + sample.courierCost).toFixed(2)}</td>
+              <td class="text-right">$${(sample.cost ?? 0).toFixed(2)}</td>
+              <td class="text-right">$${(sample.courierCost ?? 0).toFixed(2)}</td>
+              <td class="text-right">$${((sample.cost ?? 0) + (sample.courierCost ?? 0)).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>

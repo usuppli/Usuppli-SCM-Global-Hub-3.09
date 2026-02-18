@@ -85,7 +85,7 @@ const PrintableOrder: React.FC<Props> = ({ job, factory, customer, product }) =>
                         <div className="text-xs font-normal text-slate-500 font-mono mt-0.5">{job.sku || 'N/A'}</div>
                     </td>
                     <td className="p-3 text-slate-600 max-w-[300px]">{job.description || 'Production Run'}</td>
-                    <td className="p-3 text-center font-bold">{job.quantity.toLocaleString()}</td>
+                    <td className="p-3 text-center font-bold">{(job.quantity ?? 0).toLocaleString()}</td>
                     <td className="p-3 text-right">$0.00</td>
                     <td className="p-3 text-right font-bold">$0.00</td>
                 </tr>

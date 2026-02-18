@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo } from 'react';
 import { useExchangeRates } from '../../hooks/useExchangeRates';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -131,7 +132,7 @@ export const ExchangeRateView: React.FC = () => {
                         <Tooltip 
                             contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '12px' }}
                             itemStyle={{ color: '#fff' }}
-                            formatter={(value: number) => [value.toFixed(4), 'Rate']}
+                            formatter={(value: any) => [Number(value).toFixed(4), 'Rate']}
                         />
                         <Area type="monotone" dataKey="value" stroke="#003d5b" strokeWidth={3} fillOpacity={1} fill="url(#colorRate)" />
                     </AreaChart>
