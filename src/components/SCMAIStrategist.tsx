@@ -7,7 +7,7 @@ import { Language } from '../types';
 
 interface Props {
   lang?: Language;
-  onClose?: () => void; // Added back to prevent App.tsx crash
+  onClose?: () => void; // Critical: Prevents App.tsx crash & enables closing
 }
 
 interface Message {
@@ -60,10 +60,10 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en', onClose }) => {
     setError(null);
 
     try {
-      // Always use process.env.API_KEY as per coding guidelines
-      // Note: In Vite, this is usually import.meta.env.VITE_API_KEY, 
-      // but we will stick to your requested pattern or a safe fallback.
-      const apiKey = process.env.API_KEY || ""; 
+      // ---------------------------------------------------------
+      // CRITICAL FIX: Use import.meta.env for Vite / Browser
+      // ---------------------------------------------------------
+      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY || ""; 
       
       if (!apiKey) {
         // Fallback Simulation if no API key is present
@@ -86,7 +86,7 @@ const SCMAIStrategist: React.FC<Props> = ({ lang = 'en', onClose }) => {
       
       // Use ai.models.generateContent directly with model name and contents
       const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-exp", // Updated to latest available model
+        model: "gemini-2.0-flash-exp", 
         contents: userMsg.text,
         config: {
           systemInstruction: systemContext,
